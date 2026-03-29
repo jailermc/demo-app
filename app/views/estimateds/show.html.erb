@@ -1,1522 +1,389 @@
+<%
+equip_rows = [
+  { n:1,  lbl:'EXCAVATOR' },
+  { n:2,  lbl:'EXCAVATOR 2' },
+  { n:3,  lbl:'SCISSOR LIF' },
+  { n:4,  lbl:'LOADER' },
+  { n:5,  lbl:'DUMP TRUCK' },
+  { n:6,  lbl:'BOBCAT' },
+  { n:12, lbl:'UTILITY TRUCK' },
+  { n:7,  lbl:'FLOOR SCRAPER' },
+  { n:8,  lbl:'WATER TRUCK' },
+  { n:9,  lbl:'COMPRESSOR' },
+  { n:10, lbl:nil },
+  { n:11, lbl:nil },
+]
+
+mat_rows = [
+  { lbl:'Trash / C&D',     ed: :tdescription1, eq: :tqtyyds1,  ep: :tpricing1, et: :ttotal1 },
+  { lbl:'Tree / Vegetation',ed: :tdescription2, eq: :tqtyyds2,  ep: :tpricing2, et: :ttotal2 },
+  { lbl:'Concrete',         ed: :tdescription3, eq: :tqtyyds3,  ep: :tpricing3, et: :ttotal3 },
+  { lbl:'Concrete / rebar', ed: :tdescription6, eq: :tqtyyds6,  ep: :tpricing6, et: :ttotal6 },
+  { lbl:'Asphalt',          ed: :tdescription4, eq: :tqtyyds4,  ep: :tpricing4, et: :ttotal4 },
+  { lbl:'Fill',             ed: :mdescription1, eq: :mqtysfft1, ep: :mpricing1, et: :mtotal1 },
+]
+
+permit_rows = [
+  { lbl:'Demo',       n:1 },
+  { lbl:'Plumbing',   n:2 },
+  { lbl:'Septic',     n:8 },
+  { lbl:'Electical',  n:3 },
+  { lbl:'Derm',       n:4 },
+  { lbl:'Tree',       n:5, bg:'#ebfd8f' },
+  { lbl:'Mechanical', n:6 },
+  { lbl:'MOT',        n:7 },
+]
+
+erosion_rows = [
+  { lbl:'SILT FENCE',       ed: :mdescription2,   eq: :mqtysfft2, ep: :mpricing2,   et: :mtotal2    },
+  { lbl:'ROCK',             ed: :tdescription5,   eq: :tqtysfft5, ep: :tpricing5,   et: :ttotal5    },
+  { lbl:'FILTER FABRIC',    ed: :ec_description3, eq: :ec_qty3,   ep: :ec_pricing3, et: :ec_total3  },
+  { lbl:'TURBIDITY CURTIN', ed: :ec_description4, eq: :ec_qty4,   ep: :ec_pricing4, et: :ec_total4  },
+  { lbl:'GUTTER BUDDY',     ed: :ec_description5, eq: :ec_qty5,   ep: :ec_pricing5, et: :ec_total5  },
+  { lbl:'SOD / HYDRO,SEEDS',ed: :mdescription9,   eq: :mqtysfft9, ep: :mpricing9,   et: :mtotal9    },
+]
+
+tf_rows = [
+  { lbl:'POLICE FEE',       ed: :mdescription31, eq: :mqtysfft31, ep: :mpricing31, et: :mtotal31 },
+  { lbl:'CHAIN LINK FENCE', ed: :mdescription3,  eq: :mqtysfft3,  ep: :mpricing3,  et: :mtotal3  },
+]
+
+oot_rows = [
+  { lbl:'HOTEL',        ed: :mdescription17,    eq: :mqtysfft17, ep: :mpricing17,   et: :mtotal17   },
+  { lbl:'MOBILIZATION', ed: :mov_pdescription2, eq: :mov_pqty2,  ep: :mov_pricing2, et: :mov_total2 },
+  { lbl:'PERDIEM',      ed: :mov_pdescription3, eq: :mov_pqty3,  ep: :mov_pricing3, et: :mov_total3 },
+]
+
+misc_rows = [
+  { lbl:'Asbestos',          n:4  },
+  { lbl:'Freon Removal',     n:11 },
+  { lbl:'Pump-Out',          n:5  },
+  { lbl:'TORCHING',          n:7  },
+  { lbl:'TRASH CHUTE',       n:8  },
+  { lbl:'TEMP BATHS',        n:18 },
+  { lbl:'TRIMMING / GRINDING', n:32 },
+]
+
+scrap_rows = [
+  { lbl:'FERROUS',     n:13 },
+  { lbl:'NON-FERROUS', n:14 },
+  { lbl:'MISC',        n:15 },
+]
+%>
 <p id="notice"><%= notice %></p>
 <%= link_to 'Edit', edit_estimated_path(@estimated) %> |
 <%= link_to 'Back', estimateds_path %>
-<br>
-<br>
+<br><br>
 <button id="print-button">Print</button>
-        <div id="section-to-print">
-          <h1 style="font-size: 22px;">Demolition Estimating Sheet </h1>
+<div id="section-to-print">
+  <h1 style="font-size:22px;">Demolition Estimating Sheet</h1>
 
-          <table id="principal2" class="table table-bordered table-sm"  style="width:90%" >
-            <thead>
-            <tr>
-              <th style="background-color: rgba(185,183,183,0.94)"></th>
-              <th style="background-color: rgba(185,183,183,0.94)">NAME</th>
-              <th style="background-color: rgba(185,183,183,0.94)">ADDRESS</th>
-              <th style="background-color: rgba(185,183,183,0.94)">DATE</th>
-              <th style="background-color: rgba(185,183,183,0.94)">QTY</th>
-              <th style="background-color: rgba(185,183,183,0.94)">PER SF / L.F $</th>
-              <th style="background-color: rgba(185,183,183,0.94)">STATUS</th>
-              <th style="background-color: rgba(185,183,183,0.94)"></th>
-              <th style="background-color: rgba(185,183,183,0.94)"></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-             <th></th>
-              <td><%= @estimated.name %></td>
-              <td><%= @estimated.address  %></td>
-              <td><%= @estimated.date1.strftime('%m/%d/%Y')%></td>
-              <td><%= @estimated.sf%></td>
-              <td><%= @estimated.persf%></td>
-              <td>
-                <% if @estimated.status == 1 %>
-                  active
-                <% elsif @estimated.status == 2 %>
-                  completed
-                <% else %>
-                  pending
-                <% end %>
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-            </tbody>
-          </table>
-          <br>
-          <table id="principal" class="table table-bordered table-sm" style="width:90%">
-            <thead>
-            <tr>
-              <th>ACTIVITY</th>
-              <th>DESCRIPTION</th>
-              <th>QTY MEN</th>
-              <th>DAYS</th>
-              <th>MEN HRS</th>
-              <th>PRICE PER HRS</th>
-              <th>TOTAL</th>
-            </tr>
-            </thead>
-            <tbody >
-            <tr>
-              <td class="celda2"><%= @selector[0]%></td>
-              <td><%= @estimated.adescription1 %></td>
-              <td><%= @estimated.aemp1 %></td>
-              <td><%= @estimated.adays1%></td>
-              <td><%= @estimated.ahours1 == 0 ? "" : @estimated.ahours1 %> <%= @estimated.over1 == 0 ? "" :  @estimated.over1 %> </td>
-              <td class="celda"><%= @estimated.apricing1 %></td>
-                <% if @estimated.atotal1 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.atotal1, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2"><%= @selector[1]  %></td>
-              <td><%= @estimated.adescription2 %></td>
-              <td><%= @estimated.aemp2 %></td>
-              <td><%= @estimated.adays2%></td>
-              <td><%=  @estimated.ahours2 == 0 ? "" : @estimated.ahours2 %> <%= @estimated.over2 == 0 ? ""  : +@estimated.over2 %> </td>
-              <td class="celda"><%= @estimated.apricing2 %></td>
-                <% if @estimated.atotal2 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.atotal2, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2"><%= @selector[2]  %></td>
-              <td><%= @estimated.adescriptio3 %></td>
-              <td><%= @estimated.aemp3 %></td>
-              <td><%= @estimated.adays3%></td>
-              <td><%=  @estimated.ahours3 == 0 ? "" : @estimated.ahours3 %> <%= @estimated.over3 == 0 ? "" : +@estimated.over3 %></td>
-              <td class="celda"><%= @estimated.apricing3 %></td>
-                <% if @estimated.atotal3 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.atotal3, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2"><%= @selector[3]  %></td>
-              <td><%= @estimated.adescription4 %></td>
-              <td><%= @estimated.aemp4 %></td>
-              <td><%= @estimated.adays4%></td>
-              <td><%=  @estimated.ahours4 == 0 ? "" : @estimated.ahours4  %> <%= @estimated.over4 == 0 ? "" : +@estimated.over4 %></td>
-              <td class="celda"><%= @estimated.apricing4 %></td>
-                <% if @estimated.atotal4 == 0.0 %>
-              <td>
-              </td>
-                  <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.atotal4, :precision => 2) %>
-                  </td>
-                  <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2"><%= @selector[4]  %></td>
-              <td><%= @estimated.adescription5 %></td>
-              <td><%= @estimated.aemp5 %></td>
-              <td><%= @estimated.adays5%></td>
-              <td><%=  @estimated.ahours5 == 0 ? "" : @estimated.ahours5 %><%= @estimated.over5 == 0 ? "" : +@estimated.over5 %> </td>
-              <td class="celda"><%= @estimated.apricing5 %></td>
-                <% if @estimated.atotal5 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.atotal5, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2"><%= @selector[5]  %></td>
-              <td><%= @estimated.adescription6 %></td>
-              <td><%= @estimated.aemp6 %></td>
-              <td><%= @estimated.adays6%></td>
-              <td><%=  @estimated.ahours6 == 0 ? "" : @estimated.ahours6 %> <%= @estimated.over6 == 0 ? "" : +@estimated.over6 %> </td>
-              <td class="celda"><%= @estimated.apricing6 %></td>
-                <% if @estimated.atotal6 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.atotal6, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2"><%= @selector[6]  %></td>
-              <td><%= @estimated.adescription7 %></td>
-              <td><%= @estimated.aemp7 %></td>
-              <td><%= @estimated.adays7%></td>
-              <td><%=  @estimated.ahours7 == 0 ? "" : @estimated.ahours7 %> <%= @estimated.over7 == 0 ? "" : +@estimated.over7 %> </td>
-              <td class="celda"><%= @estimated.apricing7 %></td>
-                <% if @estimated.atotal7 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.atotal7, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2"><%= @selector[7]  %></td>
-              <td><%= @estimated.adescription8 %></td>
-              <td><%= @estimated.aemp8%></td>
-              <td><%= @estimated.adays8%></td>
-              <td><%=  @estimated.ahours8 == 0 ? "" : @estimated.ahours8 %> <%= @estimated.over8 == 0 ? "" : +@estimated.over8 %></td>
-              <td class="celda"><%= @estimated.apricing8 %></td>
-                <% if @estimated.atotal8 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.atotal8, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2"><%= @selector[8]  %></td>
-              <td><%= @estimated.adescription9 %></td>
-              <td><%= @estimated.aemp9%></td>
-              <td><%= @estimated.adays9%></td>
-              <td><%=  @estimated.ahours9 == 0 ? "" : @estimated.ahours9 %> <%= @estimated.over9 == 0 ? "" : +@estimated.over9 %></td>
-              <td class="celda"><%= @estimated.apricing9 %></td>
-                <% if @estimated.atotal9 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.atotal9, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2"><%= @selector[9]  %></td>
-              <td><%= @estimated.adescription10 %></td>
-              <td><%= @estimated.aemp10%></td>
-              <td><%= @estimated.adays10%></td>
-              <td><%=  @estimated.ahours10 == 0 ? "" : @estimated.ahours10 %> <%= @estimated.over10 == 0 ? "" :  @estimated.over10 %></td>
-              <td class="celda"><%= @estimated.apricing10 %></td>
-              <% if @estimated.atotal10 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.atotal10, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2"><%= @selector[10]  %></td>
-              <td><%= @estimated.adescription11 %></td>
-              <td><%= @estimated.aemp11%></td>
-              <td><%= @estimated.adays11%></td>
-              <td><%=  @estimated.ahours11 == 0 ? "" : @estimated.ahours11 %> <%= @estimated.over11 == 0 ? "" : +@estimated.over11 %></td>
-              <td class="celda"><%= @estimated.apricing11 %></td>
-              <% if @estimated.atotal11 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.atotal11, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2"><%= @selector[11]  %></td>
-              <td><%= @estimated.adescription12 %></td>
-              <td><%= @estimated.aemp12%></td>
-              <td><%= @estimated.adays12%></td>
-              <td><%=  @estimated.ahours12 == 0 ? "" : @estimated.ahours12 %> <%= @estimated.over12 == 0 ? "" : +@estimated.over12 %> </td>
-              <td class="celda"><%= @estimated.apricing12 %></td>
-              <% if @estimated.atotal12 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.atotal12, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td>TOTAL</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.atotal, :precision => 2) %></td>
-            </tr>
-            </tbody>
-            <thead>
-            <tr>
-              <th>EQUIP.</th>
-              <th>DESCRIPTION</th>
-              <th>QTY</th>
-              <th>DAYS</th>
-              <th>QTY. GAL.</th>
-              <th> GAL. PRICE</th>
-              <th>TOTAL</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td class="celda2"></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <th>$ <%= @estimated.fpricing1 %></th>
-              <td></td>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">EXCAVATOR</td>
-              <td><%= @estimated.edescription1 %></td>
-              <td><%= @estimated.eqty1%></td>
-              <td><%= @estimated.edaywk1 %></td>
-              <td><%= @estimated.eresult1%></td>
-              <td class="celda"><%= @estimated.epricing1%></td>
-                <% if @estimated.etotal1 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.etotal1, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">EXCAVATOR 2	</td>
-              <td><%= @estimated.edescription2 %></td>
-              <td><%= @estimated.eqty2%></td>
-              <td><%= @estimated.edaywk2 %></td>
-              <td><%= @estimated.eresult2%></td>
-              <td class="celda"><%= @estimated.epricing2%></td>
-                <% if @estimated.etotal2 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.etotal2, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">SCISSOR LIF	</td>
-              <td><%= @estimated.edescription3 %></td>
-              <td><%= @estimated.eqty3%></td>
-              <td><%= @estimated.edaywk3 %></td>
-              <td><%= @estimated.eresult3%></td>
-              <td class="celda"><%= @estimated.epricing3%></td>
-                <% if @estimated.etotal3 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.etotal3, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">LOADER</td>
-              <td><%= @estimated.edescription4 %></td>
-              <td><%= @estimated.eqty4%></td>
-              <td><%= @estimated.edaywk4 %></td>
-              <td><%= @estimated.eresult4%></td>
-              <td class="celda"><%= @estimated.epricing4%></td>
-                <% if @estimated.etotal4 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.etotal4, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">DUMP TRUCK</td>
-              <td><%= @estimated.edescription5 %></td>
-              <td><%= @estimated.eqty5%></td>
-              <td><%= @estimated.edaywk5 %></td>
-              <td><%= @estimated.eresult5%></td>
-              <td class="celda"><%= @estimated.epricing5%></td>
-                <% if @estimated.etotal5 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.etotal5, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">BOBCAT</td>
-              <td><%= @estimated.edescription6 %></td>
-              <td><%= @estimated.eqty6%></td>
-              <td><%= @estimated.edaywk6 %></td>
-              <td><%= @estimated.eresult6%></td>
-              <td class="celda"><%= @estimated.epricing6%></td>
-                <% if @estimated.etotal6 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.etotal6, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">UTILITY TRUCK</td>
-              <td><%= @estimated.edescription12 %></td>
-              <td><%= @estimated.eqty12 %></td>
-              <td><%= @estimated.edaywk12 %></td>
-              <td><%= @estimated.eresult12%></td>
-              <td class="celda"><%= @estimated.epricing12 %></td>
-              <% if @estimated.etotal12 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.etotal12, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">FLOOR SCRAPER</td>
-              <td><%= @estimated.edescription7 %></td>
-              <td><%= @estimated.eqty7%></td>
-              <td><%= @estimated.edaywk7 %></td>
-              <td><%= @estimated.eresult7%></td>
-              <td class="celda"><%= @estimated.epricing7%></td>
-                <% if @estimated.etotal7 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.etotal7, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">WATER TRUCK	</td>
-              <td><%= @estimated.edescription8 %></td>
-              <td><%= @estimated.eqty8%></td>
-              <td><%= @estimated.edaywk8 %></td>
-              <td><%= @estimated.eresult8%></td>
-              <td class="celda"><%= @estimated.epricing8%></td>
-                <% if @estimated.etotal8 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.etotal8, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">COMPRESSOR</td>
-              <td><%= @estimated.edescription9 %></td>
-              <td><%= @estimated.eqty9 %></td>
-              <td><%= @estimated.edaywk9 %></td>
-              <td><%= @estimated.eresult9%></td>
-              <td class="celda"><%= @estimated.epricing9%></td>
-              <% if @estimated.etotal9 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.etotal9, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2"><%= @estimated.edefault10 %></td>
-              <td><%= @estimated.edescription10 %></td>
-              <td><%= @estimated.eqty10 %></td>
-              <td><%= @estimated.edaywk10 %></td>
-              <td><%= @estimated.eresult10%></td>
-              <td class="celda"><%= @estimated.epricing10 %></td>
-              <% if @estimated.etotal10 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.etotal10, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2"><%= @estimated.edefault11 %></td>
-              <td><%= @estimated.edescription11 %></td>
-              <td><%= @estimated.eqty11 %></td>
-              <td><%= @estimated.edaywk11 %></td>
-              <td><%= @estimated.eresult11%></td>
-              <td class="celda"><%= @estimated.epricing11 %></td>
-              <% if @estimated.etotal11 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.etotal11, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2"></td>
-              <td></td>
-              <td></td>
-              <th>TOTAL GAL.</th>
-              <th><%= @estimated.totalfuel %></th>
-              <td></td>
-              <td></td>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td>TOTAL</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-                <% if @estimated.etotal == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.etotal, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <thead>
-            <tr>
-              <th>SAW-CUTTING</th>
-              <th>DESCRIPTION</th>
-              <th>QTY/SF/LF</th>
-              <th>DAYS</th>
-              <th></th>
-              <th>UNIT.PRICE</th>
-              <th>TOTAL</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td class="celda2"><%= @estimated.saw1 %></td>
-              <td><%= @estimated.sdescription1 %></td>
-              <td><%= @estimated.sqtysflf1%></td>
-              <td><%= @estimated.sdays1%></td>
-             <td></td>
-              <td class="celda"><%= @estimated.spricing1%></td>
-                <% if @estimated.stotal1 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.stotal1, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2"><%= @estimated.saw2 %></td>
-              <td><%= @estimated.sdescription2 %></td>
-              <td><%= @estimated.sqtysflf2 %></td>
-              <td><%= @estimated.sdays2 %></td>
-              <td></td>
-              <td class="celda"><%= @estimated.spricing2 %></td>
-              <% if @estimated.stotal2 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.stotal2, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2"><%= @estimated.saw3 %></td>
-              <td><%= @estimated.sdescription3 %></td>
-              <td><%= @estimated.sqtysflf3 %></td>
-              <td><%= @estimated.sdays3 %></td>
-              <td></td>
-              <td class="celda"><%= @estimated.spricing3 %></td>
-              <% if @estimated.stotal3 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.stotal3, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td>TOTAL</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.stotal, :precision => 2) %></td>
-            </tr>
-            </tbody>
-            <thead>
-            <tr>
-              <th>MATERIAL</th>
-              <th>DESCRIPTION</th>
-              <th>QTY/YDS</th>
-              <th></th>
-              <th></th>
-              <th>UNIT.PRICE</th>
-              <th>TOTAL</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td class="celda2">Trash / C&D</td>
-              <td><%= @estimated.tdescription1%></td>
-              <td><%= @estimated.tqtyyds1%></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.tpricing1 %></td>
-                <% if @estimated.ttotal1 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.ttotal1, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2">Tree / Vegetation</td>
-              <td><%= @estimated.tdescription2%></td>
-              <td><%= @estimated.tqtyyds2%></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.tpricing2 %></td>
-                <% if @estimated.ttotal2 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.ttotal2, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2">Concrete</td>
-              <td><%= @estimated.tdescription3%></td>
-              <td><%= @estimated.tqtyyds3%></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.tpricing3 %></td>
-                <% if @estimated.ttotal3 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.ttotal3, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2">Concrete / rebar</td>
-              <td><%= @estimated.tdescription6%></td>
-              <td><%= @estimated.tqtyyds6%></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.tpricing6 %></td>
-              <% if @estimated.ttotal6 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.ttotal6, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2">Asphalt</td>
-              <td><%= @estimated.tdescription4%></td>
-              <td><%= @estimated.tqtyyds4%></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.tpricing4 %></td>
-                <% if @estimated.ttotal4 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.ttotal4, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">Fill</td>
-              <td><%= @estimated.mdescription1 %></td>
-              <td><%= @estimated.mqtysfft1 %></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.mpricing1 %></td>
-              <% if @estimated.mtotal1 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.mtotal1, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td>TOTAL</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.ttotal, :precision => 2) %></td>
-            </tr>
-            </tbody>
-            <thead>
-            <tr>
-              <th>PERMITS</th>
-              <th>DESCRIPTION</th>
-              <th>QTY</th>
-              <th></th>
-              <th></th>
-              <th>UNIT.PRICE</th>
-              <th>TOTAL</th>
-            </tr>
-            </thead>
-            <tbody >
-            <tr>
-              <td class="celda2">Demo</td>
-              <td><%= @estimated.pdescription1 %></td>
-              <td><%= @estimated.pqty1%></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.ppricing1 %></td>
-                <% if @estimated.ptotal1 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.ptotal1, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2">Plumbing</td>
-              <td><%= @estimated.pdescription2 %></td>
-              <td><%= @estimated.pqty2%></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.ppricing2 %></td>
-                <% if @estimated.ptotal2 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.ptotal2, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2">Septic</td>
-              <td><%= @estimated.pdescription8 %></td>
-              <td><%= @estimated.pqty8%></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.ppricing8 %></td>
-              <% if @estimated.ptotal8 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.ptotal8, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2">Electical</td>
-              <td><%= @estimated.pdescription3 %></td>
-              <td><%= @estimated.pqty3%></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.ppricing3 %></td>
-                <% if @estimated.ptotal3 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.ptotal3, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2">Derm</td>
-              <td><%= @estimated.pdescription4 %></td>
-              <td><%= @estimated.pqty4%></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.ppricing4 %></td>
-                <% if @estimated.ptotal4 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.ptotal4, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2">Tree</td>
-              <td><%= @estimated.pdescription5 %></td>
-              <td><%= @estimated.pqty5%></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.ppricing5 %></td>
-                <% if @estimated.ptotal5 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #ebfd8f">
-                    <%= number_to_currency(@estimated.ptotal5, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2">Mechanical</td>
-              <td><%= @estimated.pdescription6 %></td>
-              <td><%= @estimated.pqty6%></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.ppricing6 %></td>
-                <% if @estimated.ptotal6 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.ptotal6, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody >
-            <tr>
-              <td class="celda2">MOT</td>
-              <td><%= @estimated.pdescription7 %></td>
-              <td><%= @estimated.pqty7%></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.ppricing7 %></td>
-              <% if @estimated.ptotal7 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.ptotal7, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td>TOTAL</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.pptotal, :precision => 2) %></td>
-            </tr>
-            </tbody>
-             <thead>
-                <tr>
-                  <th>ERROSION CONTROL</th>
-                  <th>DESCRIPTION</th>
-                  <th>QTY</th>
-                  <th></th>
-                  <th></th>
-                  <th>UNIT.PRICE</th>
-                  <th>TOTAL</th>
-                </tr>
-              </thead>
-              <tbody >
-            <tr>
-              <td class="celda2">SILT FENCE</td>
-              <td><%= @estimated.mdescription2 %></td>
-              <td><%= @estimated.mqtysfft2%></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.mpricing2 %></td>
-              <% if @estimated.mtotal2 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.mtotal2, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">ROCK</td>
-              <td><%= @estimated.tdescription5 %></td>
-              <td><%= @estimated.tqtysfft5 %></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.tpricing5 %></td>
-              <% if @estimated.ttotal5 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.ttotal5, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-             <td class="celda2">FILTER FABRIC</td>
-              <td><%= @estimated.ec_description3 %></td>
-              <td><%= @estimated.ec_qty3 %></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.ec_pricing3 %></td>
-              <% if @estimated.ec_total3 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.ec_total3, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">TURBIDITY CURTIN</td>
-              <td><%= @estimated.ec_description4 %></td>
-              <td><%= @estimated.ec_qty4 %></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.ec_pricing4 %></td>
-              <% if @estimated.ec_total4 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.ec_total4, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">GUTTER BUDDY</td>
-              <td><%= @estimated.ec_description5 %></td>
-              <td><%= @estimated.ec_qty5 %></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.ec_pricing5 %></td>
-              <% if @estimated.ec_total5 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.ec_total5, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">SOD / HYDRO,SEEDS</td>
-              <td><%= @estimated.mdescription9 %></td>
-              <td><%= @estimated.mqtysfft9 %></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.mpricing9 %></td>
-              <% if @estimated.mtotal9 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.mtotal9, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-          <tbody>
-            <tr>
-              <td>TOTAL</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.ec_total, :precision => 2) %></td>
-            </tr>
-            </tbody>
-            <thead>
-                <tr>
-                  <th>TEMP FENCE</th>
-                  <th>DESCRIPTION</th>
-                  <th>QTY</th>
-                  <th></th>
-                  <th></th>
-                  <th>UNIT.PRICE</th>
-                  <th>TOTAL</th>
-                </tr>
-              </thead>
-               <tbody>
-            <tr>
-         <td class="celda2">POLICE FEE</td>
-              <td><%= @estimated.mdescription31 %></td>
-              <td><%= @estimated.mqtysfft31 %></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.mpricing31 %></td>
-              <% if @estimated.mtotal31 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.mtotal31, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-                   <td class="celda2">CHAIN LINK FENCE</td>
-              <td><%= @estimated.mdescription3 %></td>
-              <td><%= @estimated.mqtysfft3 %></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.mpricing3 %></td>
-              <% if @estimated.mtotal3 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.mtotal3, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-          <tbody>
-            <tr>
-              <td>TOTAL</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.tf_total, :precision => 2) %></td>
-            </tr>
-            </tbody>
-            <thead>
-                <tr>
-                  <th>OUT OF TOWN</th>
-                  <th>DESCRIPTION</th>
-                  <th>QTY</th>
-                  <th></th>
-                  <th></th>
-                  <th>UNIT.PRICE</th>
-                  <th>TOTAL</th>
-                </tr>
-              </thead>
-              <tbody>
-            <tr>
-              <td class="celda2">HOTEL</td>
-              <td><%= @estimated.mdescription17 %></td>
-              <td><%= @estimated.mqtysfft17 %></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.mpricing17 %></td>
-              <% if @estimated.mtotal17 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.mtotal17, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">MOBILIZATION</td>
-              <td><%= @estimated.mov_pdescription2 %></td>
-              <td><%= @estimated.mov_pqty2 %></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.mov_pricing2 %></td>
-              <% if @estimated.mov_total2 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.mov_total2, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-             <tbody>
-            <tr>
-              <td class="celda2">PERDIEM</td>
-              <td><%= @estimated.mov_pdescription3 %></td>
-              <td><%= @estimated.mov_pqty3 %></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.mov_pricing3 %></td>
-              <% if @estimated.mov_total3 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.mov_total3, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-          <tbody>
-            <tr>
-              <td>TOTAL</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.per_total, :precision => 2) %></td>
-            </tr>
-            </tbody>
-            <thead>
-            <tr>
-              <th>MISCELLANEOUS</th>
-              <th>DESCRIPTION</th>
-              <th>QTY/SF/FT</th>
-              <th></th>
-              <th></th>
-              <th>UNIT.PRICE</th>
-              <th>TOTAL</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td class="celda2">Asbestos</td>
-              <td><%= @estimated.mdescription4 %></td>
-              <td><%= @estimated.mqtysfft4 %></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.mpricing4 %></td>
-                <% if @estimated.mtotal4 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.mtotal4, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">Freon Removal</td>
-              <td><%= @estimated.mdescription11 %></td>
-              <td><%= @estimated.mqtysfft11 %></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.mpricing11 %></td>
-                <% if @estimated.mtotal11 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.mtotal11, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">Pump-Out</td>
-              <td><%= @estimated.mdescription5 %></td>
-              <td><%= @estimated.mqtysfft5 %></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.mpricing5 %></td>
-                <% if @estimated.mtotal5 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.mtotal5, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">TORCHING</td>
-              <td><%= @estimated.mdescription7 %></td>
-              <td><%= @estimated.mqtysfft7 %></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.mpricing7 %></td>
-                <% if @estimated.mtotal7 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.mtotal7, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">TRASH CHUTE</td>
-              <td><%= @estimated.mdescription8 %></td>
-              <td><%= @estimated.mqtysfft8 %></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.mpricing8 %></td>
-                <% if @estimated.mtotal8 == 0.0 %>
-                  <td>
-                  </td>
-                <%else %>
-                  <td style="background-color: #FFFF00">
-                    <%= number_to_currency(@estimated.mtotal8, :precision => 2) %>
-                  </td>
-                <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">TEMP BATHS</td>
-              <td><%= @estimated.mdescription18 %></td>
-              <td><%= @estimated.mqtysfft18 %></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.mpricing18 %></td>
-              <% if @estimated.mtotal18 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.mtotal18, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tr>
-              <td class="celda2">TRIMMING / GRINDING</td>
-              <td><%= @estimated.mdescription32 %></td>
-              <td><%= @estimated.mqtysfft32 %></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.mpricing32 %></td>
-              <% if @estimated.mtotal32 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.mtotal32, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td>TOTAL</td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.mtotal, :precision => 2) %></td>
-            </tr>
-            </tbody>
-            <thead>
-            <tr>
-              <th>SUB C / ALT-</th>
-              <th>DESCRIPTION / COMPANY</th>
-              <th>QTY/SF/FT</th>
-              <th>UNIT.PRICE</th>
-              <th></th>
-              <th>PROFIT(%)</th>
-              <th>TOTAL</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td class="celda20"><%= @estimated.subdefault1 %></td>
-              <td><%= @estimated.subdescription1 %></td>
-              <td><%= @estimated.subqtysfft1 %></td>
-              <td><%= @estimated.subpricing1 %></td>
-              <td></td>
-              <td><%= @estimated.subporce1 %> %</td>
-              <td style="<%= @estimated.subtotal1 == 0.0 ? '' : 'background-color: #FFFF00' %>">
-                <%= @estimated.subtotal1 == 0.0 ? '' : number_to_currency(@estimated.subtotal1, precision: 2) %>
-              </td>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda20"><%= @estimated.subdefault2 %></td>
-              <td><%= @estimated.subdescription2 %></td>
-              <td><%= @estimated.subqtysfft2 %></td>
-              <td><%= @estimated.subpricing2 %></td>
-              <td></td>
-              <td><%= @estimated.subporce2 %> %</td>
-              <td style="<%= @estimated.subtotal2 == 0.0 ? '' : 'background-color: #FFFF00' %>">
-                <%= @estimated.subtotal2 == 0.0 ? '' : number_to_currency(@estimated.subtotal2, precision: 2) %>
-              </td>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda20"><%= @estimated.subdefault3 %></td>
-              <td><%= @estimated.subdescription3 %></td>
-              <td><%= @estimated.subqtysfft3 %></td>
-              <td><%= @estimated.subpricing3 %></td>
-              <td></td>
-              <td><%= @estimated.subporce3 %> %</td>
-              <td style="<%= @estimated.subtotal3 == 0.0 ? '' : 'background-color: #FFFF00' %>">
-                <%= @estimated.subtotal3 == 0.0 ? '' : number_to_currency(@estimated.subtotal3, precision: 2) %>
-              </td>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <tH>TOTAL</tH>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-             <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.subtotaltotal, :precision => 2) %></td>
-            </tr>
-            </tbody>
-            <tr style="height: 20px;"></tr>
-            <thead>
-            <tr>
-              <th>SCRAP</th>
-              <th>DESCRIPTION</th>
-              <th>QTY/SF/FT</th>
-              <th></th>
-              <th></th>
-              <th>UNIT.PRICE</th>
-              <th>TOTAL</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td class="celda2">FERROUS</td>
-              <td><%= @estimated.mdescription13 %></td>
-              <td><%= @estimated.mqtysfft13 %></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.mpricing13 %></td>
-              <% if @estimated.mtotal13 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.mtotal13, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">NON-FERROUS</td>
-              <td><%= @estimated.mdescription14 %></td>
-              <td><%= @estimated.mqtysfft14 %></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.mpricing14 %></td>
-              <% if @estimated.mtotal14 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.mtotal14, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <td class="celda2">MISC</td>
-              <td><%= @estimated.mdescription15 %></td>
-              <td><%= @estimated.mqtysfft15 %></td>
-              <td></td>
-              <td></td>
-              <td class="celda"><%= @estimated.mpricing15 %></td>
-              <% if @estimated.mtotal15 == 0.0 %>
-                <td>
-                </td>
-              <%else %>
-                <td style="background-color: #FFFF00">
-                  <%= number_to_currency(@estimated.mtotal15, :precision => 2) %>
-                </td>
-              <%end %>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <th style="background-color: rgb(155,255,148)"> SALVAGE</th>
-              <td>$  <%= @estimated.mpricing12 %></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td ><%= @estimated.totalsalvage%></td>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <tH></tH>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th>TOTAL SALVAGE</th>
-              <th style="background-color: rgb(155,255,148)"><%= @estimated.salvage %></th>
-            </tr>
-            </tbody>
-            <tr style="height: 20px;"></tr>
-            <tbody>
-            <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th> SUBTOTAL</th>
-              <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.subtotal, :precision => 2) %></td>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <td style="background-color: #b1f3b1">PROFIT %: <%= @estimated.profitporcen %></td>
-              <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.profit, :precision => 2) %></td>
-            </tr>
-            </tbody>
-            <tbody>
-            <tr>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th></th>
-              <th> TOTAL </th>
-              <th style="background-color: #FFFF00"><%= number_to_currency(@estimated.total, :precision => 2) %></th>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+  <table id="principal2" class="table table-bordered table-sm" style="width:90%">
+    <thead><tr>
+      <% ['','NAME','ADDRESS','DATE','QTY','PER SF / L.F $','STATUS','',''].each do |h| %>
+        <th style="background-color:rgba(185,183,183,0.94)"><%= h %></th>
+      <% end %>
+    </tr></thead>
+    <tbody><tr>
+      <th></th>
+      <td><%= @estimated.name %></td>
+      <td><%= @estimated.address %></td>
+      <td><%= @estimated.date1.strftime('%m/%d/%Y') %></td>
+      <td><%= @estimated.sf %></td>
+      <td><%= @estimated.persf %></td>
+      <td>
+        <% if @estimated.status == 1 %>active
+        <% elsif @estimated.status == 2 %>completed
+        <% else %>pending
+        <% end %>
+      </td>
+      <td></td><td></td>
+    </tr></tbody>
+  </table>
+  <br>
+
+  <table id="principal" class="table table-bordered table-sm" style="width:90%">
+    <thead><tr>
+      <th>ACTIVITY</th><th>DESCRIPTION</th><th>QTY MEN</th><th>DAYS</th>
+      <th>MEN HRS</th><th>PRICE PER HRS</th><th>TOTAL</th>
+    </tr></thead>
+
+    <% (1..12).each do |i| %>
+      <% desc_f = (i == 3) ? :adescriptio3 : :"adescription#{i}" %>
+      <% hours = @estimated.send(:"ahours#{i}"); ov = @estimated.send(:"over#{i}") %>
+      <% atot = @estimated.send(:"atotal#{i}") %>
+      <tbody><tr>
+        <td class="celda2"><%= @selector[i-1] %></td>
+        <td><%= @estimated.send(desc_f) %></td>
+        <td><%= @estimated.send(:"aemp#{i}") %></td>
+        <td><%= @estimated.send(:"adays#{i}") %></td>
+        <td><%= hours == 0 ? "" : hours %> <%= ov == 0 ? "" : ov %></td>
+        <td class="celda"><%= @estimated.send(:"apricing#{i}") %></td>
+        <td<%= atot == 0.0 ? "" : " style=\"background-color: #FFFF00\"" %>><%= atot == 0.0 ? "" : number_to_currency(atot, precision: 2) %></td>
+      </tr></tbody>
+    <% end %>
+
+    <tbody><tr>
+      <td>TOTAL</td><td></td><td></td><td></td><td></td><td></td>
+      <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.atotal, precision: 2) %></td>
+    </tr></tbody>
+
+    <!-- EQUIPMENT -->
+    <thead><tr>
+      <th>EQUIP.</th><th>DESCRIPTION</th><th>QTY</th><th>DAYS</th>
+      <th>QTY. GAL.</th><th> GAL. PRICE</th><th>TOTAL</th>
+    </tr></thead>
+    <tbody><tr>
+      <td class="celda2"></td><td></td><td></td><td></td><td></td>
+      <th>$ <%= @estimated.fpricing1 %></th><td></td>
+    </tr></tbody>
+
+    <% equip_rows.each do |row| %>
+      <% n = row[:n]; lbl = row[:lbl] || @estimated.send(:"edefault#{n}") %>
+      <% et = @estimated.send(:"etotal#{n}") %>
+      <tbody><tr>
+        <td class="celda2"><%= lbl %></td>
+        <td><%= @estimated.send(:"edescription#{n}") %></td>
+        <td><%= @estimated.send(:"eqty#{n}") %></td>
+        <td><%= @estimated.send(:"edaywk#{n}") %></td>
+        <td><%= @estimated.send(:"eresult#{n}") %></td>
+        <td class="celda"><%= @estimated.send(:"epricing#{n}") %></td>
+        <td<%= et == 0.0 ? "" : " style=\"background-color: #FFFF00\"" %>><%= et == 0.0 ? "" : number_to_currency(et, precision: 2) %></td>
+      </tr></tbody>
+    <% end %>
+
+    <tbody><tr>
+      <td class="celda2"></td><td></td><td></td>
+      <th>TOTAL GAL.</th><th><%= @estimated.totalfuel %></th><td></td><td></td>
+    </tr></tbody>
+    <tbody><tr>
+      <td>TOTAL</td><td></td><td></td><td></td><td></td><td></td>
+      <td<%= @estimated.etotal == 0.0 ? "" : " style=\"background-color: #FFFF00\"" %>><%= @estimated.etotal == 0.0 ? "" : number_to_currency(@estimated.etotal, precision: 2) %></td>
+    </tr></tbody>
+
+    <!-- SAW-CUTTING -->
+    <thead><tr>
+      <th>SAW-CUTTING</th><th>DESCRIPTION</th><th>QTY/SF/LF</th><th>DAYS</th>
+      <th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+    </tr></thead>
+    <% [[1,:saw1,:sdescription1,:sqtysflf1,:sdays1,:spricing1,:stotal1],
+        [2,:saw2,:sdescription2,:sqtysflf2,:sdays2,:spricing2,:stotal2],
+        [3,:saw3,:sdescription3,:sqtysflf3,:sdays3,:spricing3,:stotal3]].each do |_, saw, desc, qty, days, price, tot| %>
+      <% et = @estimated.send(tot) %>
+      <tbody><tr>
+        <td class="celda2"><%= @estimated.send(saw) %></td>
+        <td><%= @estimated.send(desc) %></td>
+        <td><%= @estimated.send(qty) %></td>
+        <td><%= @estimated.send(days) %></td>
+        <td></td>
+        <td class="celda"><%= @estimated.send(price) %></td>
+        <td<%= et == 0.0 ? "" : " style=\"background-color: #FFFF00\"" %>><%= et == 0.0 ? "" : number_to_currency(et, precision: 2) %></td>
+      </tr></tbody>
+    <% end %>
+    <tbody><tr>
+      <td>TOTAL</td><td></td><td></td><td></td><td></td><td></td>
+      <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.stotal, precision: 2) %></td>
+    </tr></tbody>
+
+    <!-- MATERIAL -->
+    <thead><tr>
+      <th>MATERIAL</th><th>DESCRIPTION</th><th>QTY/YDS</th><th></th>
+      <th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+    </tr></thead>
+    <% mat_rows.each do |row| %>
+      <% et = @estimated.send(row[:et]) %>
+      <tbody><tr>
+        <td class="celda2"><%= row[:lbl] %></td>
+        <td><%= @estimated.send(row[:ed]) %></td>
+        <td><%= @estimated.send(row[:eq]) %></td>
+        <td></td><td></td>
+        <td class="celda"><%= @estimated.send(row[:ep]) %></td>
+        <td<%= et == 0.0 ? "" : " style=\"background-color: #FFFF00\"" %>><%= et == 0.0 ? "" : number_to_currency(et, precision: 2) %></td>
+      </tr></tbody>
+    <% end %>
+    <tbody><tr>
+      <td>TOTAL</td><td></td><td></td><td></td><td></td><td></td>
+      <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.ttotal, precision: 2) %></td>
+    </tr></tbody>
+
+    <!-- PERMITS -->
+    <thead><tr>
+      <th>PERMITS</th><th>DESCRIPTION</th><th>QTY</th><th></th>
+      <th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+    </tr></thead>
+    <% permit_rows.each do |row| %>
+      <% n = row[:n]; et = @estimated.send(:"ptotal#{n}"); bg = row[:bg] || '#FFFF00' %>
+      <tbody><tr>
+        <td class="celda2"><%= row[:lbl] %></td>
+        <td><%= @estimated.send(:"pdescription#{n}") %></td>
+        <td><%= @estimated.send(:"pqty#{n}") %></td>
+        <td></td><td></td>
+        <td class="celda"><%= @estimated.send(:"ppricing#{n}") %></td>
+        <td<%= et == 0.0 ? "" : " style=\"background-color: #{bg}\"" %>><%= et == 0.0 ? "" : number_to_currency(et, precision: 2) %></td>
+      </tr></tbody>
+    <% end %>
+    <tbody><tr>
+      <td>TOTAL</td><td></td><td></td><td></td><td></td><td></td>
+      <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.pptotal, precision: 2) %></td>
+    </tr></tbody>
+
+    <!-- EROSION CONTROL -->
+    <thead><tr>
+      <th>ERROSION CONTROL</th><th>DESCRIPTION</th><th>QTY</th><th></th>
+      <th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+    </tr></thead>
+    <% erosion_rows.each do |row| %>
+      <% et = @estimated.send(row[:et]) %>
+      <tbody><tr>
+        <td class="celda2"><%= row[:lbl] %></td>
+        <td><%= @estimated.send(row[:ed]) %></td>
+        <td><%= @estimated.send(row[:eq]) %></td>
+        <td></td><td></td>
+        <td class="celda"><%= @estimated.send(row[:ep]) %></td>
+        <td<%= et == 0.0 ? "" : " style=\"background-color: #FFFF00\"" %>><%= et == 0.0 ? "" : number_to_currency(et, precision: 2) %></td>
+      </tr></tbody>
+    <% end %>
+    <tbody><tr>
+      <td>TOTAL</td><td></td><td></td><td></td><td></td><td></td>
+      <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.ec_total, precision: 2) %></td>
+    </tr></tbody>
+
+    <!-- TEMP FENCE -->
+    <thead><tr>
+      <th>TEMP FENCE</th><th>DESCRIPTION</th><th>QTY</th><th></th>
+      <th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+    </tr></thead>
+    <% tf_rows.each do |row| %>
+      <% et = @estimated.send(row[:et]) %>
+      <tbody><tr>
+        <td class="celda2"><%= row[:lbl] %></td>
+        <td><%= @estimated.send(row[:ed]) %></td>
+        <td><%= @estimated.send(row[:eq]) %></td>
+        <td></td><td></td>
+        <td class="celda"><%= @estimated.send(row[:ep]) %></td>
+        <td<%= et == 0.0 ? "" : " style=\"background-color: #FFFF00\"" %>><%= et == 0.0 ? "" : number_to_currency(et, precision: 2) %></td>
+      </tr></tbody>
+    <% end %>
+    <tbody><tr>
+      <td>TOTAL</td><td></td><td></td><td></td><td></td><td></td>
+      <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.tf_total, precision: 2) %></td>
+    </tr></tbody>
+
+    <!-- OUT OF TOWN -->
+    <thead><tr>
+      <th>OUT OF TOWN</th><th>DESCRIPTION</th><th>QTY</th><th></th>
+      <th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+    </tr></thead>
+    <% oot_rows.each do |row| %>
+      <% et = @estimated.send(row[:et]) %>
+      <tbody><tr>
+        <td class="celda2"><%= row[:lbl] %></td>
+        <td><%= @estimated.send(row[:ed]) %></td>
+        <td><%= @estimated.send(row[:eq]) %></td>
+        <td></td><td></td>
+        <td class="celda"><%= @estimated.send(row[:ep]) %></td>
+        <td<%= et == 0.0 ? "" : " style=\"background-color: #FFFF00\"" %>><%= et == 0.0 ? "" : number_to_currency(et, precision: 2) %></td>
+      </tr></tbody>
+    <% end %>
+    <tbody><tr>
+      <td>TOTAL</td><td></td><td></td><td></td><td></td><td></td>
+      <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.per_total, precision: 2) %></td>
+    </tr></tbody>
+
+    <!-- MISCELLANEOUS -->
+    <thead><tr>
+      <th>MISCELLANEOUS</th><th>DESCRIPTION</th><th>QTY/SF/FT</th><th></th>
+      <th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+    </tr></thead>
+    <% misc_rows.each do |row| %>
+      <% n = row[:n]; et = @estimated.send(:"mtotal#{n}") %>
+      <tbody><tr>
+        <td class="celda2"><%= row[:lbl] %></td>
+        <td><%= @estimated.send(:"mdescription#{n}") %></td>
+        <td><%= @estimated.send(:"mqtysfft#{n}") %></td>
+        <td></td><td></td>
+        <td class="celda"><%= @estimated.send(:"mpricing#{n}") %></td>
+        <td<%= et == 0.0 ? "" : " style=\"background-color: #FFFF00\"" %>><%= et == 0.0 ? "" : number_to_currency(et, precision: 2) %></td>
+      </tr></tbody>
+    <% end %>
+    <tbody><tr>
+      <td>TOTAL</td><td></td><td></td><td></td><td></td><td></td>
+      <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.mtotal, precision: 2) %></td>
+    </tr></tbody>
+
+    <!-- SUB-CONTRACTORS -->
+    <thead><tr>
+      <th>SUB C / ALT-</th><th>DESCRIPTION / COMPANY</th><th>QTY/SF/FT</th>
+      <th>UNIT.PRICE</th><th></th><th>PROFIT(%)</th><th>TOTAL</th>
+    </tr></thead>
+    <% (1..3).each do |i| %>
+      <% st = @estimated.send(:"subtotal#{i}") %>
+      <tbody><tr>
+        <td class="celda20"><%= @estimated.send(:"subdefault#{i}") %></td>
+        <td><%= @estimated.send(:"subdescription#{i}") %></td>
+        <td><%= @estimated.send(:"subqtysfft#{i}") %></td>
+        <td><%= @estimated.send(:"subpricing#{i}") %></td>
+        <td></td>
+        <td><%= @estimated.send(:"subporce#{i}") %> %</td>
+        <td style="<%= st == 0.0 ? '' : 'background-color: #FFFF00' %>">
+          <%= st == 0.0 ? '' : number_to_currency(st, precision: 2) %>
+        </td>
+      </tr></tbody>
+    <% end %>
+    <tbody><tr>
+      <tH>TOTAL</tH><th></th><th></th><th></th><th></th><th></th>
+      <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.subtotaltotal, precision: 2) %></td>
+    </tr></tbody>
+    <tr style="height:20px;"></tr>
+
+    <!-- SCRAP -->
+    <thead><tr>
+      <th>SCRAP</th><th>DESCRIPTION</th><th>QTY/SF/FT</th><th></th>
+      <th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+    </tr></thead>
+    <% scrap_rows.each do |row| %>
+      <% n = row[:n]; et = @estimated.send(:"mtotal#{n}") %>
+      <tbody><tr>
+        <td class="celda2"><%= row[:lbl] %></td>
+        <td><%= @estimated.send(:"mdescription#{n}") %></td>
+        <td><%= @estimated.send(:"mqtysfft#{n}") %></td>
+        <td></td><td></td>
+        <td class="celda"><%= @estimated.send(:"mpricing#{n}") %></td>
+        <td<%= et == 0.0 ? "" : " style=\"background-color: #FFFF00\"" %>><%= et == 0.0 ? "" : number_to_currency(et, precision: 2) %></td>
+      </tr></tbody>
+    <% end %>
+
+    <tbody><tr>
+      <th style="background-color:rgb(155,255,148)"> SALVAGE</th>
+      <td>$ <%= @estimated.mpricing12 %></td>
+      <td></td><td></td><td></td><td></td>
+      <td><%= @estimated.totalsalvage %></td>
+    </tr></tbody>
+    <tbody><tr>
+      <tH></tH><th></th><th></th><th></th><th></th>
+      <th>TOTAL SALVAGE</th>
+      <th style="background-color:rgb(155,255,148)"><%= @estimated.salvage %></th>
+    </tr></tbody>
+    <tr style="height:20px;"></tr>
+
+    <!-- SUMMARY -->
+    <tbody><tr>
+      <th></th><th></th><th></th><th></th><th></th>
+      <th> SUBTOTAL</th>
+      <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.subtotal, precision: 2) %></td>
+    </tr></tbody>
+    <tbody><tr>
+      <th></th><th></th><th></th><th></th><th></th>
+      <td style="background-color: #b1f3b1">PROFIT %: <%= @estimated.profitporcen %></td>
+      <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.profit, precision: 2) %></td>
+    </tr></tbody>
+    <tbody><tr>
+      <th></th><th></th><th></th><th></th><th></th>
+      <th> TOTAL </th>
+      <th style="background-color: #FFFF00"><%= number_to_currency(@estimated.total, precision: 2) %></th>
+    </tr></tbody>
+  </table>
+</div>
 <%= link_to 'Edit', edit_estimated_path(@estimated) %> |
 <%= link_to 'Back', estimateds_path %>
 <br>
@@ -1564,7 +431,4 @@
     for (const header of tableHeaders) {
         header.style.backgroundColor = "rgba(203,203,203,0.94)";
     }
-
-
 </script>
-
