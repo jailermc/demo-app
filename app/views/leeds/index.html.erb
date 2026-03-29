@@ -1,0 +1,46 @@
+<br>
+<br>
+<div class="contextual">
+
+</div>
+
+<h1>LEED USER</h1>
+<div class="table-responsive">
+  <table class="table table-bordered table-sm">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Project</th>
+      <th>Date</th>
+      <th colspan="3"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @leeds.each do |leed| %>
+      <tr>
+        <td><%= leed.id %></td>
+        <td><%= link_to((leed.project), leed) %></td>
+        <td><%= leed.date.strftime('%m/%d/%Y')%></td>
+        <td class="buttons">
+          <%= button_to 'Edit', edit_leed_path(leed), class: 'btn btn-sm btn-warning', method: :get %>
+          <%= button_to('Delete', leed, :method => :delete,:class => 'btn btn-sm btn-danger', data: { confirm: 'Are you sure?' }) %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<br>
+
+<% unless @result.nil? %>
+  <p> = <%= @result %> </p>
+<% end %>
+
+<script>
+    const tableHeaders = document.querySelectorAll("thead th");
+    for (const header of tableHeaders) {
+        header.style.backgroundColor = "rgb(198,255,196)";
+    }
+
+</script>
+

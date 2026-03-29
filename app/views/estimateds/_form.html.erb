@@ -1,0 +1,598 @@
+<%= form_with(model: estimated) do |form| %>
+  <% if estimated.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(estimated.errors.count, "error") %> prohibited this estimated from being saved:</h2>
+      <ul>
+        <% estimated.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions"><%= form.submit %></div>
+  <br>
+
+  <div id="table">
+    <table class="table table-bordered table-sm" style="width:70%">
+      <thead>
+        <tr>
+          <th>ADDRESS</th><th>NAME PROJECT</th><th>DATE</th>
+          <th>QTY</th><th>PER SF / L.F $</th><th>STATUS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= form.text_field :address %></td>
+          <td><%= form.text_field :name %></td>
+          <td><%= form.date_field :date1, required: true %></td>
+          <td><%= form.text_field :sf, id: "sf", style: "width:100px;", value: (@sf.blank? ? 1 : @sf) %></td>
+          <td><%= form.text_field :persf, id: "persf", step: :any, style: "width:100px;" %></td>
+          <td class="celda2"><%= form.select :status, options_for_select([['PENDING', 3], ['COMPLETED', 2], ['ACTIVE', 1]], selected: @estimated.status) %></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table id="principal2" class="table table-bordered table-sm" style="width:70%">
+
+      <%# === LABOR (12 rows) === %>
+      <thead>
+        <tr>
+          <th>ACTIVITY</th><th>DESCRIPTION</th><th>QTY MEN</th><th>DAYS</th>
+          <th>MEN HRS + OVER T.</th><th>PRICE PER HRS</th><th>TOTAL</th>
+        </tr>
+      </thead>
+      <% (1..12).each do |i| %>
+        <tbody>
+          <tr>
+            <td class="celda2"><%= form.select :"alabor#{i}", options_for_select([['', 0], ['LABOR', 1], ['OPERATOR', 2], ['SUPERVISOR', 3], ['DRIVER', 4]], selected: @estimated.send("alabor#{i}")) %></td>
+            <td><%= form.text_field(i == 3 ? :adescriptio3 : :"adescription#{i}", size: "30", maxlength: "254") %></td>
+            <td><%= form.text_field :"aemp#{i}", id: "aemp#{i}", style: "width:60px;" %></td>
+            <td><%= form.text_field :"adays#{i}", id: "adays#{i}", style: "width:60px;" %></td>
+            <td>
+              <%= form.text_field :"ahours#{i}", id: "ahours#{i}", style: "width:60px;" %> +
+              <%= form.text_field :"over#{i}", id: "over#{i}", value: (instance_variable_get("@over#{i}").blank? ? 0 : instance_variable_get("@over#{i}")), style: "width:60px;" %>
+            </td>
+            <td><%= form.text_field :"apricing#{i}", id: "apricing#{i}", style: "width:100px;" %></td>
+            <td><%= form.text_field :"atotal#{i}", id: "atotal#{i}", style: "width:100px;" %></td>
+          </tr>
+        </tbody>
+      <% end %>
+      <tbody>
+        <tr>
+          <th></th><th></th><th></th><th></th><th></th>
+          <th>TOTAL OK? <%= form.check_box :check_box_a, required: true %></th>
+          <th style="background-color: rgb(197,255,194)"><%= form.text_field :atotal, id: "atotal", style: "width:100px;" %></th>
+        </tr>
+      </tbody>
+
+      <%# === EQUIPMENT (12 rows) === %>
+      <thead>
+        <tr>
+          <th>EQUIP.</th><th>DESCRIPTION</th><th>QTY</th><th>DAYS</th>
+          <th>QTY. GAL.</th><th>GAL. PRICE</th><th>TOTAL</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="celda2"></td><td></td><td></td><td></td><td></td>
+          <th>$ <%= form.text_field :fpricing1, id: "fpricing1", style: "width:100px;" %></th>
+          <td></td>
+        </tr>
+      </tbody>
+      <% [['EXCAVATOR', 1], ['EXCAVATOR 2', 2], ['SCISSOR LIFT', 3], ['LOADER', 4],
+          ['DUMP TRUCK', 5], ['BOBCAT', 6], ['UTILITY TRUCK', 12], ['FLOOR SCRAPER', 7],
+          ['WATER TRUCK', 8], ['COMPRESSOR', 9], [nil, 10], [nil, 11]].each do |label, n| %>
+        <tbody>
+          <tr>
+            <td class="celda2">
+              <% if label %>
+                <%= label %>
+              <% else %>
+                <%= form.text_field :"edefault#{n}", size: "10", maxlength: "254" %>
+              <% end %>
+            </td>
+            <td><%= form.text_field :"edescription#{n}" %></td>
+            <td><%= form.text_field :"eqty#{n}", id: "eqty#{n}", style: "width:60px;" %></td>
+            <td><%= form.text_field :"edaywk#{n}", id: "edaywk#{n}", style: "width:60px;" %></td>
+            <td><%= form.text_field :"eresult#{n}", id: "eresult#{n}", style: "width:60px;" %></td>
+            <td><%= form.text_field :"epricing#{n}", id: "epricing#{n}", style: "width:100px;" %></td>
+            <td><%= form.text_field :"etotal#{n}", id: "etotal#{n}", style: "width:100px;" %></td>
+          </tr>
+        </tbody>
+      <% end %>
+      <tbody>
+        <tr>
+          <td class="celda2"></td><td></td>
+          <th>TOTAL GAL.</th>
+          <th><%= form.text_field :totalfuel, id: "totalfuel", style: "width:60px;" %></th>
+          <td></td><td></td><td></td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr>
+          <th></th><th></th><th></th><th></th><th></th>
+          <th>TOTAL OK? <%= form.check_box :check_box_e, required: true %></th>
+          <th style="background-color: rgb(197,255,194)"><%= form.text_field :etotal, id: "etotal", style: "width:100px;" %></th>
+        </tr>
+      </tbody>
+
+      <%# === SAW-CUTTING (3 rows) === %>
+      <thead>
+        <tr>
+          <th>SAW-CUTTING</th><th>DESCRIPTION</th><th>QTY/SF/LF</th><th>DAYS</th>
+          <th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+        </tr>
+      </thead>
+      <% (1..3).each do |i| %>
+        <tbody>
+          <tr>
+            <td class="celda2"><%= form.text_field :"saw#{i}", size: "10", maxlength: "254" %></td>
+            <td><%= form.text_field :"sdescription#{i}" %></td>
+            <td><%= form.text_field :"sqtysflf#{i}", id: "sqtysflf#{i}", style: "width:60px;" %></td>
+            <td><%= form.text_field :"sdays#{i}", id: "sdays#{i}", style: "width:60px;" %></td>
+            <td></td>
+            <td><%= form.text_field :"spricing#{i}", id: "spricing#{i}", style: "width:100px;" %></td>
+            <td><%= form.text_field :"stotal#{i}", id: "stotal#{i}", style: "width:100px;" %></td>
+          </tr>
+        </tbody>
+      <% end %>
+      <tbody>
+        <tr>
+          <th></th><th></th><th></th><th></th><th></th>
+          <th>TOTAL OK? <%= form.check_box :check_box_t, required: true %></th>
+          <th style="background-color: rgb(197,255,194)"><%= form.text_field :stotal, id: "stotal", style: "width:100px;" %></th>
+        </tr>
+      </tbody>
+
+      <%# === MATERIAL === %>
+      <thead>
+        <tr>
+          <th>MATERIAL</th><th>DESCRIPTION</th><th>QTY/YDS</th>
+          <th></th><th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+        </tr>
+      </thead>
+      <% [['TRASH / C&D',     :tdescription1, :tqtyyds1,  :tpricing1,  :ttotal1 ],
+          ['TREE / VEGETATION',:tdescription2, :tqtyyds2,  :tpricing2,  :ttotal2 ],
+          ['CONCRETE',         :tdescription3, :tqtyyds3,  :tpricing3,  :ttotal3 ],
+          ['CONCRETE / REBAR', :tdescription6, :tqtyyds6,  :tpricing6,  :ttotal6 ],
+          ['ASPHALT',          :tdescription4, :tqtyyds4,  :tpricing4,  :ttotal4 ],
+          ['FILL',             :mdescription1, :mqtysfft1, :mpricing1,  :mtotal1 ]
+         ].each do |label, desc, qty, price, total| %>
+        <tbody>
+          <tr>
+            <td class="celda2"><%= label %></td>
+            <td><%= form.text_field desc %></td>
+            <td><%= form.text_field qty, id: qty.to_s, style: "width:60px;" %></td>
+            <td></td><td></td>
+            <td><%= form.text_field price, id: price.to_s, style: "width:100px;" %></td>
+            <td><%= form.text_field total, id: total.to_s, style: "width:100px;" %></td>
+          </tr>
+        </tbody>
+      <% end %>
+      <tbody>
+        <tr>
+          <th></th><th></th><th></th><th></th><th></th>
+          <th>TOTAL OK? <%= form.check_box :check_box_t, required: true %></th>
+          <th style="background-color: rgb(197,255,194)"><%= form.text_field :ttotal, id: "ttotal", style: "width:100px;" %></th>
+        </tr>
+      </tbody>
+
+      <%# === PERMITS (8 rows) === %>
+      <thead>
+        <tr>
+          <th>PERMITS</th><th>DESCRIPTION</th><th>QTY</th>
+          <th></th><th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+        </tr>
+      </thead>
+      <% [['DEMO', 1], ['PLUMBING', 2], ['SEPTIC', 8], ['ELECTICAL', 3],
+          ['DERM', 4], ['TREE', 5], ['MECHANICAL', 6], ['MOT', 7]].each do |label, n| %>
+        <tbody>
+          <tr>
+            <td class="celda2"><%= label %></td>
+            <td><%= form.text_field :"pdescription#{n}" %></td>
+            <td><%= form.text_field :"pqty#{n}", id: "pqty#{n}", style: "width:60px;" %></td>
+            <td></td><td></td>
+            <td><%= form.text_field :"ppricing#{n}", id: "ppricing#{n}", style: "width:100px;" %></td>
+            <td><%= form.text_field :"ptotal#{n}", id: "ptotal#{n}", style: "width:100px;" %></td>
+          </tr>
+        </tbody>
+      <% end %>
+      <tbody>
+        <tr>
+          <th></th><th></th><th></th><th></th><th></th>
+          <th>TOTAL OK? <%= form.check_box :check_box_p, required: true %></th>
+          <th style="background-color: rgb(197,255,194)"><%= form.text_field :pptotal, id: "ptotal", style: "width:100px;" %></th>
+        </tr>
+      </tbody>
+
+      <%# === EROSION CONTROL === %>
+      <thead>
+        <tr>
+          <th>ERROSION CONTROL</th><th>DESCRIPTION</th><th>QTY</th>
+          <th></th><th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+        </tr>
+      </thead>
+      <% [['SILT FENCE',      :mdescription2,  :mqtysfft2, :mpricing2,  :mtotal2  ],
+          ['ROCK',             :tdescription5,  :tqtysfft5, :tpricing5,  :ttotal5  ],
+          ['FILTER FABRIC',    :ec_description3,:ec_qty3,   :ec_pricing3,:ec_total3],
+          ['TURBIDITY CURTIN', :ec_description4,:ec_qty4,   :ec_pricing4,:ec_total4],
+          ['GUTTER BUDDY',     :ec_description5,:ec_qty5,   :ec_pricing5,:ec_total5],
+          ['SOD / HYDRO,SEEDS',:mdescription9,  :mqtysfft9, :mpricing9,  :mtotal9  ]
+         ].each do |label, desc, qty, price, total| %>
+        <tbody>
+          <tr>
+            <td class="celda2"><%= label %></td>
+            <td><%= form.text_field desc %></td>
+            <td><%= form.text_field qty, id: qty.to_s, style: "width:60px;" %></td>
+            <td></td><td></td>
+            <td><%= form.text_field price, id: price.to_s, style: "width:100px;" %></td>
+            <td><%= form.text_field total, id: total.to_s, style: "width:100px;" %></td>
+          </tr>
+        </tbody>
+      <% end %>
+      <tbody>
+        <tr>
+          <th></th><th></th><th></th><th></th><th></th>
+          <th>TOTAL OK? <%= form.check_box :check_box_p, required: true %></th>
+          <th style="background-color: rgb(197,255,194)"><%= form.text_field :ec_total, id: "ec_total", style: "width:100px;" %></th>
+        </tr>
+      </tbody>
+
+      <%# === TEMP FENCE === %>
+      <thead>
+        <tr>
+          <th>TEMP FENCE</th><th>DESCRIPTION</th><th>QTY</th>
+          <th></th><th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+        </tr>
+      </thead>
+      <% [['POLICE FEE',       :mdescription31,:mqtysfft31,:mpricing31,:mtotal31],
+          ['CHAIN LINK FENCE', :mdescription3, :mqtysfft3, :mpricing3, :mtotal3 ]
+         ].each do |label, desc, qty, price, total| %>
+        <tbody>
+          <tr>
+            <td class="celda2"><%= label %></td>
+            <td><%= form.text_field desc %></td>
+            <td><%= form.text_field qty, id: qty.to_s, style: "width:60px;" %></td>
+            <td></td><td></td>
+            <td><%= form.text_field price, id: price.to_s, style: "width:100px;" %></td>
+            <td><%= form.text_field total, id: total.to_s, style: "width:100px;" %></td>
+          </tr>
+        </tbody>
+      <% end %>
+      <tbody>
+        <tr>
+          <th></th><th></th><th></th><th></th><th></th>
+          <th>TOTAL OK? <%= form.check_box :check_box_p, required: true %></th>
+          <th style="background-color: rgb(197,255,194)"><%= form.text_field :tf_total, id: "tf_total", style: "width:100px;" %></th>
+        </tr>
+      </tbody>
+
+      <%# === OUT OF TOWN === %>
+      <thead>
+        <tr>
+          <th>OUT OF TOWN</th><th>DESCRIPTION</th><th>QTY</th>
+          <th></th><th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+        </tr>
+      </thead>
+      <% [['HOTEL',        :mdescription17,    :mqtysfft17,  :mpricing17,   :mtotal17   ],
+          ['MOBILIZATION', :mov_pdescription2, :mov_pqty2,   :mov_pricing2, :mov_total2 ],
+          ['PERDIEM',      :mov_pdescription3, :mov_pqty3,   :mov_pricing3, :mov_total3 ]
+         ].each do |label, desc, qty, price, total| %>
+        <tbody>
+          <tr>
+            <td class="celda2"><%= label %></td>
+            <td><%= form.text_field desc %></td>
+            <td><%= form.text_field qty, id: qty.to_s, style: "width:60px;" %></td>
+            <td></td><td></td>
+            <td><%= form.text_field price, id: price.to_s, style: "width:100px;" %></td>
+            <td><%= form.text_field total, id: total.to_s, style: "width:100px;" %></td>
+          </tr>
+        </tbody>
+      <% end %>
+      <tbody>
+        <tr>
+          <th></th><th></th><th></th><th></th><th></th>
+          <th>TOTAL OK? <%= form.check_box :check_box_p, required: true %></th>
+          <th style="background-color: rgb(197,255,194)"><%= form.text_field :per_total, id: "per_total", style: "width:100px;" %></th>
+        </tr>
+      </tbody>
+
+      <%# === MISCELLANEOUS (9 rows) === %>
+      <thead>
+        <tr>
+          <th>MISCELLANEOUS</th><th>DESCRIPTION</th><th>QTY/SF/FT</th>
+          <th></th><th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+        </tr>
+      </thead>
+      <% [['ASBESTOS',          4], ['FREON REMOVAL', 11], ['PUMP-OUT',          5],
+          ['TORCHING',          7], ['TRASH CHUTE',    8], ['TEMP BATHS',       18],
+          ['BARRICANES',       19], ['COVERED WALKWAY',20], ['TRIMMING / GRINDING', 32]
+         ].each do |label, n| %>
+        <tbody>
+          <tr>
+            <td class="celda2"><%= label %></td>
+            <td><%= form.text_field :"mdescription#{n}" %></td>
+            <td><%= form.text_field :"mqtysfft#{n}", id: "mqtysfft#{n}", style: "width:60px;" %></td>
+            <td></td><td></td>
+            <td><%= form.text_field :"mpricing#{n}", id: "mpricing#{n}", style: "width:100px;" %></td>
+            <td><%= form.text_field :"mtotal#{n}", id: "mtotal#{n}", style: "width:100px;" %></td>
+          </tr>
+        </tbody>
+      <% end %>
+      <tbody>
+        <tr>
+          <th></th><th></th><th></th><th></th><th></th>
+          <th>TOTAL OK? <%= form.check_box :check_box_m, required: true %></th>
+          <th style="background-color: rgb(197,255,194)"><%= form.text_field :mtotal, id: "mtotal", style: "width:100px;" %></th>
+        </tr>
+      </tbody>
+
+      <%# === SUB C / ALT (3 rows) === %>
+      <thead>
+        <tr>
+          <th>SUB C / ALT-</th><th>DESCRIPTION / COMPANY</th><th>QTY/SF/FT</th>
+          <th>UNIT.PRICE</th><th></th><th>PROFIT(%)</th><th>TOTAL</th>
+        </tr>
+      </thead>
+      <% (1..3).each do |i| %>
+        <tbody>
+          <tr>
+            <td class="celda2"><%= form.text_field :"subdefault#{i}", id: "subdefault#{i}", style: "width:100px;" %></td>
+            <td><%= form.text_field :"subdescription#{i}" %></td>
+            <td><%= form.text_field :"subqtysfft#{i}", id: "subqtysfft#{i}", style: "width:60px;" %></td>
+            <td><%= form.text_field :"subpricing#{i}", id: "subpricing#{i}", style: "width:100px;" %></td>
+            <td></td>
+            <td><%= form.text_field :"subporce#{i}", id: "subporce#{i}", style: "width:60px;", value: (instance_variable_get("@subporce#{i}").blank? ? 15 : instance_variable_get("@subporce#{i}")) %></td>
+            <td><%= form.text_field :"subtotal#{i}", id: "subtotal#{i}", style: "width:100px;" %></td>
+          </tr>
+        </tbody>
+      <% end %>
+      <tbody>
+        <tr>
+          <th>TOTAL</th><th></th><th></th><th></th><th></th><th></th>
+          <th><%= form.text_field :subtotaltotal, id: "subtotaltotal", style: "width:100px;" %></th>
+        </tr>
+      </tbody>
+
+      <tr style="height: 20px;"></tr>
+
+      <%# === SCRAP (3 rows) === %>
+      <thead>
+        <tr>
+          <th>SCRAP</th><th>DESCRIPTION</th><th>QTY/SF/FT</th>
+          <th></th><th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+        </tr>
+      </thead>
+      <% [['FERROUS', 13], ['NON-FERROUS', 14], ['MISC', 15]].each do |label, n| %>
+        <tbody>
+          <tr>
+            <td class="celda2"><%= label %></td>
+            <td><%= form.text_field :"mdescription#{n}" %></td>
+            <td><%= form.text_field :"mqtysfft#{n}", id: "mqtysfft#{n}", style: "width:60px;" %></td>
+            <td></td><td></td>
+            <td><%= form.text_field :"mpricing#{n}", id: "mpricing#{n}", style: "width:100px;" %></td>
+            <td><%= form.text_field :"mtotal#{n}", id: "mtotal#{n}", style: "width:100px;" %></td>
+          </tr>
+        </tbody>
+      <% end %>
+      <tbody>
+        <tr>
+          <th style="background-color: rgb(155,255,148)">SALVAGE</th>
+          <td>$ : <%= form.text_field :mpricing12, id: "mpricing12", style: "width:100px;", required: true %></td>
+          <td></td><td></td><td></td><td></td>
+          <td><%= form.text_field :totalsalvage, id: "totalsalvage", style: "width:100px;" %></td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr>
+          <th></th><th></th><th></th><th></th><th></th>
+          <th>TOTAL SALVAGE</th>
+          <th style="background-color: rgb(197,255,194)"><%= form.text_field :salvage, id: "salvage", style: "width:100px;" %></th>
+        </tr>
+      </tbody>
+
+      <tr style="height: 20px;"></tr>
+
+      <tbody>
+        <tr>
+          <th></th><th></th><th></th><th></th><th></th>
+          <th>SUBTOTAL</th>
+          <td><%= form.text_field :subtotal, id: "subtotal", step: :any, style: "width:100px;" %></td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr>
+          <th></th><th></th><th></th><th></th><th></th>
+          <td>PROFIT %: <%= form.text_field :profitporcen, id: "porce", style: "width:60px;", value: (@porce.blank? ? 30 : @porce) %></td>
+          <td><%= form.text_field :profit, id: "profit", step: :any, style: "width:100px;" %></td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr>
+          <th></th><th></th><th></th><th></th><th></th>
+          <th style="background-color: rgb(155,255,148)">TOTAL</th>
+          <td style="background-color: rgb(155,255,148)"><%= form.text_field :total, id: "total", step: :any, style: "width:100px;" %></td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+
+  <br>
+  <div class="actions"><%= form.submit %></div>
+  <br>
+<% end %>
+
+<script>
+$(document).ready(function() {
+  $('#table').on('input', function() {
+    for (let i = 1; i <= 12; i++) {
+      calculateHours(i);
+      calculateActivity(i);
+      calculatefuel(i);
+    }
+    total_gallons();
+    fuel();
+    for (let i = 1; i <= 3; i++) saw(i);
+    [['tqtyyds1','tpricing1','ttotal1'], ['tqtyyds2','tpricing2','ttotal2'],
+     ['tqtyyds3','tpricing3','ttotal3'], ['tqtyyds4','tpricing4','ttotal4'],
+     ['tqtysfft5','tpricing5','ttotal5'],['tqtyyds6','tpricing6','ttotal6']
+    ].forEach(([q, p, t]) => calcQtyPrice(q, p, t));
+    for (let i = 1; i <= 8; i++) calcQtyPrice(`pqty${i}`, `ppricing${i}`, `ptotal${i}`);
+    [3, 4, 5].forEach(i => calculate_npdes(i));
+    calcQtyPrice('mqtysfft2', 'mpricing2', 'mtotal2');
+    calcQtyPrice('mov_pqty2', 'mov_pricing2', 'mov_total2');
+    calcQtyPrice('mov_pqty3', 'mov_pricing3', 'mov_total3');
+    [1,2,3,4,5,6,7,8,9,11,13,14,15,17,18,19,20,31,32].forEach(i => calculatemis(i));
+    for (let i = 1; i <= 3; i++) contractor(i);
+    totalA(); totalE(); totalf(); totalS(); totalT(); totalP();
+    total_npdes(); total_temp_fence(); total_perdiem();
+    totalM(); totalcontractor(); salvage(); totalscrap();
+    subtotal(); porce(); total(); persf();
+  });
+});
+
+// ---- Helpers ----
+function calcQtyPrice(qtyId, priceId, totalId) {
+  const qty   = parseFloat($(`#${qtyId}`).val()) || 0;
+  const price = parseFloat($(`#${priceId}`).val()) || 0;
+  $(`#${totalId}`).val(qty * price);
+}
+
+function sumIds(ids, outputId) {
+  const total = ids.reduce((s, id) => s + (parseFloat($(`#${id}`).val()) || 0), 0);
+  $(`#${outputId}`).val(total);
+}
+
+function sumPrefix(prefix, count, outputId) {
+  let total = 0;
+  for (let i = 1; i <= count; i++) total += parseFloat($(`#${prefix}${i}`).val()) || 0;
+  $(`#${outputId}`).val(total);
+}
+
+// ---- Per-row calculations ----
+function calculateHours(i) {
+  const days = parseFloat($(`#adays${i}`).val()) || 0;
+  const emp  = parseFloat($(`#aemp${i}`).val()) || 0;
+  const over = parseFloat($(`#over${i}`).val()) || 0;
+  $(`#ahours${i}`).val(8 * days * emp + over);
+}
+
+function calculateActivity(i) {
+  const hours   = parseFloat($(`#ahours${i}`).val()) || 0;
+  const pricing = parseFloat($(`#apricing${i}`).val()) || 0;
+  const over    = parseFloat($(`#over${i}`).val()) || 0;
+  $(`#atotal${i}`).val(hours * pricing + 0.5 * pricing * over);
+}
+
+function calculatefuel(i) {
+  const qty    = parseFloat($(`#eqty${i}`).val()) || 0;
+  const result = parseFloat($(`#eresult${i}`).val()) || 0;
+  const price  = parseFloat($(`#fpricing1`).val()) || 0;
+  const mach   = parseFloat($(`#epricing${i}`).val()) || 0;
+  $(`#etotal${i}`).val(result * price + mach * qty);
+}
+
+function calculatemis(i) {
+  const qty   = parseFloat($(`#mqtysfft${i}`).val()) || 0;
+  const price = parseFloat($(`#mpricing${i}`).val()) || 0;
+  $(`#mtotal${i}`).val(qty * price);
+}
+
+function calculate_npdes(i) {
+  const qty   = parseFloat($(`#ec_qty${i}`).val()) || 0;
+  const price = parseFloat($(`#ec_pricing${i}`).val()) || 0;
+  $(`#ec_total${i}`).val(qty * price);
+}
+
+function saw(i) {
+  const qty   = parseFloat($(`#sqtysflf${i}`).val()) || 0;
+  const days  = parseFloat($(`#sdays${i}`).val()) || 0;
+  const price = parseFloat($(`#spricing${i}`).val()) || 0;
+  $(`#stotal${i}`).val(days * price * qty);
+}
+
+function contractor(i) {
+  const qty    = parseFloat($(`#subqtysfft${i}`).val()) || 0;
+  const price  = parseFloat($(`#subpricing${i}`).val()) || 0;
+  const porce  = parseFloat($(`#subporce${i}`).val()) || 0;
+  const amount = qty * price;
+  $(`#subtotal${i}`).val(amount + (amount * porce) / 100);
+}
+
+function fuel() {
+  calcQtyPrice('fqtysflf1', 'fpricing1', 'ftotal1');
+}
+
+function total_gallons() {
+  let total = 0;
+  $('[id^=eresult]').each(function() { total += parseFloat($(this).val()) || 0; });
+  $('#totalfuel').val(total);
+}
+
+// ---- Section totals ----
+function totalA() { sumPrefix('atotal', 12, 'atotal'); }
+function totalE() { sumPrefix('etotal', 12, 'etotal'); }
+function totalf() { $('#ftotal').val(parseFloat($('#ftotal1').val()) || 0); }
+function totalS() { sumPrefix('stotal', 3, 'stotal'); }
+function totalP() { sumPrefix('ptotal', 8, 'ptotal'); }
+
+function totalT() {
+  sumIds(['ttotal1','ttotal2','ttotal3','ttotal4','mtotal1','ttotal6'], 'ttotal');
+}
+
+function total_npdes() {
+  sumIds(['mtotal2','ttotal5','ec_total3','ec_total4','ec_total5','mtotal9'], 'ec_total');
+}
+
+function total_temp_fence() {
+  sumIds(['mtotal31','mtotal3'], 'tf_total');
+}
+
+function total_perdiem() {
+  sumIds(['mtotal17','mov_total2','mov_total3'], 'per_total');
+}
+
+function totalM() {
+  sumIds(['mtotal4','mtotal5','mtotal7','mtotal8','mtotal11','mtotal18','mtotal19','mtotal20','mtotal32'], 'mtotal');
+}
+
+function totalcontractor() { sumPrefix('subtotal', 3, 'subtotaltotal'); }
+
+function totalscrap() {
+  sumIds(['mtotal13','mtotal14','mtotal15','totalsalvage'], 'salvage');
+}
+
+// ---- Grand total ----
+function subtotal() {
+  sumIds(['atotal','etotal','stotal','ttotal','ptotal','mtotal','ec_total','tf_total','per_total'], 'subtotal');
+}
+
+function salvage() {
+  $('#totalsalvage').val(parseFloat($('#mpricing12').val()) || 0);
+}
+
+function porce() {
+  const sub = parseFloat($('#subtotal').val()) || 0;
+  const pct = parseFloat($('#porce').val()) || 0;
+  $('#profit').val((sub * pct) / 100);
+}
+
+function total() {
+  sumIds(['subtotal','profit','subtotaltotal'], 'total');
+}
+
+function persf() {
+  const t  = parseFloat($('#total').val()) || 0;
+  const sf = parseFloat($('#sf').val()) || 1;
+  $('#persf').val(t / sf);
+}
+
+// Style
+document.querySelectorAll('thead th').forEach(th => th.style.backgroundColor = 'rgba(203,203,203,0.94)');
+document.querySelectorAll('.celda2').forEach(el => {
+  el.style.backgroundColor = '#D1E2FFFF';
+  el.style.fontWeight = 'bold';
+});
+</script>

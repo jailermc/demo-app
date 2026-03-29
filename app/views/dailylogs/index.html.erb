@@ -1,0 +1,61 @@
+<h1>Daily Log </h1>
+
+<br>
+
+<div class="table-responsive">
+  <div class="contextual">
+    <%= link_to 'New Daily Log', new_dailylog_path(parametro: params[:parametro]), class: 'btn btn-sm btn-success', style: 'margin-right: 30px;' %>
+  </div>
+  <br>
+  <br>
+  <table class="table table-bordered table-sm">
+    <thead>
+    <tr>
+      <th>Report #</th>
+      <th>Date</th>
+      <th>Comment</th>
+      <th></th>
+      <th></th>
+      <th>Total images</th>
+      <th></th>
+      <th colspan="3"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @dailylogs.each do |dl| %>
+      <tr>
+        <td><%= dl.daily_number %></td>
+        <td>
+          <% if dl.date %>
+            <%= dl.date.strftime('%m/%d/%Y') %>
+          <% else %>
+          <% end %>
+        </td>
+        <td> <%= dl.remarks %></td>
+        <td></td>
+        <td></td>
+        <td><%= dl.avatar.size %></td>
+        <td></td>
+        <td class="buttons">
+          <%= link_to('Show', dl, :class => 'btn btn-sm btn-info') %> |
+          <%= link_to 'View Report', show_alternative_dailylog_path(dl), method: :get, class: 'btn' %> |
+          <%= link_to('Edit', edit_dailylog_path(dl), :class => 'btn btn-sm btn-warning') %> |
+          <%= link_to('Delete', dl, :method => :delete,:class => 'btn btn-sm btn-danger', data: { confirm: 'Are you sure?' }) %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<br>
+
+<% unless @result.nil? %>
+  <p> = <%= @result %> </p>
+<% end %>
+<script>
+    const tableHeaders = document.querySelectorAll("thead th");
+    for (const header of tableHeaders) {
+        header.style.backgroundColor = "rgb(173,255,169)";
+    }
+
+</script>

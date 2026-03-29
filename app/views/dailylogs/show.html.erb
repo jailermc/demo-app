@@ -1,0 +1,1024 @@
+<button id="print-button">Print</button>
+
+<div id="table">
+</div>
+<br>
+<br>
+<div id="section-to-print" >
+  <h2>DAILY LOG </h2>
+  <div>
+    <h2 ALIGN="center">REPORT # <%= @dailylog.daily_number%></h2>
+  </div>
+  <table  class="table table-bordered table-sm"  style="width:60%">
+    <thead>
+    <tr>
+      <th class="color">COMPANY NAME</th>
+      <th class="color"></th>
+      <th class="color"></th>
+      <th class="color">LOCATION</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><%= @cost_sheet.name%></td>
+      <td></td>
+      <td></td>
+      <td><%= @cost_sheet.address%></td>
+    </tr>
+    </tbody>
+    <tr style="height: 20px;"></tr>
+    <thead>
+    <tr>
+      <th class="color"></th>
+      <th class="color">DATE</th>
+      <th class="color">WEATHER</th>
+      <th class="color"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td></td>
+      <th>
+        <% if @dailylog.date %>
+          <%= @dailylog.date.strftime('%m/%d/%Y') %>
+        <% else %>
+        <% end %>
+      </th>
+      <td><%=  @whater_sel %></td>
+      <td></td>
+    </tr>
+    </tbody>
+    <tr style="height: 20px;"></tr>
+  </table>
+  <table  class="table table-bordered table-sm"  style="width:60%">
+    <thead>
+    <tr>
+      <th class="color">DESCRIPTION</th>
+      <th class="color">MANPOWER</th>
+      <th class="color"> L-QTY</th>
+      <th class="color">L-HRS</th>
+      <th class="color"> O-QTY</th>
+      <th class="color">O-HRS</th>
+      <th class="color"> S-QTY</th>
+      <th class="color">S-HRS</th>
+      <th class="color"> D-QTY</th>
+      <th class="color">D-HRS</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><%=@estimates.adescription1 %></td>
+      <td><%=  @selector[0] %></td>
+      <td> <%= @dailylog.manqty1 %></td>
+      <td><%= @dailylog.hour1 %></td>
+      <td><%= @dailylog.omanqty1 %></td>
+      <td><%= @dailylog.ohour1 %></td>
+      <td><%= @dailylog.smanqty1 %></td>
+      <td><%= @dailylog.shour1 %></td>
+      <td><%= @dailylog.dmanqty1 %></td>
+      <td> <%= @dailylog.dhour1%></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <td><%=@estimates.adescription2 %></td>
+      <td><%=  @selector[1] %></td>
+      <td> <%= @dailylog.manqty2 %></td>
+      <td><%= @dailylog.hour2 %></td>
+      <td><%= @dailylog.omanqty2 %></td>
+      <td><%= @dailylog.ohour2 %></td>
+      <td><%= @dailylog.smanqty2 %></td>
+      <td><%= @dailylog.shour2 %></td>
+      <td><%= @dailylog.dmanqty2 %></td>
+      <td> <%= @dailylog.dhour2%></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <td><%=@estimates.adescriptio3 %></td>
+      <td><%=  @selector[2] %></td>
+      <td> <%= @dailylog.manqty3 %></td>
+      <td><%= @dailylog.hour3 %></td>
+      <td><%= @dailylog.omanqty3 %></td>
+      <td><%= @dailylog.ohour3 %></td>
+      <td><%= @dailylog.smanqty3 %></td>
+      <td><%= @dailylog.shour3 %></td>
+      <td><%= @dailylog.dmanqty3 %></td>
+      <td> <%= @dailylog.dhour3%></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <td><%=@estimates.adescription4 %></td>
+      <td><%=  @selector[3] %></td>
+      <td> <%= @dailylog.manqty4 %></td>
+      <td><%= @dailylog.hour4 %></td>
+      <td><%= @dailylog.omanqty4 %></td>
+      <td><%= @dailylog.ohour4 %></td>
+      <td><%= @dailylog.smanqty4 %></td>
+      <td><%= @dailylog.shour4 %></td>
+      <td><%= @dailylog.dmanqty4 %></td>
+      <td> <%= @dailylog.dhour4%></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <td><%=@estimates.adescription5 %></td>
+      <td><%=  @selector[4] %></td>
+      <td> <%= @dailylog.manqty5 %></td>
+      <td><%= @dailylog.hour5 %></td>
+      <td><%= @dailylog.omanqty5 %></td>
+      <td><%= @dailylog.ohour5 %></td>
+      <td><%= @dailylog.smanqty5 %></td>
+      <td><%= @dailylog.shour5 %></td>
+      <td><%= @dailylog.dmanqty5 %></td>
+      <td> <%= @dailylog.dhour5%></td>
+    </tr>
+    <tr>
+      <td><%=@estimates.adescription6 %></td>
+      <td><%=  @selector[5] %></td>
+      <td> <%= @dailylog.manqty6 %></td>
+      <td><%= @dailylog.hour6 %></td>
+      <td><%= @dailylog.omanqty6 %></td>
+      <td><%= @dailylog.ohour6 %></td>
+      <td><%= @dailylog.smanqty6 %></td>
+      <td><%= @dailylog.shour6 %></td>
+      <td><%= @dailylog.dmanqty6 %></td>
+      <td> <%= @dailylog.dhour6%></td>
+    </tr>
+    <!-- Repeat the above pattern for values 7 through 12 -->
+    <tr>
+      <td><%=@estimates.adescription7 %></td>
+      <td><%=  @selector[6] %></td>
+      <td> <%= @dailylog.manqty7 %></td>
+      <td><%= @dailylog.hour7 %></td>
+      <td><%= @dailylog.omanqty7 %></td>
+      <td><%= @dailylog.ohour7 %></td>
+      <td><%= @dailylog.smanqty7 %></td>
+      <td><%= @dailylog.shour7 %></td>
+      <td><%= @dailylog.dmanqty7 %></td>
+      <td> <%= @dailylog.dhour7%></td>
+    </tr>
+    <tr>
+      <td><%=@estimates.adescription8 %></td>
+      <td><%=  @selector[7] %></td>
+      <td> <%= @dailylog.manqty8 %></td>
+      <td><%= @dailylog.hour8 %></td>
+      <td><%= @dailylog.omanqty8 %></td>
+      <td><%= @dailylog.ohour8 %></td>
+      <td><%= @dailylog.smanqty8 %></td>
+      <td><%= @dailylog.shour8 %></td>
+      <td><%= @dailylog.dmanqty8 %></td>
+      <td> <%= @dailylog.dhour8%></td>
+    </tr>
+    <tr>
+      <td><%=@estimates.adescription9 %></td>
+      <td><%=  @selector[8] %></td>
+      <td> <%= @dailylog.manqty9 %></td>
+      <td><%= @dailylog.hour9 %></td>
+      <td><%= @dailylog.omanqty9 %></td>
+      <td><%= @dailylog.ohour9 %></td>
+      <td><%= @dailylog.smanqty9 %></td>
+      <td><%= @dailylog.shour9 %></td>
+      <td><%= @dailylog.dmanqty9 %></td>
+      <td> <%= @dailylog.dhour9%></td>
+    </tr>
+    <tr>
+      <td><%=@estimates.adescription10 %></td>
+      <td><%=  @selector[9] %></td>
+      <td> <%= @dailylog.manqty10 %></td>
+      <td><%= @dailylog.hour10 %></td>
+      <td><%= @dailylog.omanqty10 %></td>
+      <td><%= @dailylog.ohour10 %></td>
+      <td><%= @dailylog.smanqty10 %></td>
+      <td><%= @dailylog.shour10 %></td>
+      <td><%= @dailylog.dmanqty10 %></td>
+      <td> <%= @dailylog.dhour10%></td>
+    </tr>
+    <tr>
+      <td><%=@estimates.adescription11 %></td>
+      <td><%=  @selector[10] %></td>
+      <td> <%= @dailylog.manqty11 %></td>
+      <td><%= @dailylog.hour11 %></td>
+      <td><%= @dailylog.omanqty11 %></td>
+      <td><%= @dailylog.ohour11 %></td>
+      <td><%= @dailylog.smanqty11 %></td>
+      <td><%= @dailylog.shour11 %></td>
+      <td><%= @dailylog.dmanqty11 %></td>
+      <td> <%= @dailylog.dhour11%></td>
+    </tr>
+    <tr>
+      <td><%=@estimates.adescription12 %></td>
+      <td><%=  @selector[11] %></td>
+      <td> <%= @dailylog.manqty12 %></td>
+      <td><%= @dailylog.hour12 %></td>
+      <td><%= @dailylog.omanqty12 %></td>
+      <td><%= @dailylog.ohour12 %></td>
+      <td><%= @dailylog.smanqty12 %></td>
+      <td><%= @dailylog.shour12 %></td>
+      <td><%= @dailylog.dmanqty12 %></td>
+      <td> <%= @dailylog.dhour12%></td>
+    </tr>
+    </tbody>
+    <tr style="height: 20px;"></tr>
+    <thead>
+    <tr>
+      <th>MANPOWER</th>
+      <th> QTYS</th>
+      <th> HOURS</th>
+      <th>OVER T. HOURS</th>
+      <TH></TH>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <th class="color">MANPOWER</th>
+      <th class="color">QTY</th>
+      <th class="color"> TOTAL HOURS / OVER T.</th>
+      <th class="color">EQUIPMENT</th>
+      <th class="color">HOURS</th>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <th>LABOR</th>
+      <td><%= @dailylog.totallqty%></td>
+      <td><%= @dailylog.totalhoursl%> <%= @dailylog.overl%></td>
+      <th>EXCAVATOR</th>
+      <td><%= @dailylog.equipqty1 %></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <th>OPERATOR</th>
+      <td><%= @dailylog.totaloqty%></td>
+      <td><%= @dailylog.totalhourso%> <%= @dailylog.overo%></td>
+      <th>EXCAVATOR</th>
+      <td><%= @dailylog.equipqty2 %></td>
+    </tr>
+    </tbody>
+    <tbody >
+    <tr>
+      <th>SUPERVISOR</th>
+      <td><%= @dailylog.totalsqty%></td>
+      <td><%= @dailylog.totalhourss%> <%= @dailylog.overs%></td>
+      <th>SCISSOR LIF	</th>
+      <td><%= @dailylog.equipqty3 %></td>
+    </tr>
+    </tbody>
+    <tbody >
+    <tr>
+      <th>DRIVER</th>
+      <td><%= @dailylog.totaldqty%></td>
+      <td><%= @dailylog.totalhoursd%> <%= @dailylog.overd%></td>
+      <th>LOADER</th>
+      <td><%= @dailylog.equipqty4 %></td>
+    </tr>
+    </tbody>
+    <tbody >
+    <tr>
+      <td><%= @selector[4]%></td>
+      <td></td>
+      <td></td>
+      <th>DUMP TRUCK</th>
+      <td><%= @dailylog.equipqty5 %></td>
+    </tr>
+    </tbody>
+    <tbody >
+    <tr>
+      <td><%= @selector[5] %></td>
+      <td></td>
+      <td></td>
+      <th>BOBCAT</th>
+      <td><%= @dailylog.equipqty6 %></td>
+    </tr>
+    </tbody>
+    <tbody >
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <th>FLOOR SCRAPER</th>
+      <td><%= @dailylog.equipqty7 %></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <th>WATER TRUCK</th>
+      <td><%= @dailylog.equipqty8 %></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <th>COMPRESSOR</th>
+      <td><%= @dailylog.equipqty9 %></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <th>UTILITY TRUCK</th>
+      <td><%= @dailylog.equipqty10 %></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><%=@estimates.adescription11 %></td>
+      <td><%= @dailylog.equipqty11 %></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><%=@estimates.adescription12 %></td>
+      <td><%= @dailylog.equipqty12 %></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <th></th>
+      <td></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <th>FUEL</th>
+      <td><%= @dailylog.fuel %></td>
+    </tr>
+    </tbody>
+    <tr style="height: 40px;"></tr>
+    <tbody>
+    <tr>
+      <th style="background-color: rgb(215,220,227)">CONCRETE</th>
+      <th style="background-color: rgb(215,220,227)"></th>
+      <th style="background-color: rgb(215,220,227)">QTY</th>
+      <th style="background-color: rgb(215,220,227)">UNIT.PRICE</th>
+      <th style="background-color: rgb(215,220,227)">TOTAL P</th>
+    </tr>
+    </tbody>
+    <% if @dailylog.ctransporter1.present? %>
+    <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.ctransporter1%></td>
+      <td class="cqty1"><%= @dailylog.cqty1%></td>
+      <td><%= number_to_currency(@dailylog.cpricing1, :precision => 2) %></td>
+      <td><%= number_to_currency(@dailylog.ctotal10, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <% if @dailylog.ctransporter2.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.ctransporter2%></td>
+      <td class="cqty1"><%= @dailylog.cqty2%></td>
+      <td><%= number_to_currency( @dailylog.cpricing20, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.ctotal20, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <% if @dailylog.ctransporter3.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.ctransporter3%></td>
+      <td class="cqty1"><%= @dailylog.cqty3%></td>
+      <td><%= number_to_currency( @dailylog.cpricing30, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.ctotal30, :precision => 2) %></td>
+    </tr>
+
+    </tbody>
+    <% if @dailylog.ctransporter4.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.ctransporter4%></td>
+      <td class="cqty1"><%= @dailylog.cqty4%></td>
+      <td><%= number_to_currency( @dailylog.cpricing40, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.ctotal40, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <th>TONS: <%= @dailylog.tconcrete%></th>
+      <td>QTYS: </td>
+      <th class="celda0"><%= @dailylog.concrete%></th>
+      <td>TOTAL PRICE</td>
+      <th class="celda"><%= number_to_currency( @dailylog.pconcrete, :precision => 2) %></th>
+    </tr>
+    </tbody>
+    <tr style="height: 20px;"></tr>
+    <tbody>
+    <tr>
+      <th style="background-color: rgb(243,210,173)">CONCRETE / REBAR</th>
+      <th style="background-color: rgb(243,210,173)"></th>
+      <th style="background-color: rgb(243,210,173)">QTY</th>
+      <th style="background-color: rgb(243,210,173)">UNIT.PRICE</th>
+      <th style="background-color: rgb(243,210,173)">TOTAL P</th>
+    </tr>
+    </tbody>
+    <% if @dailylog.xtransporter1.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.xtransporter1%></td>
+      <td class="cqty1"><%= @dailylog.xqty1%></td>
+      <td><%= number_to_currency(@dailylog.xpricing1, :precision => 2) %></td>
+      <td><%= number_to_currency(@dailylog.xtotal10, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <% if @dailylog.xtransporter2.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.xtransporter2%></td>
+      <td class="cqty1"><%= @dailylog.xqty2%></td>
+      <td><%= number_to_currency( @dailylog.xpricing2, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.xtotal20, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <% if @dailylog.xtransporter3.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.xtransporter3%></td>
+      <td class="cqty1"><%= @dailylog.xqty3%></td>
+      <td><%= number_to_currency( @dailylog.xpricing3, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.xtotal30, :precision => 2) %></td>
+    </tr>
+
+    </tbody>
+    <% if @dailylog.xtransporter4.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.xtransporter4%></td>
+      <td class="cqty1"><%= @dailylog.xqty4%></td>
+      <td><%= number_to_currency( @dailylog.xpricing4, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.xtotal40, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <th>TONS: <%= @dailylog.trebar%></th>
+      <td>QTYS: </td>
+      <th class="celda0"><%= @dailylog.rebar%></th>
+      <td>TOTAL PRICE</td>
+      <th class="celda"><%= number_to_currency( @dailylog.prebar, :precision => 2) %></th>
+    </tr>
+    </tbody>
+    <tr style="height: 20px;"></tr>
+    <tbody>
+    <tr>
+      <th style="background-color: rgba(238,210,243,0.94)">ASPHALT</th>
+      <th style="background-color: rgba(238,210,243,0.94)"></th>
+      <th style="background-color: rgba(238,210,243,0.94)">QTY</th>
+      <th style="background-color: rgba(238,210,243,0.94)">UNIT.PRICE</th>
+      <th style="background-color: rgba(238,210,243,0.94)">TOTAL P</th>
+    </tr>
+    </tbody>
+    <% if @dailylog.atransporter1.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.atransporter1%></td>
+      <td class="aqty1"><%= @dailylog.aqty1%></td>
+      <td><%= number_to_currency( @dailylog.apricing1, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.atotal1, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <% if @dailylog.atransporter2.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.atransporter2%></td>
+      <td class="aqty1"><%= @dailylog.aqty2%></td>
+      <td><%= number_to_currency( @dailylog.apricing20, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.atotal20, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <% if @dailylog.atransporter3.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.atransporter3%></td>
+      <td class="aqty1"><%= @dailylog.aqty3%></td>
+      <td><%= number_to_currency( @dailylog.apricing3, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.atotal3, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <% if @dailylog.atransporter4.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.atransporter4%></td>
+      <td class="aqty1"><%= @dailylog.aqty4%></td>
+      <td><%= number_to_currency( @dailylog.apricing4, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.atotal4, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <th>TONS: <%= @dailylog.tasphalt%></th>
+      <td>QTYS: </td>
+      <th class="celda0"><%= @dailylog.asphalt%></th>
+      <td>TOTAL PRICE</td>
+      <th class="celda"><%= number_to_currency( @dailylog.pasphalt, :precision => 2) %></th>
+    </tr>
+    </tbody>
+    <tr style="height: 20px;"></tr>
+    <tbody>
+    <tr>
+      <th style="background-color: rgb(222,231,180)">FILL</th>
+      <th style="background-color: rgb(222,231,180)"></th>
+      <th style="background-color: rgb(222,231,180)">QTY</th>
+      <th style="background-color: rgb(222,231,180)">UNIT.PRICE</th>
+      <th style="background-color: rgb(222,231,180)">TOTAL P</th>
+    </tr>
+    </tbody>
+    <% if @dailylog.ftransporter1.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.ftransporter1%></td>
+      <td class="fqty1"><%= @dailylog.fqty1%></td>
+      <td><%= number_to_currency( @dailylog.fpricing10, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.ftotal10, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <% if @dailylog.ftransporter2.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.ftransporter2%></td>
+      <td class="fqty1"><%= @dailylog.fqty2%></td>
+      <td><%= number_to_currency( @dailylog.fpricing20, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.ftotal20, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <% if @dailylog.ftransporter3.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.ftransporter3%></td>
+      <td class="fqty1"><%= @dailylog.fqty3%></td>
+      <td><%= number_to_currency( @dailylog.fpricing3, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.ftotal3, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <% if @dailylog.ftransporter4.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.ftransporter4%></td>
+      <td class="fqty1"><%= @dailylog.fqty4%></td>
+      <td><%= number_to_currency( @dailylog.fpricing4, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.ftotal4, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <th>TONS: <%= @dailylog.tfill%></th>
+      <td>QTYS: </td>
+      <th class="celda0"><%= @dailylog.fill%></th>
+      <td>TOTAL PRICE</td>
+      <th class="celda"><%= number_to_currency( @dailylog.pfill, :precision => 2) %></th>
+    </tr>
+    </tbody>
+    <tr style="height: 20px;"></tr>
+    <tbody>
+    <tr>
+      <th style="background-color: rgb(155,255,148)" >VEGETATION</th>
+      <th style="background-color: rgb(155,255,148)"></th>
+      <th style="background-color: rgb(155,255,148)">QTY</th>
+      <th style="background-color: rgb(155,255,148)">UNIT.PRICE</th>
+      <th style="background-color: rgb(155,255,148)">TOTAL P</th>
+    </tr>
+    </tbody>
+    <% if @dailylog.vtransporter1.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.vtransporter1%></td>
+      <td class="vqty1"><%= @dailylog.vqty1%></td>
+      <td><%= number_to_currency( @dailylog.vpricing10, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.vtotal10, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <% if @dailylog.vtransporter2.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.vtransporter2%></td>
+      <td class="vqty1"><%= @dailylog.vqty2%></td>
+      <td><%= number_to_currency( @dailylog.vpricing20, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.vtotal20, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <% if @dailylog.vtransporter3.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.vtransporter3%></td>
+      <td class="vqty1"><%= @dailylog.vqty3%></td>
+      <td><%= number_to_currency( @dailylog.vpricing3, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.vtotal3, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <% if @dailylog.vtransporter4.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.vtransporter4%></td>
+      <td class="vqty1"><%= @dailylog.vqty4%></td>
+      <td><%= number_to_currency( @dailylog.vpricing4, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.vtotal4, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <th>TONS: <%= @dailylog.tvegetation%></th>
+      <td>QTYS: </td>
+      <th class="celda0"><%= @dailylog.vegitation%></th>
+      <td>TOTAL PRICE</td>
+      <th class="celda"><%= number_to_currency( @dailylog.pvegitation, :precision => 2) %></th>
+    </tr>
+    </tbody>
+    <tr style="height: 20px;"></tr>
+    <tbody>
+    <tr>
+      <th style="background-color: rgb(163,204,248)">C&D / TRASH
+      </th>
+      <th style="background-color: rgb(163,204,248)"></th>
+      <th style="background-color: rgb(163,204,248)">QTY</th>
+      <th style="background-color: rgb(163,204,248)">UNIT.PRICE</th>
+      <th style="background-color: rgb(163,204,248)">TOTAL P</th>
+    </tr>
+    </tbody>
+    <% if @dailylog.ttransporter1.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.ttransporter1%></td>
+      <td class="tqty1"><%= @dailylog.tqty1%></td>
+      <td><%= number_to_currency( @dailylog.tpricing10, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.ttotal10, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <% if @dailylog.ttransporter2.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.ttransporter2 %></td>
+      <td class="tqty1"><%= @dailylog.tqty2 %></td>
+      <td><%= number_to_currency( @dailylog.tpricing20, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.ttotal20, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <% if @dailylog.ttransporter3.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.ttransporter3%></td>
+      <td class="tqty1"><%= @dailylog.tqty3%></td>
+      <td><%= number_to_currency( @dailylog.tpricing3, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.ttotal3, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <% if @dailylog.ttransporter4.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.ttransporter4 %></td>
+      <td class="tqty1"><%= @dailylog.tqty4 %></td>
+      <td><%= number_to_currency( @dailylog.tpricing4, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.ttotal4, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <th>TONS: <%= @dailylog.ttrash%></th>
+      <td>QTYS: </td>
+      <th class="celda0"><%= @dailylog.trash%></th>
+      <td>TOTAL PRICE</td>
+      <th class="celda"><%= number_to_currency( @dailylog.ptrash, :precision => 2) %></th>
+    </tr>
+    </tbody>
+    <tr style="height: 20px;"></tr>
+    <tbody>
+    <tr>
+      <th style="background-color: rgb(188,248,241)">ROCK</th>
+      <th style="background-color: rgb(188,248,241)"></th>
+      <th style="background-color: rgb(188,248,241)">QTY</th>
+      <th style="background-color: rgb(188,248,241)">UNIT.PRICE</th>
+      <th style="background-color: rgb(188,248,241)">TOTAL P</th>
+    </tr>
+    </tbody>
+    <% if @dailylog.rtransporter1.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.rtransporter1%></td>
+      <td class="tqty1"><%= @dailylog.rqty1%></td>
+      <td><%= number_to_currency( @dailylog.rpricing1, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.rtotal1, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <% if @dailylog.rtransporter2.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.rtransporter2 %></td>
+      <td class="tqty1"><%= @dailylog.rqty2 %></td>
+      <td><%= number_to_currency( @dailylog.rpricing2, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.rtotal2, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <% if @dailylog.rtransporter3.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.rtransporter3%></td>
+      <td class="tqty1"><%= @dailylog.rqty3%></td>
+      <td><%= number_to_currency( @dailylog.rpricing3, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.rtotal3, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <% if @dailylog.rtransporter4.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.rtransporter4 %></td>
+      <td class="tqty1"><%= @dailylog.rqty4 %></td>
+      <td><%= number_to_currency( @dailylog.rpricing4, :precision => 2) %></td>
+      <td><%= number_to_currency( @dailylog.rtotal4, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <th>TONS: <%= @dailylog.trock%></th>
+      <td>QTYS: </td>
+      <th class="celda0"><%= @dailylog.rock%></th>
+      <td>TOTAL PRICE</td>
+      <th class="celda"><%= number_to_currency( @dailylog.prock, :precision => 2) %></th>
+    </tr>
+    </tbody>
+    <tr style="height: 20px;"></tr>
+    <tbody>
+    <tr>
+      <th style="background-color: rgb(188,248,241)">MISELLANEOUS</th>
+      <th style="background-color: rgb(188,248,241)"></th>
+      <th style="background-color: rgb(188,248,241)"></th>
+      <th style="background-color: rgb(188,248,241)">PRICE</th>
+      <th style="background-color: rgb(188,248,241)"></th>
+    </tr>
+    </tbody>
+    <% if @dailylog.mtransporter1.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.mtransporter1%></td>
+      <td></td>
+      <td><%= number_to_currency( @dailylog.mpricing1, :precision => 2) %></td>
+
+    </tr>
+    </tbody>
+    </tbody>
+    <% if @dailylog.mtransporter2.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.mtransporter2%></td>
+      <td></td>
+      <td><%= number_to_currency( @dailylog.mpricing2, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    </tbody>
+    <% if @dailylog.mtransporter3.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.mtransporter3%></td>
+      <td></td>
+      <td><%= number_to_currency( @dailylog.mpricing3, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    </tbody>
+    <% if @dailylog.mtransporter4.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.mtransporter4%></td>
+      <td></td>
+      <td><%= number_to_currency( @dailylog.mpricing4, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    </tbody>
+    <% if @dailylog.mtransporter5.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.mtransporter5%></td>
+      <td></td>
+      <td><%= number_to_currency( @dailylog.mpricing5, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    </tbody>
+    <% if @dailylog.mtransporter1.present? %>
+      <tbody>
+    <% else %>
+      <tbody class="hidden">
+    <% end %>
+    <tr>
+      <th></th>
+      <td><%= @dailylog.mtransporter6%></td>
+      <td></td>
+      <td><%= number_to_currency( @dailylog.mpricing6, :precision => 2) %></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <th></th>
+      <td></td>
+      <th></th>
+      <td>TOTAL =</td>
+      <th class="celda"><%= number_to_currency( @dailylog.pmisellaneous, :precision => 2) %></th>
+    </tr>
+    </tbody>
+  </table>
+  <br>
+  <br>
+  <h3>WORK DESCRIPTION: </h3>
+ <p><%= @dailylog.remarks %></p>
+<br>
+  <br>
+<h3>COMMENTS: </h3>
+<p><%= @dailylog.comments %></p>
+</div>
+<br>
+<br>
+<div>
+  <table class="table table-bordered table-sm" style="width:20%">
+    <thead>
+    <tr>
+      <th>Image</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <% if @dailylog.avatar.attached? %>
+    <tbody>
+    <% @dailylog.avatar.each do |image| %>
+      <tr>
+        <td> <%= link_to(image.filename, rails_blob_path(image), target: "_blank", style: 'width:100%; height: auto') %> </td>
+        <td>   <%= link_to "Download", rails_blob_url(image, disposition: "attachment"), download: image.filename %></td>
+      </tr>
+    <% end %>
+    </tbody>
+      <% end %>
+  </table>
+</div>
+<br>
+<br>
+<%= link_to 'Edit', edit_dailylog_path(@dailylog) %> |
+
+<script>
+    document.getElementById("print-button").addEventListener("click", function() {
+        var printContents = document.getElementById("section-to-print").innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        window.location.reload();
+        document.body.innerHTML = originalContents;
+    });
+
+    const tableHeaders = document.querySelectorAll(".color");
+    for (const header of tableHeaders) {
+        header.style.backgroundColor = "rgb(206,228,255)";
+    }
+
+
+    const celdas = document.querySelectorAll(".celda");
+    celdas.forEach(celda => {
+        if (celda.textContent) {
+            celda.style.backgroundColor = "#FFFF00";
+        }
+    });
+
+</script>

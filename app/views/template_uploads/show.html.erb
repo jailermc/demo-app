@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<br>
+<br>
+<table class="table table-bordered table-sm" style="width:20%">
+  <thead>
+  <tr>
+    <th>Image</th>
+    <th>Action</th>
+  </tr>
+  </thead>
+  <% if @template_upload.avatar.attached? %>
+    <tbody>
+    <% @template_upload.avatar %>
+      <tr>
+        <td> <%= link_to(@template_upload.avatar .filename, rails_blob_path(@template_upload.avatar ), target: "_blank", style: 'width:100%; height: auto') %> </td>
+        <td>   <%= link_to "Download", rails_blob_url(@template_upload.avatar , disposition: "attachment"), download: @template_upload.avatar .filename %></td>
+      </tr>
+    </tbody>
+  <% end %>
+</table>
+<br>
+<br>
+<%= link_to 'Edit', edit_template_upload_path(@template_upload) %> |
+<%= link_to 'Back', template_uploads_path %>

@@ -1,0 +1,3266 @@
+<%= link_to 'Edit', edit_cost_sheet_path(@cost_sheet) %> |
+<%= link_to 'Back', cost_sheets_path %>
+<br>
+<br>
+<button id="print-button">Print</button>
+
+<br>
+<div >
+    <div id="section-to-print">
+      <h3><%= @estimated.address  %></h3>
+      <div id="table">
+        <table class="table table-bordered table-sm" style="width:80%">
+          <tbody>
+          <tr>
+            <td style="text-align: left;">
+              <span style="margin-left: 0px;"><b>Name</b>:</span>
+              <%= @cost_sheet.name%>
+              <span style="margin-left: 80px;"><b>Address</b>:</span>
+              <%=  @cost_sheet.address %>
+            </td>
+            <td></td>
+            <td style="text-align: left;">
+              <span style="margin-right: 0px;"><b>Project Manager:</b> </span>
+              <%=  @cost_sheet.pmanager %>
+              <span style="margin-left: 50px;"><b>Email:</b></span>
+              <%=  @cost_sheet.pemail %>
+              <span style="margin-left: 50px;"><b>Cell:</b></span>
+              <%=  @cost_sheet.pcell %>
+            </td>
+            <th></th>
+          </tr>
+          </tbody>
+          <tbody>
+          <tr>
+            <td> </td>
+            <td></td>
+            <td style="text-align: left;">
+              <span style="margin-left: 0px;"><b>Supervisor:</b></span>
+              <%=  @cost_sheet.supervisor%>
+              <span style="margin-left: 85px;"><b>Cell:</b></span>
+              <%=  @cost_sheet.scell%>
+            </td>
+            <th></th>
+          </tr>
+          </tbody>
+          <tr style="height: 20px;"></tr>
+          <tbody>
+          <tr>
+            <td> </td>
+            <td></td>
+            <td style="text-align: left;">
+              <span style="margin-left: 0px;"><b>Start Date:</b></span>
+              <% if @cost_sheet.sdate.present? %>
+                <%= @cost_sheet.sdate.strftime('%m/%d/%Y') %>
+              <% else %>
+                0/0/0
+              <% end %>
+              <span style="margin-left: 22px;"><b>Finish Date:</b></span>
+              <% if @cost_sheet.fdate.present? %>
+                <%= @cost_sheet.fdate.strftime('%m/%d/%Y') %>
+              <% else %>
+                0/0/0
+              <% end %>
+            </td>
+            <th></th>
+          </tr>
+          </tbody>
+          <tbody>
+          <tr>
+            <td> </td>
+            <td></td>
+            <td style="text-align: left;">
+              <span style="margin-left: 0px;"><b>NOC:</b></span>
+              <%=  @cost_sheet.noc %>
+              <span style="margin-left: 85px;"><b>Date:</b></span>
+              <% if @cost_sheet.nocdate.present? %>
+                <%= @cost_sheet.nocdate.strftime('%m/%d/%Y') %>
+              <% else %>
+                0/0/0
+              <% end %>
+              <span style="margin-left: 50px;"><b>Exp:</b></span>
+              <% if @cost_sheet.nocedate.present? %>
+                <%= @cost_sheet.nocedate.strftime('%m/%d/%Y') %>
+              <% else %>
+                0/0/0
+              <% end %>
+            </td>
+            <th></th>
+          </tr>
+          </tbody>
+          <tbody>
+          <tr>
+            <td> </td>
+            <td></td>
+            <td style="text-align: left;">
+              <span style="margin-left: 0px;"><b>NTO:</b></span>
+              <%=  @cost_sheet.nto %>
+              <span style="margin-left: 85px;"><b>Date:</b></span>
+              <% if @cost_sheet.ntodate.present? %>
+                <%= @cost_sheet.ntodate.strftime('%m/%d/%Y') %>
+              <% else %>
+                0/0/0
+              <% end %>
+            </td>
+            <th></th>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <br>
+      <table  class="table table-bordered table-sm"  style="width:70%">
+        <thead>
+        <tr>
+          <th>ACTIVITY</th>
+          <th>DESCRIPTION</th>
+          <th>QTY MEN</th>
+          <th>DAYS</th>
+          <th>MEN HRS</th>
+          <th>PRICE HRS</th>
+          <th>TOTAL</th>
+          <th>ACTIVITY</th>
+          <th>QTY MEN</th>
+          <th>DAYS</th>
+          <th>MEN HRS</th>
+          <th>PRICE HRS</th>
+          <th>TOTAL</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="celda2"><%= @selector1[0] %></td>
+          <td ><%= @estimated.adescription1  %></td>
+          <td><%= @estimated.aemp1 %></td>
+          <td><%= @estimated.adays1%></td>
+          <td><%= @estimated.ahours1 == 0 ? "" : @estimated.ahours1 %> </td>
+          <td><%= @estimated.apricing1 %></td>
+          <div>
+            <% if @estimated.atotal1 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.atotal1, :precision => 2) %>
+              </td>
+            <%end %>
+          </div>
+          <th class="celda2"></th>
+          <td><%=  @max1  %></td>
+          <td><%= @dayly_counts[0]%></td>
+          <td><%=  @sumhours1%></td>
+          <td><%= @cost_sheet.apricing1 %></td>
+          <div>
+            <% if @cost_sheet.atotal1 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@cost_sheet.atotal1, :precision => 2) %>
+              </td>
+            <%end %>
+          </div>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2"><%= @selector1[1] %></td>
+          <td><%= @estimated.adescription2 %></td>
+          <td><%= @estimated.aemp2 %></td>
+          <td><%= @estimated.adays2%></td>
+          <td><%= @estimated.ahours2 == 0 ? "" : @estimated.ahours2 %> </td>
+          <td><%= @estimated.apricing2 %></td>
+            <% if @estimated.atotal2 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.atotal2, :precision => 2) %>
+              </td>
+            <%end %>
+          <th  class="celda2"></th>
+          <td><%= @max2  %></td>
+          <td><%= @dayly_counts[1] %></td>
+          <td><%=  @sumhours2%></td>
+          <td><%= @cost_sheet.apricing2 %></td>
+          <div>
+            <% if @cost_sheet.atotal2 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@cost_sheet.atotal2, :precision => 2) %>
+              </td>
+            <%end %>
+          </div>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2"><%= @selector1[2] %></td>
+          <td><%= @estimated.adescriptio3 %></td>
+          <td><%= @estimated.aemp3 %></td>
+          <td><%= @estimated.adays3%></td>
+          <td><%= @estimated.ahours3 == 0 ? "" : @estimated.ahours3 %> </td>
+          <td><%= @estimated.apricing3 %></td>
+            <% if @estimated.atotal3 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.atotal3, :precision => 2) %>
+              </td>
+            <%end %>
+          <th  class="celda2"></th>
+          <td><%= @max3  %></td>
+          <td><%= @dayly_counts[2] %></td>
+          <td><%=  @sumhours3 %></td>
+          <td><%= @cost_sheet.apricing3 %></td>
+          <div>
+            <% if @cost_sheet.atotal3 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@cost_sheet.atotal3, :precision => 2) %>
+              </td>
+            <%end %>
+          </div>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2"><%= @selector1[3] %></td>
+          <td><%= @estimated.adescription4 %></td>
+          <td><%= @estimated.aemp4 %></td>
+          <td><%= @estimated.adays4%></td>
+          <td><%= @estimated.ahours4 == 0 ? "" : @estimated.ahours4 %> </td>
+          <td><%= @estimated.apricing4 %></td>
+            <% if @estimated.atotal4 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.atotal4, :precision => 2) %>
+              </td>
+            <%end %>
+          <th class="celda2"></th>
+          <td><%= @max4 %></td>
+          <td><%= @dayly_counts[3] %></td>
+          <td><%=  @sumhours4%></td>
+          <td><%= @cost_sheet.apricing4 %></td>
+          <div>
+            <% if @cost_sheet.atotal4 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@cost_sheet.atotal4, :precision => 2) %>
+              </td>
+            <%end %>
+          </div>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2"><%= @selector1[4] %></td>
+          <td><%= @estimated.adescription5 %></td>
+          <td><%= @estimated.aemp5 %></td>
+          <td><%= @estimated.adays5%></td>
+          <td><%= @estimated.ahours5 == 0 ? "" : @estimated.ahours5 %> </td>
+          <td><%= @estimated.apricing5 %></td>
+            <% if @estimated.atotal5 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.atotal5, :precision => 2) %>
+              </td>
+            <%end %>
+          <th class="celda2"></th>
+          <td><%= @max5  %></td>
+          <td><%= @dayly_counts[4] %></td>
+          <td><%=  @sumhours5%></td>
+          <td><%= @cost_sheet.apricing5 %></td>
+          <div>
+            <% if @cost_sheet.atotal5 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@cost_sheet.atotal5, :precision => 2) %>
+              </td>
+            <%end %>
+          </div>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2"><%= @selector1[5]  %></td>
+          <td><%= @estimated.adescription6 %></td>
+          <td><%= @estimated.aemp6 %></td>
+          <td><%= @estimated.adays6%></td>
+          <td><%=  @estimated.ahours6 == 0 ? "" : @estimated.ahours6 %> <%= @estimated.over6 == 0 ? "" : @estimated.over6 %></td>
+          <td><%= @estimated.apricing6 %></td>
+          <% if @estimated.atotal6 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.atotal6, :precision => 2) %>
+            </td>
+          <%end %>
+          <th class="celda2"></th>
+          <td><%= @max6  %></td>
+          <td><%= @dayly_counts[5] %></td>
+          <td><%=  @sumhours6%></td>
+          <td><%= @cost_sheet.apricing6 %></td>
+          <div>
+            <% if @cost_sheet.atotal6== 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@cost_sheet.atotal6, :precision => 2) %>
+              </td>
+            <%end %>
+          </div>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2"><%= @selector1[6] %></td>
+          <td><%= @estimated.adescription7 %></td>
+          <td><%= @estimated.aemp7 %></td>
+          <td><%= @estimated.adays7%></td>
+          <td><%=  @estimated.ahours7 == 0 ? "" : @estimated.ahours7 %>  <%= @estimated.over7 == 0 ? "" : @estimated.over7 %> </td>
+          <td><%= @estimated.apricing7 %></td>
+          <% if @estimated.atotal7 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.atotal7, :precision => 2) %>
+            </td>
+          <%end %>
+          <th class="celda2"></th>
+          <td><%= @max7  %></td>
+          <td><%= @dayly_counts[6] %></td>
+          <td><%=  @sumhours7%></td>
+          <td><%= @cost_sheet.apricing7 %></td>
+          <div>
+            <% if @cost_sheet.atotal7 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@cost_sheet.atotal7, :precision => 2) %>
+              </td>
+            <%end %>
+          </div>
+        </tr>
+        </tbody>
+
+        <tbody>
+        <tr>
+          <td class="celda2"><%= @selector1[7] %></td>
+          <td><%= @estimated.adescription8 %></td>
+          <td><%= @estimated.aemp8%></td>
+          <td><%= @estimated.adays8%></td>
+          <td><%=  @estimated.ahours8 == 0 ? "" : @estimated.ahours8 %>  <%= @estimated.over8 == 0 ? "" : @estimated.over8 %></td>
+          <td><%= @estimated.apricing8 %></td>
+          <% if @estimated.atotal8 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.atotal8, :precision => 2) %>
+            </td>
+          <%end %>
+          <th class="celda2"></th>
+          <td><%= @max8  %></td>
+          <td><%= @dayly_counts[7] %></td>
+          <td><%=  @sumhours8%></td>
+          <td><%= @cost_sheet.apricing8 %></td>
+          <div>
+            <% if @cost_sheet.atotal8 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@cost_sheet.atotal8, :precision => 2) %>
+              </td>
+            <%end %>
+          </div>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2"><%= @selector1[8] %></td>
+          <td><%= @estimated.adescription9 %></td>
+          <td><%= @estimated.aemp9%></td>
+          <td><%= @estimated.adays9%></td>
+          <td><%=  @estimated.ahours9 == 0 ? "" : @estimated.ahours9 %> <%= @estimated.over9 == 0 ? "" : @estimated.over9 %></td>
+          <td><%= @estimated.apricing9 %></td>
+          <% if @estimated.atotal9 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.atotal9, :precision => 2) %>
+            </td>
+          <%end %>
+          <th class="celda2"></th>
+          <td><%= @max9  %></td>
+          <td><%= @dayly_counts[8] %></td>
+          <td><%=  @sumhours9%></td>
+          <td><%= @cost_sheet.apricing9 %></td>
+          <div>
+            <% if @cost_sheet.atotal9 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@cost_sheet.atotal9, :precision => 2) %>
+              </td>
+            <%end %>
+          </div>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2"><%= @selector1[9] %></td>
+          <td><%= @estimated.adescription10 %></td>
+          <td><%= @estimated.aemp10%></td>
+          <td><%= @estimated.adays10%></td>
+          <td><%=  @estimated.ahours10 == 0 ? "" : @estimated.ahours10 %><%= @estimated.over10 == 0 ? "" : @estimated.over10 %> </td>
+          <td><%= @estimated.apricing10 %></td>
+          <% if @estimated.atotal10 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.atotal10, :precision => 2) %>
+            </td>
+          <%end %>
+          <th class="celda2"></th>
+          <td><%= @max10 %></td>
+          <td><%= @dayly_counts[9] %></td>
+          <td><%=  @sumhours10%></td>
+          <td><%= @cost_sheet.apricing10 %></td>
+          <div>
+            <% if @cost_sheet.atotal10 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@cost_sheet.atotal10, :precision => 2) %>
+              </td>
+            <%end %>
+          </div>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2"><%= @selector1[10] %></td>
+          <td><%= @estimated.adescription11 %></td>
+          <td><%= @estimated.aemp11%></td>
+          <td><%= @estimated.adays11%></td>
+          <td><%=  @estimated.ahours11 == 0 ? "" : @estimated.ahours11 %> <%= @estimated.over11 == 0 ? "" : @estimated.over11 %> </td>
+          <td><%= @estimated.apricing11 %></td>
+          <% if @estimated.atotal11 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.atotal11, :precision => 2) %>
+            </td>
+          <%end %>
+          <th class="celda2"></th>
+          <td><%= @max11 %></td>
+          <td><%= @dayly_counts[10] %></td>
+          <td><%=  @sumhours11 %></td>
+          <td><%= @cost_sheet.apricing11 %></td>
+          <div>
+            <% if @cost_sheet.atotal11 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@cost_sheet.atotal11, :precision => 2) %>
+              </td>
+            <%end %>
+          </div>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2"><%= @selector1[11] %></td>
+          <td><%= @estimated.adescription12 %></td>
+          <td><%= @estimated.aemp12%></td>
+          <td><%= @estimated.adays12%></td>
+          <td><%=  @estimated.ahours12 == 0 ? "" : @estimated.ahours12 %>  <%= @estimated.over12 == 0 ? "" : @estimated.over12 %></td>
+          <td><%= @estimated.apricing12 %></td>
+          <% if @estimated.atotal12 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.atotal12, :precision => 2) %>
+            </td>
+          <%end %>
+          <th class="celda2"></th>
+          <td><%= @max12 %></td>
+          <td><%= @dayly_counts[11] %></td>
+          <td><%=  @sumhours12%></td>
+          <td><%= @cost_sheet.apricing12 %></td>
+          <div>
+            <% if @cost_sheet.atotal12 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@cost_sheet.atotal12, :precision => 2) %>
+              </td>
+            <%end %>
+          </div>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <th class="celda2">OVER TIME</th>
+          <th class="celda2">TOTAL HOURS</th>
+          <td class="celda2">DAYS</td>
+          <td class="celda2">HOURS</td>
+          <td class="celda2">TOTAL </td>
+          <td></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>LABOR</td>
+          <td><%= @daily&.sum(:totalhoursl) || ''%></td>
+          <td><%= @overl %></td>
+          <td><%= @daily&.sum(:overl) || ''%></td>
+          <td class="celda1"><%=  number_to_currency(@cost_sheet.totalover1, :precision => 2) %> </td>
+          <td></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>OPERATOR</td>
+          <td><%= @daily&.sum(:totalhourso) || ''%></td>
+          <td><%= @overo %></td>
+          <td><%= @daily&.sum(:overo) || ''%></td>
+          <td class="celda1"><%=  number_to_currency(@cost_sheet.totalover2, :precision => 2) %></td>
+          <td></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>SUPERVISOR</td>
+          <td><%= @daily&.sum(:totalhourss) || ''%></td>
+          <td><%= @overs %></td>
+          <td><%= @daily&.sum(:overs) || ''%></td>
+          <td class="celda1"><%=  number_to_currency(@cost_sheet.totalover3, :precision => 2) %></td>
+          <td></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td >DRIVER</td>
+          <td><%= @daily&.sum(:totalhoursd) || ''%></td>
+          <td><%= @overd %></td>
+          <td><%= @daily&.sum(:overd) || ''%></td>
+          <td class="celda1"><%=  number_to_currency(@cost_sheet.totalover4, :precision => 2) %></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <th>TOTAL OVER T.</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <th ><%=  number_to_currency(@cost_sheet.totaltotalover, :precision => 2) %></th>
+          <td></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <th>ADD. DAYS C.O</th>
+          <td><%= @change_order&.sum(:corder5) || ''%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <tH>TOTAL</tH>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= number_to_currency(@estimated.atotal, :precision => 2) %></td>
+          <tH>Qty Reports</tH>
+          <td><%= @daily.count %></td>
+          <th></th>
+          <th></th>
+          <th>TOTAL</th>
+          <td><%= number_to_currency(@cost_sheet.atotal, :precision => 2) %></td>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+        <tbody>
+        <tr>
+          <tH></tH>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <tH>Last date Daily Log</tH>
+          <td><%= @daily.maximum(:date).present? ? @daily.maximum(:date).strftime('%m-%d-%y') : 0 %></td>
+          <th></th>
+          <th></th>
+          <th>DIFFERENCES</th>
+          <th><%= number_to_currency(@cost_sheet.atotalvs, :precision => 2) %></th>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+        <thead>
+        <tr>
+          <th>EQUIP.</th>
+          <th>DESCRIPTION</th>
+          <th>QTY</th>
+          <th>DAYS</th>
+          <th>QTY. GAL.</th>
+          <th> GAL. PRICE</th>
+          <th>TOTAL</th>
+          <th>EQUIP.</th>
+          <Th>DESCRIPTION</Th>
+          <th>QTY</th>
+          <th>DAYS</th>
+          <th>QTY. GAL.</th>
+          <th>TOTAL EQUIP.</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="celda2"></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <th>$ <%= @estimated.fpricing1 %></th>
+          <td></td>
+          <td class="celda2"></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <th>$ <%= @cost_sheet.fpricing1 %></th>
+          <td></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th  class="celda2">EXCAVATOR 1</th>
+          <td><%= @estimated.edescription1 %></td>
+          <td><%= @estimated.eqty1%></td>
+          <td><%= @estimated.edaywk1%></td>
+          <td><%= @estimated.eresult1%></td>
+          <td><%= @estimated.epricing1%></td>
+          <% if @estimated.etotal1 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.etotal1, :precision => 2) %>
+            </td>
+          <%end %>
+          <th class="celda2">EXCAVATOR</th>
+          <td><%= @cost_sheet.edescription1 %></td>
+          <td><%= @cost_sheet.eqty1%></td>
+          <td><%= @cost_sheet.edaywk1%></td>
+          <td><%= @cost_sheet.eresult1%></td>
+          <% if @cost_sheet.etotal1 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.etotal1, :precision => 2) %>
+            </td>
+          <%end %>
+        </tbody>
+        <tbody>
+        <tr>
+          <th  class="celda2">EXCAVATOR 2
+          </th>
+          <td><%= @estimated.edescription2 %></td>
+          <td><%= @estimated.eqty2%></td>
+          <td><%= @estimated.edaywk2%></td>
+          <td><%= @estimated.eresult2%></td>
+          <td><%= @estimated.epricing2%></td>
+          <% if @estimated.etotal2 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.etotal2, :precision => 2) %>
+            </td>
+          <%end %>
+          <th class="celda2">EXCAVATOR</th>
+          <td><%= @cost_sheet.edescription2 %></td>
+          <td><%= @cost_sheet.eqty2 %></td>
+          <td><%= @cost_sheet.edaywk2 %></td>
+          <td><%= @cost_sheet.eresult2 %></td>
+          <% if @cost_sheet.etotal2 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.etotal2, :precision => 2) %>
+            </td>
+          <%end %>
+          </tbody>
+        <tbody>
+        <tr>
+          <th  class="celda2">SCISSOR LIFT</th>
+          <td><%= @estimated.edescription3 %></td>
+          <td><%= @estimated.eqty3 %></td>
+          <td><%= @estimated.edaywk3 %></td>
+          <td><%= @estimated.eresult3 %></td>
+          <td><%= @estimated.epricing3 %></td>
+          <% if @estimated.etotal1 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.etotal3, :precision => 2) %>
+            </td>
+          <%end %>
+          <th class="celda2">SCISSOR LIFT</th>
+          <td><%= @cost_sheet.edescription3 %></td>
+          <td><%= @cost_sheet.eqty3 %></td>
+          <td><%= @cost_sheet.edaywk3 %></td>
+          <td><%= @cost_sheet.eresult3 %></td>
+          <% if @cost_sheet.etotal3 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.etotal3, :precision => 2) %>
+            </td>
+          <%end %>
+          </tbody>
+        <tbody>
+        <tr>
+          <th class="celda2">LOADER</th>
+          <td><%= @estimated.edescription4 %></td>
+          <td><%= @estimated.eqty4 %></td>
+          <td><%= @estimated.edaywk4 %></td>
+          <td><%= @estimated.eresult4 %></td>
+          <td><%= @estimated.epricing4 %></td>
+          <% if @estimated.etotal4 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.etotal4, :precision => 2) %>
+            </td>
+          <%end %>
+          <th class="celda2">LOADER</th>
+          <td><%= @cost_sheet.edescription4 %></td>
+          <td><%= @cost_sheet.eqty4%></td>
+          <td><%= @cost_sheet.edaywk4%></td>
+          <td><%= @cost_sheet.eresult4%></td>
+          <% if @cost_sheet.etotal4 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.etotal4, :precision => 2) %>
+            </td>
+          <%end %>
+          </tbody>
+        <tbody>
+        <tr>
+          <th  class="celda2">DUMP TRUCK</th>
+          <td><%= @estimated.edescription5 %></td>
+          <td><%= @estimated.eqty5 %></td>
+          <td><%= @estimated.edaywk5 %></td>
+          <td><%= @estimated.eresult5 %></td>
+          <td><%= @estimated.epricing5 %></td>
+          <% if @estimated.etotal5 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.etotal5, :precision => 2) %>
+            </td>
+          <%end %>
+          <th  class="celda2">DUMP TRUCK</th>
+          <td><%= @cost_sheet.edescription5 %></td>
+          <td><%= @cost_sheet.eqty5 %></td>
+          <td><%= @cost_sheet.edaywk5 %></td>
+          <td><%= @cost_sheet.eresult5 %></td>
+          <% if @cost_sheet.etotal5 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.etotal5, :precision => 2) %>
+            </td>
+          <%end %>
+          </tbody>
+        <tbody>
+        <tr>
+          <th  class="celda2">BOBCAT</th>
+          <td><%= @estimated.edescription6 %></td>
+          <td><%= @estimated.eqty6 %></td>
+          <td><%= @estimated.edaywk6 %></td>
+          <td><%= @estimated.eresult6 %></td>
+          <td><%= @estimated.epricing6 %></td>
+          <% if @estimated.etotal6 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.etotal6, :precision => 2) %>
+            </td>
+          <%end %>
+          <th  class="celda2">BOBCAT</th>
+          <td><%= @cost_sheet.edescription6 %></td>
+          <td><%= @cost_sheet.eqty6%></td>
+          <td><%= @cost_sheet.edaywk6%></td>
+          <td><%= @cost_sheet.eresult6%></td>
+          <% if @cost_sheet.etotal6 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.etotal6, :precision => 2) %>
+            </td>
+          <%end %>
+          </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">UTILITY TRUCK</td>
+          <td><%= @estimated.edescription12 %></td>
+          <td><%= @estimated.eqty12 %></td>
+          <td><%= @estimated.edaywk12 %></td>
+          <td><%= @estimated.eresult12 %></td>
+          <td><%= @estimated.epricing12 %></td>
+          <% if @estimated.etotal12 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.etotal12, :precision => 2) %>
+            </td>
+          <%end %>
+          <td class="celda2">UTILITY TRUCK</td>
+          <td><%= @cost_sheet.edescription12 %></td>
+          <td><%= @cost_sheet.eqty12%></td>
+          <td><%= @cost_sheet.edaywk12%></td>
+          <td><%= @cost_sheet.eresult12%></td>
+          <% if @cost_sheet.etotal12 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.etotal12, :precision => 2) %>
+            </td>
+          <%end %>
+          </tbody>
+        <tbody>
+        <tr>
+          <th  class="celda2">FLOOR SCRAPER</th>
+          <td><%= @estimated.edescription7 %></td>
+          <td><%= @estimated.eqty7 %></td>
+          <td><%= @estimated.edaywk7 %></td>
+          <td><%= @estimated.eresult7 %></td>
+          <td><%= @estimated.epricing7 %></td>
+          <% if @estimated.etotal7 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.etotal7, :precision => 2) %>
+            </td>
+          <%end %>
+          <th  class="celda2">FLOOR SCRAPER</th>
+          <td><%= @cost_sheet.edescription7 %></td>
+          <td><%= @cost_sheet.eqty7%></td>
+          <td><%= @cost_sheet.edaywk7%></td>
+          <td><%= @cost_sheet.eresult7%></td>
+          <% if @cost_sheet.etotal7 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.etotal7, :precision => 2) %>
+            </td>
+          <%end %>
+          </tbody>
+        <tbody>
+        <tr>
+          <th  class="celda2">WATER TRUCK</th>
+          <td><%= @estimated.edescription8 %></td>
+          <td><%= @estimated.eqty8 %></td>
+          <td><%= @estimated.edaywk8 %></td>
+          <td><%= @estimated.eresult8 %></td>
+          <td><%= @estimated.epricing8 %></td>
+          <% if @estimated.etotal8 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.etotal8, :precision => 2) %>
+            </td>
+          <%end %>
+          <th  class="celda2">WATER TRUCK</th>
+          <td><%= @cost_sheet.edescription8 %></td>
+          <td><%= @cost_sheet.eqty8%></td>
+          <td><%= @cost_sheet.edaywk8%></td>
+          <td><%= @cost_sheet.eresult8%></td>
+          <% if @cost_sheet.etotal8 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.etotal8, :precision => 2) %>
+            </td>
+          <%end %>
+          </tbody>
+        <tbody>
+        <tr>
+          <th  class="celda2">COMPRESSOR</th>
+          <td><%= @estimated.edescription9 %></td>
+          <td><%= @estimated.eqty9 %></td>
+          <td><%= @estimated.edaywk9 %></td>
+          <td><%= @estimated.eresult9 %></td>
+          <td><%= @estimated.epricing9 %></td>
+          <% if @estimated.etotal9 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.etotal4, :precision => 2) %>
+            </td>
+          <%end %>
+          <th  class="celda2">COMPRESSOR</th>
+          <td><%= @cost_sheet.edescription9 %></td>
+          <td><%= @cost_sheet.eqty9%></td>
+          <td><%= @cost_sheet.edaywk9%></td>
+          <td><%= @cost_sheet.eresult9%></td>
+          <% if @cost_sheet.etotal9 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.etotal9, :precision => 2) %>
+            </td>
+          <%end %>
+          </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2"><%= @estimated.edefault10 %></td>
+          <td><%= @estimated.edescription10 %></td>
+          <td><%= @estimated.eqty10 %></td>
+          <td><%= @estimated.edaywk10 %></td>
+          <td><%= @estimated.eresult10 %></td>
+          <td><%= @estimated.epricing10 %></td>
+          <% if @estimated.etotal10 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.etotal10, :precision => 2) %>
+            </td>
+          <%end %>
+          <td class="celda2"><%= @estimated.edefault10 %></td>
+          <td><%= @cost_sheet.edescription10 %></td>
+          <td><%= @cost_sheet.eqty10 %></td>
+          <td><%= @cost_sheet.edaywk10%></td>
+          <td><%= @cost_sheet.eresult10%></td>
+          <% if @cost_sheet.etotal10 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.etotal10, :precision => 2) %>
+            </td>
+          <%end %>
+          </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2"><%= @estimated.edefault11 %></td>
+          <td><%= @estimated.edescription11 %></td>
+          <td><%= @estimated.eqty11 %></td>
+          <td><%= @estimated.edaywk11 %></td>
+          <td><%= @estimated.eresult11 %></td>
+          <td><%= @estimated.epricing11 %></td>
+          <% if @estimated.etotal11 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.etotal4, :precision => 2) %>
+            </td>
+          <%end %>
+          <td class="celda2"><%= @estimated.edefault11 %></td>
+          <td><%= @cost_sheet.edescription11 %></td>
+          <td><%= @cost_sheet.eqty11%></td>
+          <td><%= @cost_sheet.edaywk11%></td>
+          <td><%= @cost_sheet.eresult11%></td>
+          <% if @cost_sheet.etotal11 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.etotal11, :precision => 2) %>
+            </td>
+          <%end %>
+          </tbody>
+        <tbody>
+        <tbody>
+        <tr>
+          <td class="celda2"></td>
+          <td></td>
+          <td></td>
+          <th>TOTAL GAL.</th>
+          <th><%= @estimated.totalfuel %></th>
+          <td></td>
+          <td></td>
+          <td class="celda2"></td>
+          <td></td>
+          <td></td>
+          <th>TOTAL GAL.</th>
+          <td><%= @cost_sheet.totalfuel %></td>
+          <td></td>
+        </tr>
+        </tbody>
+        <tr>
+          <tH>TOTAL</tH>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+            <% if @estimated.etotal == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.etotal, :precision => 2) %>
+              </td>
+            <%end %>
+          <tH>TOTAL</tH>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <td><%= number_to_currency(@cost_sheet.etotal, :precision => 2) %></td>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+        <tbody>
+        <tr>
+          <tH></tH>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <tH></tH>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>DIFFERENCES</th>
+          <th><%= number_to_currency(@cost_sheet.etotalvs, :precision => 2) %></th>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+        <thead>
+        <tr>
+          <th>SAW-CUTTING</th>
+          <th>DESCRIPTION</th>
+          <th>QTY/SF/LF</th>
+          <th>DAYS</th>
+          <TH></TH>
+          <th>UNIT.PRICE</th>
+          <th>TOTAL</th>
+          <th>SAW-CUTTING</th>
+          <th>DESCRIPTION</th>
+          <th>QTY/SF/LF</th>
+          <th>DAYS</th>
+          <th>UNIT.PRICE</th>
+          <th>TOTAL</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="celda2"><%= @estimated.saw1 %></td>
+          <td><%= @estimated.sdescription1 %></td>
+          <td><%= @estimated.sqtysflf1%></td>
+          <td><%= @estimated.sdays1%></td>
+          <td></td>
+          <td><%= @estimated.spricing1%></td>
+            <% if @estimated.stotal1 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.stotal1, :precision => 2) %>
+              </td>
+            <%end %>
+          <th class="celda2"><%= @cost_sheet.saw1 %></th>
+          <td><%= @cost_sheet.sdescription1 %></td>
+          <td><%= @cost_sheet.sqtysflf1    %></td>
+          <td><%= @cost_sheet.sdays1   %></td>
+          <td><%= @cost_sheet.spricing1  %></td>
+          <% if @cost_sheet.stotal1 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.stotal1, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2"><%= @estimated.saw2 %></td>
+          <td><%= @estimated.sdescription2 %></td>
+          <td><%= @estimated.sqtysflf2%></td>
+          <td><%= @estimated.sdays2%></td>
+          <td></td>
+          <td><%= @estimated.spricing2%></td>
+          <% if @estimated.stotal2 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.stotal2, :precision => 2) %>
+            </td>
+          <%end %>
+          <th class="celda2"><%= @cost_sheet.saw3 %></th>
+          <td><%= @cost_sheet.sdescription2 %></td>
+          <td><%= @cost_sheet.sqtysflf3 %></td>
+          <td><%= @cost_sheet.sdays3   %></td>
+          <td><%= @cost_sheet.spricing3  %></td>
+          <% if @cost_sheet.stotal3 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.stotal3, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2"><%= @estimated.saw3 %></td>
+          <td><%= @estimated.sdescription3 %></td>
+          <td><%= @estimated.sqtysflf3 %></td>
+          <td><%= @estimated.sdays3 %></td>
+          <td></td>
+          <td><%= @estimated.spricing3 %></td>
+          <% if @estimated.stotal3 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.stotal3, :precision => 2) %>
+            </td>
+          <%end %>
+          <th class="celda2"><%= @cost_sheet.saw3 %></th>
+          <td><%= @cost_sheet.sdescription3 %></td>
+          <td><%= @cost_sheet.sqtysflf3    %></td>
+          <td><%= @cost_sheet.sdays3   %></td>
+          <td><%= @cost_sheet.spricing3  %></td>
+          <% if @cost_sheet.stotal3 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.stotal3, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <tH>TOTAL</tH>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= number_to_currency(@estimated.stotal, :precision => 2) %></td>
+          <tH>TOTAL</tH>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <td><%= number_to_currency(@cost_sheet.stotal, :precision => 2) %></td>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+        <tbody>
+        <tr>
+          <tH></tH>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>DIFFERENCES</th>
+          <th><%= number_to_currency(@cost_sheet.stotalvs, :precision => 2) %></th>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+        <thead>
+        <tr>
+          <th>MATERIAL</th>
+          <th>DESCRIPTION</th>
+          <th>QTY/YDS</th>
+          <th></th>
+          <th></th>
+          <th>UNIT.PRICE</th>
+          <th>TOTAL</th>
+          <th>MATERIAL</th>
+          <th>DESCRIPTION</th>
+          <th>QTY/YDS</th>
+          <th></th>
+          <th></th>
+          <th>TOTAL</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="celda2">TRASH / C&D</td>
+          <td><%= @estimated.tdescription1%></td>
+          <td  id = "trash1"><%= @estimated.tqtyyds1%></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.tpricing1 %></td>
+            <% if @estimated.ttotal1 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.ttotal1, :precision => 2) %>
+              </td>
+            <%end %>
+          <td class="celda2">TRASH / C&D</td>
+          <td><%= @cost_sheet.tdescription1%></td>
+          <td id = "trash2"><%= @cost_sheet.tqtyyds1 %></td>
+          <td></td>
+          <td></td>
+          <% if @cost_sheet.ttotal1 == 0.0 %>
+            <td id = "trash3">
+            </td>
+          <%else %>
+            <td id = "trash3">
+              <%= number_to_currency(@cost_sheet.ttotal1, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody >
+        <tr>
+          <td class="celda2">TREE / VEGETATION</td>
+          <td><%= @estimated.tdescription2%></td>
+          <td  id = "tree1"><%= @estimated.tqtyyds2%></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.tpricing2 %></td>
+            <% if @estimated.ttotal2 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.ttotal2, :precision => 2) %>
+              </td>
+            <%end %>
+          <td class="celda2">TREE / VEGETATION</td>
+          <td><%= @cost_sheet.tdescription2%></td>
+          <td  id = "tree2"><%= @cost_sheet.tqtyyds2 %></td>
+          <td></td>
+          <td></td>
+          <% if @cost_sheet.ttotal2 == 0.0 %>
+            <td  id = "tree3">
+            </td>
+          <%else %>
+            <td  id = "tree3">
+              <%= number_to_currency(@cost_sheet.ttotal2, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">CONCRETE</td>
+          <td><%= @estimated.tdescription3%></td>
+          <td id = "concrete1"><%= @estimated.tqtyyds3%></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.tpricing3 %></td>
+            <% if @estimated.ttotal3 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.ttotal3, :precision => 2) %>
+              </td>
+            <%end %>
+          <td class="celda2">CONCRETE</td>
+          <td><%= @cost_sheet.tdescription3%></td>
+          <td id = "concrete2"><%= @cost_sheet.tqtyyds3 %></td>
+          <td></td>
+          <td></td>
+          <% if @cost_sheet.ttotal3 == 0.0 %>
+            <td id = "concrete3">
+            </td>
+          <%else %>
+            <td id = "concrete3">
+              <%= number_to_currency(@cost_sheet.ttotal3, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">CONCRETE / REBAR</td>
+          <td><%= @estimated.tdescription6%></td>
+          <td id = "rebar1"><%= @estimated.tqtyyds6%></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.tpricing6 %></td>
+          <% if @estimated.ttotal6 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.ttotal6, :precision => 2) %>
+            </td>
+          <%end %>
+          <td class="celda2">CONCRETE / REBAR</td>
+          <td><%= @cost_sheet.tdescription6%></td>
+          <td id = "rebar2"><%= @cost_sheet.tqtyyds6 %></td>
+          <td></td>
+          <td></td>
+          <% if @cost_sheet.ttotal6 == 0.0 %>
+            <td id = "rebar3">
+            </td>
+          <%else %>
+            <td id = "rebar3">
+              <%= number_to_currency(@cost_sheet.ttotal6, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">ASPHALT</td>
+          <td><%= @estimated.tdescription4%></td>
+          <td  id = "asphalt1"><%= @estimated.tqtyyds4%></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.tpricing4 %></td>
+            <% if @estimated.ttotal4 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.ttotal4, :precision => 2) %>
+              </td>
+            <%end %>
+          <td class="celda2">ASPHALT</td>
+          <td><%= @cost_sheet.tdescription4 %></td>
+          <td id = "asphalt2"><%= @cost_sheet.tqtyyds4 %></td>
+          <td></td>
+          <td></td>
+          <% if @cost_sheet.ttotal4 == 0.0 %>
+            <td id = "asphalt3">
+            </td>
+          <%else %>
+            <td id = "asphalt3">
+              <%= number_to_currency(@cost_sheet.ttotal4, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">FILL</td>
+          <td><%= @estimated.mdescription1 %></td>
+          <td id = "fill1"><%= @estimated.mqtysfft1 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.mpricing1 %></td>
+          <% if @estimated.mtotal1 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.mtotal1, :precision => 2) %>
+            </td>
+          <%end %>
+          <td class="celda2">FILL</td>
+          <td><%= @cost_sheet.mdescription1%></td>
+          <td id = "fill2"><%= @cost_sheet.mqtysfft1   %></td>
+          <td></td>
+          <td></td>
+          <% if @cost_sheet.mtotal1 == 0.0 %>
+            <td id = "fill3">
+            </td>
+          <%else %>
+            <td  id = "fill3">
+              <%= number_to_currency(@cost_sheet.mtotal1, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <tH>TOTAL</tH>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= number_to_currency(@estimated.ttotal, :precision => 2) %></td>
+          <th>TOTAL</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <td><%= number_to_currency(@cost_sheet.ttotal, :precision => 2) %></td>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+        <tbody>
+        <tr>
+          <tH></tH>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <tH></tH>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>DIFFERENCES</th>
+          <th><%= number_to_currency(@cost_sheet.ttotalvs, :precision => 2) %></th>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+        <thead>
+        <tr>
+          <th>PERMITS</th>
+          <th>DESCRIPTION</th>
+          <th>QTY</th>
+          <th></th>
+          <th></th>
+          <th>UNIT.PRICE</th>
+          <th>TOTAL</th>
+          <th>PERMITS</th>
+          <th>DESCRIPTION</th>
+          <th>QTY</th>
+          <th></th>
+          <th>UNIT.PRICE</th>
+          <th>TOTAL</th>
+        </tr>
+        </thead>
+        <tbody >
+        <tr>
+          <td class="celda2">DEMO</td>
+          <td><%= @estimated.pdescription1 %></td>
+          <td><%= @estimated.pqty1%></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.ppricing1 %></td>
+            <% if @estimated.ptotal1 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.ptotal1, :precision => 2) %>
+              </td>
+            <%end %>
+          <td class="celda2">DEMO</td>
+          <td><%= @cost_sheet.pdescription1 %></td>
+          <td><%= @cost_sheet.pqty1 %></td>
+          <td></td>
+          <td><%= @cost_sheet.ppricing1 %></td>
+          <% if @cost_sheet.ptotal1 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.ptotal1, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">PLUMBING</td>
+          <td><%= @estimated.pdescription2 %></td>
+          <td><%= @estimated.pqty2%></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.ppricing2 %></td>
+            <% if @estimated.ptotal2 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.ptotal2, :precision => 2) %>
+              </td>
+            <%end %>
+          <td class="celda2">PLUMBING</td>
+          <td><%= @cost_sheet.pdescription2 %></td>
+          <td><%= @cost_sheet.pqty2  %></td>
+          <td></td>
+          <td><%= @cost_sheet.ppricing2 %></td>
+          <% if @cost_sheet.ptotal2 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.ptotal2, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">SEPTIC</td>
+          <td><%= @estimated.pdescription8 %></td>
+          <td><%= @estimated.pqty8%></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.ppricing8 %></td>
+          <% if @estimated.ptotal8 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.ptotal2, :precision => 2) %>
+            </td>
+          <%end %>
+          <td class="celda2">SEPTIC</td>
+          <td><%= @cost_sheet.pdescription8 %></td>
+          <td><%= @cost_sheet.pqty8  %></td>
+          <td></td>
+          <td><%= @cost_sheet.ppricing8 %></td>
+          <% if @cost_sheet.ptotal8 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.ptotal8, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">ELECTICAL</td>
+          <td><%= @estimated.pdescription3 %></td>
+          <td><%= @estimated.pqty3%></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.ppricing3 %></td>
+            <% if @estimated.ptotal3 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.ptotal3, :precision => 2) %>
+              </td>
+            <%end %>
+          <td class="celda2">ELECTICAL</td>
+          <td><%= @cost_sheet.pdescription3 %></td>
+          <td><%= @cost_sheet.pqty3 %></td>
+          <td></td>
+          <td><%= @cost_sheet.ppricing3 %></td>
+          <% if @cost_sheet.ptotal3 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.ptotal3, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">DERM</td>
+          <td><%= @estimated.pdescription4 %></td>
+          <td><%= @estimated.pqty4%></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.ppricing4 %></td>
+            <% if @estimated.ptotal4 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.ptotal4, :precision => 2) %>
+              </td>
+            <%end %>
+          <td class="celda2">DERM</td>
+          <td><%= @cost_sheet.pdescription4 %></td>
+          <td><%= @cost_sheet.pqty4   %></td> 
+          <td></td>
+          <td><%= @cost_sheet.ppricing4  %></td>
+          <% if @cost_sheet.ptotal4 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.ptotal4, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">TREE</td>
+          <td><%= @estimated.pdescription5 %></td>
+          <td><%= @estimated.pqty5 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.ppricing5 %></td>
+            <% if @estimated.ptotal5 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.ptotal5, :precision => 2) %>
+              </td>
+            <%end %>
+          <td class="celda2">TREE</td>
+          <td><%= @cost_sheet.pdescription5 %></td>
+          <td><%= @cost_sheet.pqty5 %></td>
+          <td></td>
+          <td><%= @cost_sheet.ppricing5  %></td>
+          <% if @cost_sheet.ptotal5 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.ptotal5, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">MECHANICAL</td>
+          <td><%= @estimated.pdescription6 %></td>
+          <td><%= @estimated.pqty6%></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.ppricing6 %></td>
+            <% if @estimated.ptotal6 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.ptotal6, :precision => 2) %>
+              </td>
+            <%end %>
+          <td class="celda2">MECHANICAL</td>
+          <td><%= @cost_sheet.pdescription6 %></td>
+          <td><%= @cost_sheet.pqty6 %></td> 
+          <td></td>
+          <td><%= @cost_sheet.ppricing6 %></td>
+          <% if @cost_sheet.ptotal6 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.ptotal6, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">MOT</td>
+          <td><%= @estimated.pdescription7 %></td>
+          <td><%= @estimated.pqty7 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.ppricing7 %></td>
+          <% if @estimated.ptotal7 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.ptotal7, :precision => 2) %>
+            </td>
+          <%end %>
+          <td class="celda2">MOT</td>
+          <td><%= @cost_sheet.pdescription7 %></td>
+          <td><%= @cost_sheet.pqty7 %></td>
+          <td></td>
+          <td><%= @cost_sheet.ppricing7 %></td>
+          <% if @cost_sheet.ptotal7 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.ptotal7, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <tH>TOTAL</tH>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= number_to_currency(@estimated.pptotal, :precision => 2) %></td>
+          <tH>TOTAL</tH>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <td><%= number_to_currency(@cost_sheet.pptotal, :precision => 2) %></td>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+
+        <tbody>
+        <tr>
+          <tH></tH>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>DIFFERENCES</th>
+          <th><%= number_to_currency(@cost_sheet.ptotalvs, :precision => 2) %></th>
+        </tr>
+        </tbody>
+         <tr style="height: 20px;"></tr>
+         <thead>
+            <tr>
+              <th>ERROSION CONTROL</th>
+              <th>DESCRIPTION</th>
+              <th>QTY</th>
+              <th></th>
+              <th></th>
+              <th>UNIT.PRICE</th>
+              <th>TOTAL</th>
+               <th>ERROSION CONTROL</th>
+              <th>DESCRIPTION</th>
+              <th>QTY</th>
+              <th></th>
+              <th>UNIT.PRICE</th>
+              <th>TOTAL</th>
+            </tr>
+         </thead>
+        <tbody>
+        <tr>
+          <td class="celda2">SILT FENCE</td>
+          <td><%= @estimated.mdescription2 %></td>
+          <td><%= @estimated.mqtysfft2 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.mpricing2 %></td>
+            <% if @estimated.mtotal2 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.mtotal2, :precision => 2) %>
+              </td>
+            <%end %>
+          <td class="celda2">SILT FENCE</td>
+          <td><%= @cost_sheet.mdescription2 %></td>
+          <td><%= @cost_sheet.mqtysfft2   %></td>  
+          <td></td>
+          <td><%= @cost_sheet.mpricing2  %></td>
+          <% if @cost_sheet.mtotal2 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.mtotal2, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">ROCK</td>
+          <td><%= @estimated.tdescription5 %></td>
+          <td id = "rock1"><%= @estimated.tqtysfft5 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.tpricing5 %></td>
+          <% if @estimated.ttotal5 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.ttotal5, :precision => 2) %>
+            </td>
+          <%end %>
+          <td class="celda2">ROCK</td>
+          <td><%= @cost_sheet.tdescription5%></td>
+          <td id = "rock2"><%= @cost_sheet.tqtysfft5 %></td>
+          <td></td>
+          <td></td>
+          <% if @cost_sheet.ttotal5 == 0.0 %>
+            <td id = "rock3">
+            </td>
+          <%else %>
+            <td  id = "rock3">
+              <%= number_to_currency(@cost_sheet.ttotal5, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+         <tbody>
+        <tr>
+           <td class="celda2">FILTER FABRIC</td>
+          <td><%= @estimated.ec_description3 %></td>
+          <td><%= @estimated.ec_qty3 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.ec_pricing3 %></td>
+            <% if @estimated.ec_total3 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.ec_total3, :precision => 2) %>
+              </td>
+            <%end %>
+         <td class="celda2">FILTER FABRIC</td>
+          <td><%= @cost_sheet.ec_description3 %></td>
+          <td><%= @cost_sheet.ec_qty3   %></td>  
+          <td></td>
+          <td><%= @cost_sheet.ec_pricing3  %></td>
+          <% if @cost_sheet.ec_total3 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.ec_total3, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+         <tbody>
+        <tr>
+         <td class="celda2">TURBIDITY CURTIN</td>
+          <td><%= @estimated.ec_description4 %></td>
+          <td><%= @estimated.ec_qty4 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.ec_pricing4 %></td>
+            <% if @estimated.ec_total4 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.ec_total3, :precision => 2) %>
+              </td>
+            <%end %>
+          <td class="celda2">TURBIDITY CURTIN</td>
+          <td><%= @cost_sheet.ec_description4 %></td>
+          <td><%= @cost_sheet.ec_qty4   %></td>  
+          <td></td>
+          <td><%= @cost_sheet.ec_pricing4  %></td>
+          <% if @cost_sheet.ec_total4 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.ec_total4, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+         <td class="celda2">GUTTER BUDDY</td>
+          <td><%= @estimated.ec_description5 %></td>
+          <td><%= @estimated.ec_qty5 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.ec_pricing5 %></td>
+            <% if @estimated.ec_total5 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.ec_total3, :precision => 2) %>
+              </td>
+            <%end %>
+          <td class="celda2">GUTTER BUDDY</td>
+          <td><%= @cost_sheet.ec_description5 %></td>
+          <td><%= @cost_sheet.ec_qty5   %></td>  
+          <td></td>
+          <td><%= @cost_sheet.ec_pricing5  %></td>
+          <% if @cost_sheet.ec_total5 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.ec_total5, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">SOD / HYDRO,SEEDS</td>
+          <td><%= @estimated.mdescription9 %></td>
+          <td><%= @estimated.mqtysfft9 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.mpricing9 %></td>
+          <% if @estimated.mtotal9 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.mtotal9, :precision => 2) %>
+            </td>
+          <%end %>
+          <td class="celda2">SOD / HYDRO,SEEDS</td>
+          <td><%= @cost_sheet.mdescription9 %></td>
+          <td><%= @cost_sheet.mqtysfft9 %></td>
+          <td></td>
+          <td><%= @cost_sheet.mpricing9  %></td>
+          <% if @cost_sheet.mtotal9 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.mtotal9, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <tH>TOTAL</tH>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= number_to_currency(@estimated.ec_total, :precision => 2) %></td>
+          <th>TOTAL</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <td><%= number_to_currency(@cost_sheet.ec_total, :precision => 2) %></td>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+        <tbody>
+        <tr>
+          <tH></tH>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <tH></tH>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>DIFFERENCES</th>
+          <th><%= number_to_currency(@cost_sheet.ec_totalvs, :precision => 2) %></th>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+         <thead>
+            <tr>
+              <th>TEMP FENCE</th>
+              <th>DESCRIPTION</th>
+              <th>QTY</th>
+              <th></th>
+              <th></th>
+              <th>UNIT.PRICE</th>
+              <th>TOTAL</th>
+               <th>TEMP FENCE</th>
+              <th>DESCRIPTION</th>
+              <th>QTY</th>
+              <th></th>
+              <th>UNIT.PRICE</th>
+              <th>TOTAL</th>
+            </tr>
+            </thead>
+        <tbody>
+        <tr>
+          <td class="celda2">POLICE FEE</td>
+          <td><%= @estimated.mdescription31 %></td>
+          <td><%= @estimated.mqtysfft31 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.mpricing31 %></td>
+          <% if @estimated.mtotal31 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.mtotal31, :precision => 2) %>
+            </td>
+          <%end %>
+          <td class="celda2">POLICE FEE</td>
+          <td><%= @cost_sheet.mdescription31 %></td>
+          <td><%= @cost_sheet.mqtysfft31 %></td>
+          <td></td>
+          <td><%= @cost_sheet.mpricing31  %></td>
+          <% if @cost_sheet.mtotal31 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.mtotal31, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+            <tbody>
+        <tr>
+          <td class="celda2">CHAIN LINK FENCE</td>
+          <td><%= @estimated.mdescription3 %></td>
+          <td><%= @estimated.mqtysfft3 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.mpricing3 %></td>
+            <% if @estimated.mtotal3 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.mtotal3, :precision => 2) %>
+              </td>
+            <%end %>
+          <td class="celda2">CHAIN LINK FENCE</td>
+          <td><%= @cost_sheet.mdescription3 %></td>
+          <td><%= @cost_sheet.mqtysfft3   %></td> 
+          <td></td>
+          <td><%= @cost_sheet.mpricing3  %></td>
+          <% if @cost_sheet.mtotal3 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.mtotal3, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+
+        
+        <tbody>
+        <tr>
+          <tH>TOTAL</tH>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= number_to_currency(@estimated.tf_total, :precision => 2) %></td>
+          <th>TOTAL</th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <td><%= number_to_currency(@cost_sheet.tf_total, :precision => 2) %></td>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+        <tbody>
+        <tr>
+          <tH></tH>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <tH></tH>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>DIFFERENCES</th>
+          <th><%= number_to_currency(@cost_sheet.tf_totalvs, :precision => 2) %></th>
+        </tr>
+        </tbody>
+         <tr style="height: 20px;"></tr>
+          <thead>
+                <tr>
+                  <th>OUT OF TOWN</th>
+                  <th>DESCRIPTION</th>
+                  <th>QTY</th>
+                  <th></th>
+                  <th></th>
+                  <th>UNIT.PRICE</th>
+                  <th>TOTAL</th>
+                 <th>OUT OF TOWN</th>
+                  <th>DESCRIPTION</th>
+                  <th>QTY</th>
+                  <th></th>
+                  <th>UNIT.PRICE</th>
+                  <th>TOTAL</th>
+                </tr>
+              </thead>
+              <tbody>
+        <tr>
+          <td class="celda2">HOTEL</td>
+          <td><%= @estimated.mdescription17 %></td>
+          <td><%= @estimated.mqtysfft17 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.mpricing17 %></td>
+          <% if @estimated.mtotal7 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.mtotal17, :precision => 2) %>
+            </td>
+          <%end %>
+          <th class="celda2">HOTEL</th>
+          <td><%= @cost_sheet.mdescription17 %></td>
+          <td><%= @cost_sheet.mqtysfft17  %></td>
+          <td></td>
+          <td><%= @cost_sheet.mpricing17  %></td>
+          <% if @cost_sheet.mtotal17 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.mtotal17, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+          <tbody>
+        <tr>
+          <td class="celda2">MOBILIZATION</td>
+          <td><%= @estimated.mov_pdescription2 %></td>
+          <td><%= @estimated.mov_pqty2 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.mov_pricing2 %></td>
+          <% if @estimated.mov_total2 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.mov_total2, :precision => 2) %>
+            </td>
+          <%end %>
+          <td class="celda2">MOBILIZATION</td>
+          <td><%= @cost_sheet.mov_pdescription2 %></td>
+          <td><%= @cost_sheet.mov_pqty2  %></td>
+          <td></td>
+          <td><%= @cost_sheet.mov_pricing2  %></td>
+          <% if @cost_sheet.mov_total2 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.mov_total2, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">PERDIEM</td>
+          <td><%= @estimated.mov_pdescription3 %></td>
+          <td><%= @estimated.mov_pqty3 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.mov_pricing3 %></td>
+          <% if @estimated.mov_total3 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.mov_total3, :precision => 2) %>
+            </td>
+          <%end %>
+          <td class="celda2">PERDIEM</td>
+          <td><%= @cost_sheet.mov_pdescription3 %></td>
+          <td><%= @cost_sheet.mov_pqty3  %></td>
+          <td></td>
+          <td><%= @cost_sheet.mov_pricing3  %></td>
+          <% if @cost_sheet.mov_total3 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.mov_total3, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+         <tbody>
+        <tr>
+          <tH>TOTAL</tH>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= number_to_currency(@estimated.per_total, :precision => 2) %></td>
+          <tH>TOTAL</tH>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <td><%= number_to_currency(@cost_sheet.per_total, :precision => 2) %></td>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+        <tbody>
+        <tr>
+          <tH></tH>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>DIFFERENCES</th>
+          <th><%= number_to_currency(@cost_sheet.per_totalvs, :precision => 2) %></th>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+        <thead>
+        <tr>
+          <th>MISCELLANEOUS</th>
+          <th>DESCRIPTION</th>
+          <th>QTY/SF/FT</th>
+          <th></th>
+          <th></th>
+          <th>UNIT.PRICE</th>
+          <th>TOTAL</th>
+          <th>MISCELLANEOUS</th>
+          <th>DESCRIPTION</th>
+          <th>QTY/SF/FT</th>
+          <th></th>
+          <th>UNIT.PRICE</th>
+          <th>TOTAL</th>
+        </tr>
+        </thead>
+        
+        <tbody>
+        <tr>
+          <td class="celda2">ASBESTOS</td>
+          <td><%= @estimated.mdescription4 %></td>
+          <td><%= @estimated.mqtysfft4 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.mpricing4 %></td>
+            <% if @estimated.mtotal4 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.mtotal4, :precision => 2) %>
+              </td>
+            <%end %>
+          <td class="celda2">ASBESTOS</td>
+          <td><%= @cost_sheet.mdescription4 %></td>
+          <td><%= @cost_sheet.mqtysfft4 %></td> 
+          <td></td>
+          <td><%= @cost_sheet.mpricing4  %></td>
+          <% if @cost_sheet.mtotal4 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.mtotal4, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+      
+        <tbody>
+        <tr>
+          <td class="celda2">FREON REMOVAL</td>
+          <td><%= @estimated.mdescription11 %></td>
+          <td><%= @estimated.mqtysfft11 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.mpricing11 %></td>
+          <% if @estimated.mtotal11 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.mtotal11, :precision => 2) %>
+            </td>
+          <%end %>
+          <td class="celda2">FREON REMOVAL</td>
+          <td><%= @cost_sheet.mdescription11 %></td>
+          <td><%= @cost_sheet.mqtysfft11 %></td>
+          <td></td>
+          <td><%= @cost_sheet.mpricing11  %></td>
+          <% if @cost_sheet.mtotal11 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.mtotal11, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">PUMP-OUT</td>
+          <td><%= @estimated.mdescription5 %></td>
+          <td><%= @estimated.mqtysfft5 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.mpricing5 %></td>
+            <% if @estimated.mtotal5 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.mtotal5, :precision => 2) %>
+              </td>
+            <%end %>
+          <td class="celda2">PUMP-OUT</td>
+          <td><%= @cost_sheet.mdescription5 %></td>
+          <td><%= @cost_sheet.mqtysfft5    %></td>
+          <td></td>
+          <td><%= @cost_sheet.mpricing5  %></td>
+          <% if @cost_sheet.mtotal5 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.mtotal5, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">TORCHING</td>
+          <td><%= @estimated.mdescription7 %></td>
+          <td><%= @estimated.mqtysfft7 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.mpricing7 %></td>
+            <% if @estimated.mtotal7 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.mtotal7, :precision => 2) %>
+              </td>
+            <%end %>
+          <th class="celda2">TORCHING</th>
+          <td><%= @cost_sheet.mdescription7 %></td>
+          <td><%= @cost_sheet.mqtysfft7  %></td>
+          <td></td>
+          <td><%= @cost_sheet.mpricing7  %></td>
+          <% if @cost_sheet.mtotal7 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.mtotal7, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">TRASH CHUTE</td>
+          <td><%= @estimated.mdescription8 %></td>
+          <td><%= @estimated.mqtysfft8 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.mpricing8 %></td>
+            <% if @estimated.mtotal8 == 0.0 %>
+              <td>
+              </td>
+            <%else %>
+              <td>
+                <%= number_to_currency(@estimated.mtotal8, :precision => 2) %>
+              </td>
+            <%end %>
+          <th class="celda2">TRASH CHUTE</th>
+          <td><%= @cost_sheet.mdescription8 %></td>
+          <td><%= @cost_sheet.mqtysfft8    %></td>
+          <td></td>
+          <td><%= @cost_sheet.mpricing8  %></td>
+          <% if @cost_sheet.mtotal8 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.mtotal8, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">TEMP BATHS</td>
+          <td><%= @estimated.mdescription18 %></td>
+          <td><%= @estimated.mqtysfft18 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.mpricing18 %></td>
+          <% if @estimated.mtotal18 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.mtotal18, :precision => 2) %>
+            </td>
+          <%end %>
+          <th class="celda2">TEMP BATHS</th>
+          <td><%= @cost_sheet.mdescription18 %></td>
+          <td><%= @cost_sheet.mqtysfft18 %></td>
+          <td></td>
+          <td><%= @cost_sheet.mpricing18  %></td>
+          <% if @cost_sheet.mtotal18 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.mtotal18, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">BARRICANES</td>
+          <td><%= @estimated.mdescription19 %></td>
+          <td><%= @estimated.mqtysfft19 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.mpricing19 %></td>
+          <% if @estimated.mtotal19 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.mtotal19, :precision => 2) %>
+            </td>
+          <%end %>
+          <th class="celda2">BARRICANES</th>
+          <td><%= @cost_sheet.mdescription19 %></td>
+          <td><%= @cost_sheet.mqtysfft19 %></td>
+          <td></td>
+          <td><%= @cost_sheet.mpricing19  %></td>
+          <% if @cost_sheet.mtotal19 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.mtotal19, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">COVERED WALKWAY</td>
+          <td><%= @estimated.mdescription20 %></td>
+          <td><%= @estimated.mqtysfft20 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.mpricing20 %></td>
+          <% if @estimated.mtotal20 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.mtotal20, :precision => 2) %>
+            </td>
+          <%end %>
+          <th class="celda2">COVERED WALKWAY</th>
+          <td><%= @cost_sheet.mdescription20 %></td>
+          <td><%= @cost_sheet.mqtysfft20 %></td>
+          <td></td>
+          <td><%= @cost_sheet.mpricing20  %></td>
+          <% if @cost_sheet.mtotal20 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.mtotal20, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">TRIMMING / GRINDING</td>
+          <td><%= @estimated.mdescription32 %></td>
+          <td><%= @estimated.mqtysfft32 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.mpricing32 %></td>
+          <% if @estimated.mtotal32 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.mtotal32, :precision => 2) %>
+            </td>
+          <%end %>
+          <th class="celda2">TRIMMING / GRINDING</th>
+          <td><%= @cost_sheet.mdescription32 %></td>
+          <td><%= @cost_sheet.mqtysfft32 %></td>
+          <td></td>
+          <td><%= @cost_sheet.mpricing32  %></td>
+          <% if @cost_sheet.mtotal32 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.mtotal32, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <tH>TOTAL</tH>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= number_to_currency(@estimated.mtotal, :precision => 2) %></td>
+          <tH>TOTAL</tH>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <td><%= number_to_currency(@cost_sheet.mtotal, :precision => 2) %></td>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+        <tbody>
+        <tr>
+          <tH></tH>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>DIFFERENCES</th>
+          <th><%= number_to_currency(@cost_sheet.mtotalvs, :precision => 2) %></th>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+        <thead>
+        <tr>
+          <th>SUB C / ALT-</th>
+          <th>DESCRIPTION</th>
+          <th>QTY/SF/FT</th>
+          <th>UNIT.PRICE</th>
+          <th></th>
+          <th>PROFIT(%)</th>
+          <th>TOTAL</th>
+          <th>SUB C / ALT-</th>
+          <th>DESCRIPTION</th>
+          <th>QTY/SF/FT</th>
+          <th></th>
+          <th>UNIT.PRICE</th>
+          <th>TOTAL</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="celda2"><%= @estimated.subdefault1 %></td>
+          <td><%= @estimated.subdescription1 %></td>
+          <td><%= @estimated.subqtysfft1 %></td>
+          <td><%= @estimated.subpricing1 %></td>
+          <td></td>
+          <td><%= @estimated.subporce1 %></td>
+          <td>
+            <%= @estimated.subtotal1 == 0.0 ? '' : number_to_currency(@estimated.subtotal1, precision: 2) %>
+          </td>
+
+          <td class="celda2"><%= @estimated.subdefault1 %></td>
+          <td><%= @cost_sheet.subdescription1 %></td>
+          <td><%= @cost_sheet.subqtysfft1  %></td>
+          <td></td>
+          <td><%= @cost_sheet.subpricing1 %></td>
+          <td>
+            <%= @estimated.subtotal1 == 0.0 ? '' : number_to_currency(@estimated.subtotal1, precision: 2) %>
+          </td>
+
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2"><%= @estimated.subdefault2 %></td>
+          <td><%= @estimated.subdescription2 %></td>
+          <td><%= @estimated.subqtysfft2 %></td>
+          <td><%= @estimated.subpricing2 %></td>
+          <td></td>
+          <td><%= @estimated.subporce2 %></td>
+          <td>
+            <%= @estimated.subtotal2 == 0.0 ? '' : number_to_currency(@estimated.subtotal2, precision: 2) %>
+          </td>
+
+          <td class="celda2"><%= @estimated.subdefault2 %></td>
+          <td><%= @cost_sheet.subdescription2 %></td>
+          <td><%= @cost_sheet.subqtysfft2 %></td>
+          <td></td>
+          <td><%= @cost_sheet.subpricing2 %></td>
+          <td>
+            <%= @estimated.subtotal2 == 0.0 ? '' : number_to_currency(@estimated.subtotal2, precision: 2) %>
+          </td>
+
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2"><%= @estimated.subdefault3 %></td>
+          <td><%= @estimated.subdescription3 %></td>
+          <td><%= @estimated.subqtysfft3 %></td>
+          <td><%= @estimated.subpricing3 %></td>
+          <td></td>
+          <td><%= @estimated.subporce3 %></td>
+          <td>
+            <%= @estimated.subtotal3 == 0.0 ? '' : number_to_currency(@estimated.subtotal3, precision: 2) %>
+          </td>
+          <td class="celda2"><%= @estimated.subdefault3 %></td>
+          <td><%= @cost_sheet.subdescription3 %></td>
+          <td><%= @cost_sheet.subqtysfft3 %></td>
+          <td></td>
+          <td><%= @cost_sheet.subpricing3 %></td>
+          <td>
+            <%= @estimated.subtotal3 == 0.0 ? '' : number_to_currency(@estimated.subtotal3, precision: 2) %>
+          </td>
+
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <tH>TOTAL</tH>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= number_to_currency(@estimated.subtotaltotal, :precision => 2) %></td>
+          <tH>TOTAL</tH>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <td><%= number_to_currency(@cost_sheet.subtotaltotal, :precision => 2) %></td>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+        <thead>
+        <tr>
+          <th>SCRAP</th>
+          <th>DESCRIPTION</th>
+          <th>QTY/SF/FT</th>
+          <th></th>
+          <th></th>
+          <th>UNIT.PRICE</th>
+          <th>TOTAL</th>
+          <th>SCRAP</th>
+          <th>DESCRIPTION</th>
+          <th>QTY/SF/FT</th>
+          <th>TONS</th>
+          <th>UNIT.PRICE</th>
+          <th>TOTAL</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="celda2">FERROUS</td>
+          <td><%= @estimated.mdescription13 %></td>
+          <td><%= @estimated.mqtysfft13 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.mpricing13 %></td>
+          <% if @estimated.mtotal13 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.mtotal13, :precision => 2) %>
+            </td>
+          <%end %>
+          <td class="celda2">FERROUS</td>
+          <td><%= @cost_sheet.mdescription13 %></td>
+          <td><%= @cost_sheet.mqtysfft13    %></td>
+          <td><%= @cost_sheet.ferrous %></td>
+          <td><%= @cost_sheet.mpricing13 %></td>
+          <% if @cost_sheet.mtotal13 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.mtotal13, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">NON-FERROUS</td>
+          <td><%= @estimated.mdescription14 %></td>
+          <td><%= @estimated.mqtysfft14 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.mpricing14 %></td>
+          <% if @estimated.mtotal14 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.mtotal14, :precision => 2) %>
+            </td>
+          <%end %>
+          <td class="celda2">NON-FERROUS</td>
+          <td><%= @cost_sheet.mdescription14 %></td>
+          <td><%= @cost_sheet.mqtysfft14    %></td>
+          <td><%= @cost_sheet.nonferrous %></td>
+          <td><%= @cost_sheet.mpricing14  %></td>
+          <% if @cost_sheet.mtotal14 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.mtotal14, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td class="celda2">MISC</td>
+          <td><%= @estimated.mdescription15 %></td>
+          <td><%= @estimated.mqtysfft15 %></td>
+          <td></td>
+          <td></td>
+          <td><%= @estimated.mpricing15 %></td>
+          <% if @estimated.mtotal15 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@estimated.mtotal15, :precision => 2) %>
+            </td>
+          <%end %>
+          <td class="celda2">MISC</td>
+          <td><%= @cost_sheet.mdescription15 %></td>
+          <td><%= @cost_sheet.mqtysfft15    %></td>
+          <td><%= @cost_sheet.misc %></td>
+          <td><%= @cost_sheet.mpricing15  %></td>
+          <% if @cost_sheet.mtotal15 == 0.0 %>
+            <td>
+            </td>
+          <%else %>
+            <td>
+              <%= number_to_currency(@cost_sheet.mtotal15, :precision => 2) %>
+            </td>
+          <%end %>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th> SALVAGE</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= number_to_currency(@estimated.totalsalvage, precision: 2) %></td>
+          <th > SALVAGE</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><%= number_to_currency(@cost_sheet.mpricing12, precision: 2) %></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <tH></tH>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>TOTAL SALVAGE</th>
+          <th><%= number_to_currency(@estimated.salvage, precision: 2) %></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>TOTAL SALVAGE</th>
+          <th><%= number_to_currency(@cost_sheet.salvagetotal, precision: 2) %></th>
+
+        </tr>
+        </tbody>
+        <tbody>
+        <tr style="height: 20px;"></tr>
+        <tbody>
+        <tr>
+           <th>SF / L.F</th>
+          <td><%= number_to_currency(@estimated.sf, precision: 2, unit: '') %></td>
+          <td></td>
+          <td></td>
+          <th>SUBTOTAL</th>
+          <td><%= number_to_currency(@estimated.subtotal, :precision => 2) %></td>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th>ACTUAL JOB COST
+            TOTAL</th>
+          <th><%= number_to_currency(@cost_sheet.subtotal, :precision => 2) %></th>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th>PER SF / L.F $</th>
+          <td><%= number_to_currency(@estimated.persf, :precision => 2) %></td>
+          <td></td>
+          <td></td>
+          <tH>PERCENTAGE %: <%= @estimated.profitporcen %></tH>
+          <td><%= number_to_currency(@estimated.profit, :precision => 2) %></td>
+          <th></th>
+          <td  class="celda2">CHARGE ORDER #1</td>
+          <td><%= number_to_currency(@cost_sheet.vsa, :precision => 2) %></td>
+          <td></td>
+          <td></td>
+          <tH>DIFFERENCES OF ACTUAL COST</tH>
+          <th><%= number_to_currency(@cost_sheet.totalvs, :precision => 2) %></th>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <th> TOTAL CONTRACT </th>
+          <td><%= number_to_currency(@estimated.total, :precision => 2) %></td>
+          <th></th>
+          <td  class="celda2">CHARGE ORDER #2</td>
+          <td><%= number_to_currency(@cost_sheet.vse, :precision => 2) %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <th>SALVAGE</th>
+          <td> <%= number_to_currency(@estimated.salvage, :precision => 2) %> </td>
+          <th></th>
+          <td  class="celda2">CHARGE ORDER #3</td>
+          <td><%= number_to_currency(@cost_sheet.vsm, :precision => 2) %></td>
+          <tD></tD>
+          <tD></tD>
+          <th>PER SF / L.F $</th>
+          <td><%= number_to_currency(@cost_sheet.persf, :precision => 2) %></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <th></th>
+          <td  class="celda2">CHARGE ORDER #4</td>
+          <td><%= number_to_currency(@cost_sheet.vst, :precision => 2) %></td>
+          <td></td>
+          <td></td>
+          <th>DAILY LOGS EXPENSES</th>
+          <td><%= number_to_currency(@cost_sheet.dailyexpenses, :precision => 2) %></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <th></th>
+          <td  class="celda2 bottom-line">CHARGE ORDER #5</td>
+          <td class="bottom-line"><%= number_to_currency(@cost_sheet.vsp, :precision => 2) %></td>
+          <td></td>
+          <tD></tD>
+          <th>PROFIT OF CHANGE O.</th>
+          <th><%= number_to_currency(@cost_sheet.tcontract, :precision => 2) %></th>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <th>TOTAL CHARGE ORDER</th>
+          <th><%= number_to_currency(@cost_sheet.sumco, :precision => 2) %></th>
+          <td></td>
+          <td></td>
+          <th style="background-color: rgb(207,243,203)" >TOTAL SCRAP</th>
+          <th> <%= number_to_currency(@cost_sheet.salvage, :precision => 2) %></th>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <th>COST OF CHARGE ORDER</th>
+          <th><%= number_to_currency(@cost_sheet.charge_cost, :precision => 2) %></th>
+          <td></td>
+          <td></td>
+          <th style="background-color: rgba(251,234,255,0.94)" >TOTAL INVOICE</th>
+          <th> <%= number_to_currency(@cost_sheet.invoice, :precision => 2) %> </th>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td></td>
+          <td> </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td> </td>
+          <tD></tD>
+          <th ></th>
+          <th> </th>
+          <td></td>
+          <td></td>
+           <th style="background-color: rgb(255,223,201)" >SUBC / ALT</th>
+          <th> <%= number_to_currency(@cost_sheet.vscontractor, :precision => 2) %> </th>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <tD></tD>
+          <th></th>
+          <th> </th>
+          <td></td>
+          <td></td>
+          <th style="background-color: rgb(200,222,246)" >TOTAL PROFIT</th>
+          <th> <%= number_to_currency(@cost_sheet.tprofitsalvage, :precision => 2) %></th>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <th ></th>
+          <th> </th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  <%= link_to 'Edit', edit_cost_sheet_path(@cost_sheet) %> |
+  <%= link_to 'Back', cost_sheets_path %>
+</div>
+
+<script>
+    document.getElementById("print-button").addEventListener("click", function() {
+        let printContents = document.getElementById("section-to-print").innerHTML;
+        let originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        window.location.reload();
+        document.body.innerHTML = originalContents;
+    });
+
+    var celdas = document.getElementsByClassName("celda2");
+    for (var i = 0; i < celdas.length; i++) {
+        celdas[i].style.backgroundColor = "#d0e5ff";
+        celdas[i].style.fontWeight = "bold";
+    }
+
+    const tableHeaders = document.querySelectorAll("thead th");
+    for (const header of tableHeaders) {
+        header.style.backgroundColor = "rgba(217,213,213,0.94)";
+    }
+    const tableCells = document.querySelectorAll("td");
+        for (const cell of tableCells) {
+            if (cell.textContent.trim().length === 0 ||
+                isNaN(parseFloat(cell.textContent.replace(/\$|,/g, ''))) ||
+                      parseFloat(cell.textContent.replace(/\$|,/g, '')) === 0.0) {
+                continue;
+            }
+            if (parseFloat(cell.textContent.replace(/\$|,/g, '')) > 0) {
+                        cell.style.backgroundColor = "#e5ff6f";
+                  } else {
+                   cell.style.backgroundColor = "#ff9797";
+               }
+            }
+
+    const tableCells2 = document.querySelectorAll("th");
+    for (const cell of tableCells2) {
+        if (cell.textContent.trim().length === 0 ||
+            isNaN(parseFloat(cell.textContent.replace(/\$|,/g, ''))) ||
+            parseFloat(cell.textContent.replace(/\$|,/g, '')) === 0.0) {
+            continue;
+        }
+
+        if (parseFloat(cell.textContent.replace(/\$|,/g, '')) > 0) {
+            cell.style.backgroundColor = "#75ff6b";
+        } else {
+            cell.style.backgroundColor = "#ff9797";
+        }
+    }
+
+       var celdas10 = document.getElementsByClassName("celda2");
+        for (var i = 0; i < celdas10.length; i++) {
+               celdas[i].style.backgroundColor = "#d2ddf3";
+               celdas[i].style.fontWeight = "bold";
+        }
+
+    var trash1 = parseFloat(document.getElementById("trash1").innerHTML);
+    var trash2 = parseFloat(document.getElementById("trash2").innerHTML);
+    var trash3 = parseFloat(document.getElementById("trash3").innerHTML);
+    if (trash2 === 0) {
+        document.getElementById("trash2").style.clear = "yellow";
+    } else if (isNaN(trash1)) {
+        document.getElementById("trash2").style.backgroundColor = "#ff9797";
+        document.getElementById("trash3").style.backgroundColor = "#ff9797";
+    } else if (trash1 < trash2 && trash2 !== 0) {
+        document.getElementById("trash2").style.backgroundColor = "#ff9797";
+        document.getElementById("trash3").style.backgroundColor = "#ff9797";
+    } else if (trash2 !== 0) {
+        document.getElementById("trash2").style.backgroundColor = "#75ff6b";
+        document.getElementById("trash3").style.backgroundColor = "#75ff6b";
+    }
+
+    var tree1 = parseFloat(document.getElementById("tree1").innerHTML);
+    var tree2 = parseFloat(document.getElementById("tree2").innerHTML);
+    var tree3 = parseFloat(document.getElementById("tree3").innerHTML);
+    if (tree2 === 0) {
+        document.getElementById("tree2").style.clear = "yellow";
+    } else if (isNaN(tree1)) {
+        document.getElementById("tree2").style.backgroundColor = "#ff9797";
+        document.getElementById("tree3").style.backgroundColor = "#ff9797";
+    } else if (tree1 < tree2 && tree2 !== 0) {
+        document.getElementById("tree2").style.backgroundColor = "#ff9797";
+        document.getElementById("tree3").style.backgroundColor = "#ff9797";
+    } else if (tree2 !== 0) {
+        document.getElementById("tree2").style.backgroundColor = "#75ff6b";
+        document.getElementById("tree3").style.backgroundColor = "#75ff6b";
+    }
+
+    var concrete1 = parseFloat(document.getElementById("concrete1").innerHTML);
+    var concrete2 = parseFloat(document.getElementById("concrete2").innerHTML);
+    var concrete3 = parseFloat(document.getElementById("concrete3").innerHTML);
+    if (concrete2 === 0) {
+        document.getElementById("concrete2").style.clear = "yellow";
+    } else if (isNaN(concrete1)) {
+        document.getElementById("concrete2").style.backgroundColor = "#ff9797";
+        document.getElementById("concrete3").style.backgroundColor = "#ff9797";
+    } else if (concrete1 < concrete2 && concrete2 !== 0) {
+        document.getElementById("concrete2").style.backgroundColor = "#ff9797";
+        document.getElementById("concrete3").style.backgroundColor = "#ff9797";
+    } else if (concrete2 !== 0) {
+        document.getElementById("concrete2").style.backgroundColor = "#75ff6b";
+        document.getElementById("concrete3").style.backgroundColor = "#75ff6b";
+    }
+
+    var rebar1 = parseFloat(document.getElementById("rebar1").innerHTML);
+    var rebar2 = parseFloat(document.getElementById("rebar2").innerHTML);
+    var rebar3 = parseFloat(document.getElementById("rebar3").innerHTML);
+    if (rebar2 === 0) {
+        document.getElementById("rebar2").style.clear = "yellow";
+    } else if (isNaN(rebar1)) {
+        document.getElementById("rebar2").style.backgroundColor = "#ff9797";
+        document.getElementById("rebar3").style.backgroundColor = "#ff9797";
+    } else if (rebar1 < rebar2 && rebar2 !== 0) {
+        document.getElementById("rebar2").style.backgroundColor = "#ff9797";
+        document.getElementById("rebar3").style.backgroundColor = "#ff9797";
+    } else if (rebar2 !== 0) {
+        document.getElementById("rebar2").style.backgroundColor = "#75ff6b";
+        document.getElementById("rebar3").style.backgroundColor = "#75ff6b";
+    }
+
+    var asphalt1 = parseFloat(document.getElementById("asphalt1").innerHTML);
+    var asphalt2 = parseFloat(document.getElementById("asphalt2").innerHTML);
+    var asphalt3 = parseFloat(document.getElementById("asphalt3").innerHTML);
+    if ( asphalt2 === 0){
+        document.getElementById("asphalt2").style.clear = "yellow"; // Pintar asphalt2 de rojo
+    }else if (isNaN(asphalt1 )) { // Si asphalt1 no es un número válido
+        document.getElementById("asphalt2").style.backgroundColor = "#ff9797";
+        document.getElementById("asphalt3").style.backgroundColor = "#ff9797";// Pintar asphalt2 de rojo
+    } else if (asphalt1 < asphalt2 && asphalt2 !== 0 ) {
+        document.getElementById("asphalt2").style.backgroundColor = "#ff9797";
+        document.getElementById("asphalt3").style.backgroundColor = "#ff9797";
+    } else if (asphalt2 !== 0) {
+        document.getElementById("asphalt2").style.backgroundColor = "#75ff6b";
+        document.getElementById("asphalt3").style.backgroundColor = "#75ff6b";
+    }
+
+    var fill1 = parseFloat(document.getElementById("fill1").innerHTML);
+    var fill2 = parseFloat(document.getElementById("fill2").innerHTML);
+    var fill3 = parseFloat(document.getElementById("fill3").innerHTML);
+    if ( fill2 === 0){
+        document.getElementById("fill2").style.clear = "yellow"; // Pintar fill2 de rojo
+        }else if (isNaN(fill1 )) { // Si fill1 no es un número válido
+        document.getElementById("fill2").style.backgroundColor = "#ff9797";
+        document.getElementById("fill3").style.backgroundColor = "#ff9797";// Pintar fill2 de rojo
+    } else if (fill1 < fill2 && fill2 !== 0 ) {
+        document.getElementById("fill2").style.backgroundColor = "#ff9797";
+        document.getElementById("fill3").style.backgroundColor = "#ff9797";
+    } else if (fill2 !== 0) {
+        document.getElementById("fill2").style.backgroundColor = "#75ff6b";
+        document.getElementById("fill3").style.backgroundColor = "#75ff6b";
+    }
+
+    var rock1 = parseFloat(document.getElementById("rock1").innerHTML);
+    var rock2 = parseFloat(document.getElementById("rock2").innerHTML);
+    var rock3 = parseFloat(document.getElementById("rock3").innerHTML);
+    if ( rock2 === 0){
+        document.getElementById("rock2").style.clear = "yellow"; // Pintar fill2 de rojo
+    }else if (isNaN(rock1 )) { // Si fill1 no es un número válido
+        document.getElementById("rock2").style.backgroundColor = "#ff9797";
+        document.getElementById("rock3").style.backgroundColor = "#ff9797";// Pintar fill2 de rojo
+    } else if (rock1 < rock2 && rock2 !== 0 ) {
+        document.getElementById("rock2").style.backgroundColor = "#ff9797";
+        document.getElementById("rock3").style.backgroundColor = "#ff9797";
+    } else if (rock2 !== 0) {
+        document.getElementById("rock2").style.backgroundColor = "#75ff6b";
+        document.getElementById("rock3").style.backgroundColor = "#75ff6b";
+    }
+
+</script>

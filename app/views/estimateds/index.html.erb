@@ -1,0 +1,88 @@
+<div class="contextual">
+  <%= button_to 'New Estimated', new_estimated_path, class: 'btn btn-sm btn-success', method: :get %>
+</div>
+<h1>Demolition Estimating Sheet</h1>
+<br>
+
+
+
+<%= form_tag({:controller => "estimateds", :action => "index"}, :method => :get) do %>
+ <%= label_tag :year, "Select Year:" %>
+  <%= select_tag :year, options_for_select(((2023..Time.zone.now.year).to_a.reverse), params[:year]), include_blank: true %>
+  <%= label_tag :month1, "Select Month:" %>
+  <%= select_tag :month1, options_for_select((1..12).map { |m| [Date::MONTHNAMES[m], m] }, params[:month1]), include_blank: true %>
+  <%= submit_tag "Filter" %>
+<% end %>
+
+<%= form_tag({:controller => "estimateds", :action => "index"}, :method => :get) do %>
+  <%= text_field_tag "searchbox", params[:searchbox] %>
+  <%= submit_tag "Search", :name => nil %>
+<% end %>
+<br>
+<p>Number of estimates: <%= @estimateds_count %></p>
+<div class="table-responsive">
+<table class="table table-bordered table-sm">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Date</th>
+      <th>Total</th>
+      <th>Created by</th>
+      <th>Status</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @estimateds.each do |estimated| %>
+      <tr>
+        <td><%= estimated.status %><%= estimated.id%></td>
+        <td><%= estimated.name %></td>
+        <td><%= link_to((estimated.address), estimated) %></td>
+        <td>
+          <% if estimated.date1 %>
+            <%= estimated.date1.strftime('%m/%d/%Y') %>
+          <% else %>
+
+          <% end %>
+        </td>
+        <td><%= number_to_currency( estimated.total, :precision => 2) %></td>
+        <td><%= estimated.user %></td>
+        <% if estimated.status == 1 %>
+          <td style="color: blue;">ACTIVE</td>
+        <% elsif estimated.status == 2 %>
+          <td  style="color: green;">COMPLETED</td>
+        <% else %>
+         <td  style="color: #c97e00;">PENDING</td>
+        <% end %>
+        <td class="buttons">
+          <% if estimated.status == 1 && !CostSheet.where(vsx: estimated.id).exists? %>
+            <%= link_to 'Add Cost Sheet', new_cost_sheet_path(parametro: estimated.id), class: 'btn btn-sm btn-success' %>
+          <% else if !CostSheet.where(vsx: estimated.id).exists?   %>
+              <%else %>
+              <%= link_to 'Cost Sheet', cost_sheets_path%>
+          <% end %>
+          <% end %>
+          <%= button_to 'Edit', edit_estimated_path(estimated), class: 'btn btn-sm btn-warning', method: :get %>
+          <%= button_to('Delete', estimated, :method => :delete,:class => 'btn btn-sm btn-danger', data: { confirm: 'Are you sure?' }) %>
+          <%= link_to 'View RFI', rfis_path(parametro: estimated.id), class: 'btn btn-sm btn-outline-secondary',style: 'margin-right: 5px; color: blue;' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<br>
+
+<% unless @result.nil? %>
+  <p> = <%= @result %> </p>
+<% end %>
+
+<script>
+    const tableHeaders = document.querySelectorAll("thead th");
+    for (const header of tableHeaders) {
+        header.style.backgroundColor = "rgb(163,204,248)";
+    }
+
+</script>

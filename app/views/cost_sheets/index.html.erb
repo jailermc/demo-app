@@ -1,0 +1,84 @@
+
+
+
+<h1>Cost Sheet</h1>
+<br>
+<%= form_tag({:controller => "cost_sheets", :action => "index"}, :method => :get) do %>
+ <%= label_tag :year, "Select Year:" %>
+  <%= select_tag :year, options_for_select(((2023..Time.zone.now.year).to_a.reverse), params[:year]), include_blank: true %>
+  <%= label_tag :month1, "Select Month:" %>
+  <%= select_tag :month1, options_for_select((1..12).map { |m| [Date::MONTHNAMES[m], m] }, params[:month1]), include_blank: true %>
+  <%= submit_tag "Filter" %>
+<% end %>
+
+
+<%= form_tag({:controller => "cost_sheets", :action => "index"}, :method => :get) do %>
+  <%= text_field_tag "searchbox", params[:searchbox] %>
+  <%= submit_tag "Search", :name => nil %>
+<% end %>
+<br>
+<p>Number of Cost Sheets: <%= @cost_sheets_count %></p>
+<br>
+<div class="table-responsive">
+  <table class="table table-bordered table-sm">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Date</th>
+      <th colspan="3"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @cost_sheets.each do |cost_sheets| %>
+      <tr>
+        <td><%= cost_sheets.name %></td>
+        <td>
+          <% if cost_sheets.sdate.present? %>
+            <% if cost_sheets.fdate.present? %>
+              <div style="background-color: #e3ffe3; color: white;">
+                <%= link_to(cost_sheets.address, cost_sheets) %>
+              </div>
+            <% else %>
+              <div style="background-color: #d2ecff; color: white;">
+                <%= link_to(cost_sheets.address, cost_sheets) %>
+              </div>
+            <% end %>
+          <% else %>
+            <%= link_to(cost_sheets.address, cost_sheets) %>
+          <% end %>
+        </td>
+        <td>
+          <% if cost_sheets.date1 %>
+            <%= cost_sheets.date1.strftime('%m/%d/%Y') %>
+          <% else %>
+          <% end %>
+        </td>
+        <td></td>
+        <td></td>
+        <td class="buttons1 menu">
+          <%= link_to "Daily Log [#{Dailylog.where(cost_sheet_id: cost_sheets.id).count}]", dailylogs_path(parametro: cost_sheets.id), class: 'btn btn-sm btn-outline-primary', style: 'margin-right: 5px;' %> |
+        <%= link_to "Change Order [#{ChangeOrder.where(cost_sheet_id: cost_sheets.id).count}] ", change_orders_path(parametro: cost_sheets.id), class: 'btn btn-sm btn-outline-secondary',style: 'margin-right: 5px; color: black;' %> |
+          <%= link_to "Time Sheet [#{TimeSheet.where(cost_sheet_id: cost_sheets.id).count}] ", time_sheets_path(parametro: cost_sheets.id), class: 'btn btn-sm btn-outline-secondary',style: 'margin-right: 5px; color: brown;' %> |
+        <%= link_to 'Leeds', new_leed_path(parametro: cost_sheets.id), class: 'btn btn-sm btn-outline-success', method: :get, style: 'margin-right: 10px; color: green;'  %>
+        <%= button_to('Edit', edit_cost_sheet_path(cost_sheets), :class => 'btn btn-sm btn-warning', method: :get, style: 'margin-right: 10px;') %>
+        <%= button_to('Delete', cost_sheets, :method => :delete,:class => 'btn btn-sm btn-danger', data: { confirm: 'Are you sure?' }) %>
+      </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<br>
+<% unless @result.nil? %>
+  <p> = <%= @result %> </p>
+<% end %>
+
+<script>
+
+    const tableHeaders = document.querySelectorAll("thead th");
+    for (const header of tableHeaders) {
+        header.style.backgroundColor = "rgb(162,252,158)";
+    }
+
+</script>

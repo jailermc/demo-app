@@ -1,0 +1,198 @@
+<%= form_with(model: fill_formula) do |form| %>
+  <% if fill_formula.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(fill_formula.errors.count, "error") %> prohibited this fill_formula from being saved:</h2>
+
+      <ul>
+        <% fill_formula.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+<BR>
+  <BR>
+
+<div id="table">
+  <table  class="table table-bordered table-sm"  style="width:50%">
+    <tbody>
+    <tr>
+      <th>WIDTH </th>
+      <td><%= form.text_field ':salvage1', id: "salvage1", style: "width:70px;" %> SF</td>
+      <td ></td>
+
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <th>LENGTH </th>
+      <td><%= form.text_field ':salvage2', id: "salvage2", style: "width:70px;" %> SF</td>
+      <td></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <th>TOTAL AREA</th>
+      <td><%= form.text_field ':salvage3', id: "salvage3", style: "width:70px;" %> SF</td>
+      <td></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <th>DEPTH</th>
+      <td><%= form.text_field :salvage4,id: "salvage4", style: "width:70px;" %> SF</td>
+      <td></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <th>TOTAL CUBIC FEET</th>
+      <td><%= form.text_field :salvage5, id: "salvage5", style: "width:70px;" %> CF</td>
+      <td></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <th>CONVERT TO YARDS</th>
+      <td><%= form.text_field :salvage6, id: "salvage6", style: "width:70px;" %> CY</td>
+      <td></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <th>% FOR COMPACTION</th>
+      <td><%= form.text_field :salvage7, id: "salvage7", style: "width:80px;" %> CY, % <%= form.text_field :reused18, id: "reused18", value: 15 ,style: "width:40px;" %></td>
+      <td></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <th>TOTAL AMOUNT OF FILL NEEDED</th>
+      <td><%= form.text_field :salvage8, id: "salvage8", style: "width:80px;" %>YDS</td>
+      <td></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <th>TOTAL 18YDS TRUCK </th>
+      <td><%= form.text_field :salvage9, id: "salvage9", style: "width:70px;" %> TRUCKS</td>
+      <td></td>
+    </tr>
+    </tbody>
+    <tbody>
+    <tr>
+      <th>PER LOAD / COST</th>
+      <td> PRICE $: <%= form.text_field :salvage18, id: "salvage18", style: "width:70px;" %> TOTAL $:   <%= form.text_field :salvage18, id: "salvage20", style: "width:90px;" %> </td>
+      <td></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<br>
+<br>
+<br>
+<% end %>
+
+<script>
+
+    const tableHeaders = document.querySelectorAll("thead, th");
+    for (const header of tableHeaders) {
+        header.style.backgroundColor = "#c1d6f1";
+    }
+
+    $(document).ready(function() {
+        $(' input').on('input', function () {
+            porcentage();
+            cubic();
+            yards();
+            compaction();
+            total_amount();
+            truck();
+            cost();
+        });
+    });
+
+    function updatesum() {
+        var total = 0;
+        $('.sumland input').each(function () {
+            var value = parseFloat($(this).val());
+            if (isNaN(value)) {
+                value = 0;
+            }
+            total += value;
+        });
+        $('#tlandwaste').val(total);
+
+    }
+
+    function porcentage() {
+        let v1 = $('#salvage1').val();
+        let v2 = $('#salvage2').val();
+        va1 = parseFloat(v1)
+        va2 = parseFloat(v2)
+        vv1 =(isNaN(va1) ? 0 : va1)
+        vv2 =(isNaN(va2) ? 0 : va2)
+        let total = vv1 * vv2;
+        $('#salvage3').val(total);
+    }
+
+    function cubic() {
+        let v1 = $('#salvage4').val();
+        let v2 = $('#salvage3').val();
+        va1 = parseFloat(v1)
+        va2 = parseFloat(v2)
+        vv1 =(isNaN(va1) ? 0 : va1)
+        vv2 =(isNaN(va2) ? 0 : va2)
+        let total = vv1 * vv2;
+        $('#salvage5').val(total);
+    }
+    function yards() {
+        let v1 = $('#salvage5').val();
+        let va1 = parseFloat(v1)
+        let vv1 = (isNaN(va1) ? 0 : va1)
+        let total = vv1 / 27;
+        $('#salvage6').val(total.toFixed(2)); // Redondear a 2 decimales
+    }
+
+    function compaction() {
+        let v1 = $('#salvage6').val();
+        let v2 = $('#reused18').val();
+        va1 = parseFloat(v1)
+        va2 = parseFloat(v2)
+        vv1 =(isNaN(va1) ? 0 : va1)
+        vv2 =(isNaN(va2) ? 0 : va2)
+        let total = vv1 * vv2 / 100;
+        $('#salvage7').val(total.toFixed(2));
+    }
+
+    function total_amount() {
+        let v1 = $('#salvage6').val();
+        let v2 = $('#salvage7').val();
+        va1 = parseFloat(v1)
+        va2 = parseFloat(v2)
+        vv1 =(isNaN(va1) ? 0 : va1)
+        vv2 =(isNaN(va2) ? 0 : va2)
+        let total = vv1 + vv2;
+        $('#salvage8').val(total.toFixed(2));
+    }
+
+    function truck() {
+        let v1 = $('#salvage8').val();
+        va1 = parseFloat(v1)
+        vv1 =(isNaN(va1) ? 0 : va1)
+        let total = vv1 / 18;
+        $('#salvage9').val(total.toFixed(2));
+    }
+
+    function cost() {
+        let v1 = $('#salvage9').val();
+        let v2 = $('#salvage18').val();
+        va1 = parseFloat(v1)
+        va2 = parseFloat(v2)
+        vv1 =(isNaN(va1) ? 0 : va1)
+        vv2 =(isNaN(va2) ? 0 : va2)
+        let total = vv1 * vv2;
+        $('#salvage20').val(total.toLocaleString('en-En', {minimumFractionDigits: 2, maximumFractionDigits: 2, useGrouping: true, decimal: '.', thousands: ','}));
+    }
+
+</script>

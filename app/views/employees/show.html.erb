@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<div id="user_form">
+  <!--[form:user]-->
+  <div class="splitcontent">
+    <div class="splitcontentleft">
+      <fieldset class="box tabular">
+        <legend><%=l(:label_information_plural)%></legend>
+        <p> <strong>Name: </strong>  <%= @employee.name %></p>
+        <p>   <strong>Last Name: </strong><%= @employee.lastname %></p>
+        <p> <strong>Position: </strong>  <%= @selected %>
+        <p> <strong>Active: </strong>  <%= @active %></p>
+        <p>
+          <strong>Project: </strong>
+          <%= @cost_sheet == "N/A" ? "N/A" : @cost_sheet.address %>
+        </p>
+
+      </fieldset>
+    </div>
+  </div>
+</div>
+
+<%= link_to 'Edit', edit_employee_path(@employee) %> |
+<%= link_to 'Back', employees_path %>

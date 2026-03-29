@@ -1,0 +1,24 @@
+<%= form_with(model: template_upload) do |form| %>
+  <% if template_upload.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(template_upload.errors.count, "error") %> prohibited this template_upload from being saved:</h2>
+
+      <ul>
+        <% template_upload.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label "Select Document" %>
+    <%= form.file_field :avatar %>
+  </div>
+<br>
+  <br>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+<br>

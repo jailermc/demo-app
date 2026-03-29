@@ -1,0 +1,42 @@
+<p id="notice"><%= notice %></p>
+<br>
+<h1>DOCUMENTS / TEMPLATE</h1>
+<br>
+<div>
+  <%= button_to 'New Upload', new_template_upload_path, class: 'btn btn-sm btn-success', method: :get %>
+</div>
+<br>
+<br>
+<div class="table-responsive">
+  <table class="table table-bordered table-sm" style="width:50%">
+    <thead>
+    <tr>
+      <th>DOCUMENTS</th>
+      <th colspan="5"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @template_uploads.each do |template_upload| %>
+      <tr>
+        <td><%= template_upload.avatar .filename %> </td>
+        <td class="buttons">
+        <td>   <%= button_to "Download", rails_blob_url(template_upload.avatar , disposition: "attachment"), method: :get, download: template_upload.avatar.filename %></td>
+        <td><%= link_to 'Delete', template_upload, method: :delete, class: 'btn btn-sm btn-danger' ,data: { confirm: 'Are you sure?' } %></td>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<br>
+
+<% unless @result.nil? %>
+  <p> = <%= @result %> </p>
+<% end %>
+<script>
+    const tableHeaders = document.querySelectorAll("thead th");
+    for (const header of tableHeaders) {
+        header.style.backgroundColor = "rgb(173,255,169)";
+    }
+
+</script>

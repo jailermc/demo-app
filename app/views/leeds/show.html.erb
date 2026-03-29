@@ -1,0 +1,329 @@
+<button id="print-button">Print</button>
+<br>
+<br>
+
+<div id="section-to-print">
+
+  <div id="table">
+
+    <%= image_tag "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAakAAAB3CAMAAACOsU+CAAAA/1BMVEX///8sWFGarapuoUIdUEh7s0koVU5xpUJ4r0f4+vpypkK1w8Fyi4cjU0xpm0FnmEDO19aCmZXx9fQuW1VMcGrn7ew+Z2BYenU1YVururjg5uX6/Pja59B8tUmDsVj4+/Xv9eq82aRtozp0rUB3sj9hljWzyqPp8eJqnzvP4MHn8d7Z6MyZwndvqDl5rkh+r1B5pVev0JPV5sfE3LCixoOWvnR6k4+RpaIMSUG515+jw4mOvGS40aKOuGhooDLE2LR4qE+GrWjF17mKvV6/16vT29qav3ubxnSs0I7M4buNvGGtypNrqTB6q0+avn1imi+qxZWVtn1UjSNyoFB6pFzgoKC+AAARYElEQVR4nO1deV/aztelsqgooFatmkhiAgaCgAvWKgIC1qXuP33/r+XJzJ2Q2RLSfvuRpE/OX2Vyszgn986ZO3fSVIrG8Z6tpBJEH/q4Mu40Zv0UCabjrrK7W6l0j7VZP0iCYBw7RGEcJH4VaWhjQpTjVwfWrJ8mgT9OKlkXu5XxXiItogoruwss7QJXXXXWT5RAjqOJSwFjZjZxq0jCJjRVGo0u4azSSUarCOLIBE86cKTFietW40QERg6uS2Xx6GR33FB4MusHS8DhjrjUHfl9P4aGynkyDY4UrDa40KPttthdwl1nls+VgMe5uYCARikXmuNmTpMzcukze6wEPJQ2JiqbPaZb9yqEvkStRwb3ck7us9B8q8/msRIIOIDgV+GVXl0MiglmCbW1ANFP0HkNOGJ2EgUYCVwS15HIvAaJi3uf/1QJRIwJU7KMxD24m5lMgSMAG4ha6OqyoyePcDRJrc8ee8SlzuWH7/Bhc6x/6kMlEKER5dekg5/V4I+bnWRaNWPYMO1daNP6TjmY5JVSOgjAZjJUzRj3JPjdMa0n1CyYqIq2zZ+a4FNxR5i6Z1qtyrX347yZTIAjgK7UY5ROy2vQfkH8u+fPTfCJ0JsthIUul4a4b1IT4eOFBWRT1j/10RIwaABT5hHXbrWbVGb9yJQaJfhEnABTgrJTes1TT1RY4FRmIipmh44JTAk5iL0mLTIuwakCVoAXASFvuzgdv2sffELI54oulFNMwUJb548cm2bP+6W3sVO1/J1qbhlhNdxtl5anY4myXwth/52+wTZ/dHV1bmllI9zTRRJ6dwEz1RMyEA439Eh1jaNkgFJfzRQKhcy3cLfdRsbB+DFH2a/lptpnNukbzElukMkU1ldjy5aFfaUlyRVppyYd7PQWdqqmb7XmauHLly+5kEwt5b5MQ2absl/7OtU+t07fYK4gN8p8+Ta3Fu4ZIwa1BdLvUjx0aS60VPonHs8e/K4UC6YwWZmzOPrVMZlODcRD9yZDoA2GvnOquDDloLC+lIod6sBUS7KKqCKhQf2+Aae6Fi0x/jpTzDg1nakCO07xTKGBbnLTXGY1dmLwmjAlWSi02g4vlNa7x6b5rs+V/oCpraWfK/6gQxQwVTgLsv9J3wAzlduiDm+vftv0yMp8j9todQlMSfPkvYVWkwp/WhmLj0cfof77TOW2Qo8XhKnwQQuY2mQb11bONjOEq8y3mHmVyxSRdJpOHTtwBqpTKh34gG2bEvGB8CdM7YR9TMLU9nRLAilTDnbmvpK4GLcACL0/0QnKNaXWj5qsszVA0PfkJWXxYMrhajlDqAp/tSgAkkleJv2eEgxoDKNXOiBP0fLJU8SFqdTimasxfsoORxU8UymqCAnpQmb+dNMMUH+xYQplSEAtLscp/j0YIOgmTB2VJ/FPdYjJlyljyLsbp9IrxYip1BmMVbk4Tasum3kHhseU2rxw/2mhY01q4LJMZJxvSa8UJ6YWv2Gq2Mnyf4GuNo6Pjxv21Kpw3XYMG2rYHdS6ii+rpyZMlSe3UG4m4g4T80hdVOsZyFpcIUGIE1Opna9YrP9YEQ+p53t7e+cnkpo55QQf4v96xTq6db+6Mj44D2BLPzkghtnbc5+PicHtsTrQ728n5ieOasBu0vb4qPebdXLhNqKFyl4oF8CUJPUUM6ZI/CtIFmn2HisObiX9qGfRkcox22p3dt3PGOHv4+zeHoun4tPPxxXPsrLbkSqzI3SLxzuns+8p88qRoxp4ppS20YJ7AVP0YjDwKs/SxoupnS38BOvi3PsW94xMNdngNmzkOs+aWRa75rgh8qyc8IbmruSLH9ot+m5B5T5ldSuUraO3G8AUkzQ3DCAOM2XQE9069injVObg8WIqtYydKiOGv3EWukrEPeq73Vvmj9+r7GYF7O4e8RxoHZ5QdJe7FA8N337Xboxpe7QHUc0DqBinl51xC1EFTF1Q17HAWJpPjxlTKxl5+NMeva89cDiv4C3qNAl75MU3s2MHWdPtXrPLep67wR351bg1sasIJUQWJv4Xua6Jgb7ngtKwuO+NOmX90Ae3EZnSgKmWTLrEjKmNzZxU/cGOsbHsL+yY/FYyG/bXVn5d25Zl2Y292wqpc2U3XChk41Mze1e3LVu9PniU1sOimgjU3EIF5uZjq3PuoNN9bDlvhw5yjolxestp6OmEKSbUlYFX2U6rmDG1+B3mVHxK/QTT0ZOcoXURL3TFggL1x1mqu629ltNmthmm9R5swmh7ilIl+zZMnb0J+YoBLlmejHYquqdyCkzRnuNMh52WZxlTxFom/mLGVGoOwh+fUXowfbZnpiy8k4JeSrBg8wXrF2rXuQIr/46AqB4t9twtNFz867hMNU94MQDC22AqXqwnp6l/YxsCU8RaJv7ixtQKSAouTQEdaMqkXwNedao7TuSsPnB65PgRfITtegWoYr1P6RKmWqKkue6DTNeZe/Uxe6LQu5R4IMGfrCTuhKvd85jysV4TEnjTmdrJyRLqOi7Tb8qmRLAphl5Ixb4iVusr7OCg9SSUpNy9oOxIRbxUugVABab6zNW1NnYnkSng1biR/CF/sjq/uS7HJu88ZHV+y89euO10ptYgSzvHttotPJzrkhMezBa34QWnt5vTPth22cSXFM1wCTlbl9dYWPCtgNUNYIr192uDqHeHFTou1oEp2YX+hKmcDzJc/03qKHzsCwIl05laxOIvc8a2NkzZdgoEBdeRMEVcoZhScPmdrKS/gd8KZodhHZY2ytK8YC8vcROl51LFRjrClEwa/c2KF1+mfCCK7elMpdbRMxQ4ph5MefUjkn4mcg06LgJTU/ZqQvnJgqTvdVzuwGRRH4Kqih4M2Wy20f9/whS3RnVg+BU12mLBCWZqwZnPBEA7xVeU7pLBXtqkprKOysDBT37Fej4/Pz+fz9fZ5gtjHoOZaTlM4ba/xdQso5+cqTbuKdksBG9fYssdoQilKU2uuSADn3T5AZdG0D6p/MJeJpMBDqxyHvf+g7R5vs889V9mykcg+CoKPwWy/geKQsqUbqJ+ldXUwTIqGxdVqFZongZsVsJsmHIyMdN0qLNwoBQSFwTKM/aefJmLzYM+MMUI1kts+7e039bPDR/wmQOi0uf87IWU+B+OU+A44sYXB0diXFROobLLaF/7ulUPnWbI67kEpiBfLtcTDgYQ5/qchlEg/vWZp/6rTM125gtMcdpvgPpOeGkRQGNx8kFtkcHc6NblXFnYwkcf4mXcJlNjhFWAH+06MCVMZ+uoPd9nnroDTD1LLhM3phbxChU3n8Ize+kkRC/LupwsxCKuTqVsNGBSquMf7AugAFN9yt+wupPmFQCnJPzpbDP4FDsk9QzZmIYRN6Zg5svmKDSc1+zLYhUsD5n86z4wJtMZoydZQMQTUwPKho7bZRZ4HaPvuSlUP/T9ZX+dONWIadV6Ek+7kuhBgrgxRbJJTN5PL+OuqkvMYRG1Lba3vSSB8cxLC6hnIE562TdYQM7Buxv4rfT2xABzMl9j3ccCUhjppxPlLrtW3JhagkoKZtHXhnFHJuUgLkoK6LSLvMdV/5J1OnBS8mZfTOxo9D2hqT7hloDCpQeiKRhxSjyNaVOBqbxMxcaNKSjP/MqoTHAc6ZI2HgukYT/VKPeNPOkZg50Ha7385HUnC0wc5g2q2AhPbZ8CPiXmagomxYcfrcbqECITn/6BNd/FZYkFfmXZbiDQ8AgtXUJ10DjNk0TBvPFEv8Y6mpXm4c22nmQuRZe+YmXtU/hK8EzuQ91EK0uGqVew+xfqKDZgOsVsuId+kDqOJnQQe7jeM2pgUnvSvXa97L3ZWkOVgQq1FzWZBmdAolrtlG9iRzfttAYi/R+oTYKKF1ZQKGVxaCaw+76vKEGj5+bfqIQEzdRUaD3cvf6CAj3iDbwQhvfOkDku82j6ExD6KrtGzJj6XhCfQMe9UJOFOBz3a4EZPu1yvsYLrt9iytFraQfB35G1a+l5ZlgCfmtszKwbyCpd+wdqaDe2JFk/3AtpaYh7qDl9WAsMTM75ZWSVpkS0jluuwjFlv6RDGF/ge6RrbmpDxWdxnLhG8a9LJzu2f7BVFA34+2Qi/blG944frCugSncbdGgI97nlOurz2nDKLgRyybSb5sOk1Fh+NXhl0vNSGRkrpkix81e2te7LlBNinAMvU3t8VGNfZa2Hf4+CzpkglN864xLxlxtMqXWVFs9qzKc556YRK6ZIrTO3DHbty5SN++NFn3ZbpcwxdYN73/dzKwzAb322UVP3GBKq8FWBtxd2bH0lFvJrxYmpbbJ9ilssGfgypeIDV9M/b4170WNKgQFD/m5z0A9x7wZKP+phYGzSwKXKjIF2SIKfPAbEiCkgSqj1I9FPNgxjDms+a7E0OKYI+bUwkgL8Nozp5Qvhqk5cqrbPHCdRvHaoS0+PD1PbOUjOLvMHQFHIpC0MIezsRJdde4iv4HmlDX0mnddwUGsh/TalPQMV6asB9sM0Rwk57DfkxYWpnVWyH/ubsFBsAVNvQmfhoaHIUji6kn0XB/lFMU3JN0xduhjiY6ODWhFJv+mGzkuSdgMgNWKxD4EGL59AGg+mNrY3IfQVvoo3V66KCGkhACnv+ABNjVqsXok9sV91zKp0b49QS7H6IboK3r1L4QKfG8b7vKGKgL0SEYfpmo/e/4yv8fw3ptY2lla3yJeTCpuSLb7QWU5P891qpVE7HWNszN2FztrVsV2VFuXaEJNcfeZM9QuelA9sJ80qiBi8eDxxLqURl/IdVoGp9aUAeAkBUvGyHWC8Tb/zwFRuNejqjD6Ame0Wdbk5+gtXma/Sr4aoRejWN+5trGMGqTmp9UFcZZ+2HMDpH7p4rmNKC2n79b1afGfsUmnBb4Nw6THFZTWuCYm+s7hVUL4Zf1DBjlSRFQKsf0i+Ghdkz33dlMg7Ct6HyHKFZbk3K2+kW9/3bU1TNGsAfy0EtTfPkFDqNBaf66quaZql7h+Sk7m8ITiq0364r1oI6uVhVYx0NjZ7D/0/yE8EICcclCFp91F+LlMByG163TPLLzHmMl+2/T7uYr1MGBgO34bvJJC9VkulUpWeRzrDlGtZLR4Oh8NDt4EmFEMbTkyL74eHh+9V9zdDywjdo/gR/v85dIejK51pHrijlO+IFxOmcpnNoI+bjorFEkGxWiJ96Yw1iClGQOiO+00sS8XJadVXUTsMXVMwnJgOaabw21DkaQ4ChDkuEaGQUSog9RV9pnI5J3quzwULzlG1WvIAEcQ6xB3L/c8ng3faknR+cV+2YPxaFUydCDvQaaM37LfhpB9BHSVrD1kvdIOiT84P4fuPoEGEG6e2pxpz49RUc26cOhNu8COz+e379vR5gf3mdWsVplZqFeGdD0zaYMgyUC29+Qwz6luxytBUeuNKOfUPdI//hcvlurB6NW7SBCkpn/k7wdLcVHjVJT+nG5/RMnpxuv0cI+FXhMNLKzsbob49pqhvTqcjlKqQpbH2ESR/uqa+fpRc49LHvs8XdvBFX98nhqXhviV8sALfY18P84TUZfcv2AuRhakAPfFvQbFHo8FopIYZ3nW1PkKYbmypcFWBpf8C9lo2ynNIRq8EEYPiJgTT6fAaMsEM4Cr0cCnhBDPDJHEbtnIjwWzgZlicKfb+dOsEs8Mg7ea4rpJRKsqwXI8KnZBPMBMozxOmfiN5mODz8eq5VNiVkwSzQN0j6neyvAk+G7AGLa6lJIgYlA/PpRKFHmFQakIsAkkQIXhqInwhRoIZYL9aSqZSccDIcyihqipBhFD3iOIL0xJECapXo1Mq/t7ifoLPhFqk6jiSVanogvaoaqjdBwlmApUujTpMkhORhc7UsIXY+ZNgRtiniggTNRFlvHlMJVPeKEN5o6p9Z/0wCYIwiX7ViyQvG2lYVVefJ0mkiEP9cLiqvss2mCSIFvTR6+somUdFCf8H9O69Ae+MPCgAAAAASUVORK5CYII=" %>
+    <p><strong>LEED MRc2 Construction Waste Management<br>
+      Construction Waste Management Tracking Sheet</strong> </p>
+    <br>
+    <table  class="table table-bordered table-sm"  style="width:80%">
+      <div align="left">
+        <h2>THUNDER DEMOLITION INC.</h2>
+        <h3>SITE: <%= @leed.project %></h3>
+      </div>
+      <thead>
+      <tr>
+        <th>DATE</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td><%=  @leed.date.strftime('%m/%d/%Y') %></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tr style="height: 20px;"></tr>
+      <tbody>
+      <tr>
+        <th>TOTAL CONSTRUCTION WASTE	</th>
+        <th><%= sprintf("%.2f", @leed.tconswaste) %></th>
+        <td></td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>TOTAL DIVERTED WASTE</th>
+        <th><%= sprintf("%.2f", @leed.tdivewaste) %></th>
+        <th>PERCENT OF WASTE DIVERTED</th>
+        <th><%= number_with_precision(@leed.porcen, precision: 2) %> %</th>
+
+      </tr>
+      </tbody>
+      <tr style="height: 20px;"></tr>
+      <tr style="height: 20px;"></tr>
+    </table>
+    <br>
+    <table  class="table table-bordered table-sm"  style="width:80%">
+      <thead>
+      <tr>
+        <th>MATERIAL</th>
+        <th> DISPOSAL HAULER </th>
+        <th>LANDFILL<p>(Tons)</th>
+        <th>RECYCLED<p>(Tons)</th>
+        <th>SALVAGED<p>(Tons)</th>
+        <th>REUSED<p>(Tons)</th>
+        <th>TOTAL DIVERTED<p>(Tons) </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <th>ASPHALT</th>
+        <td><%= @leed.method1 %></td>
+        <td class="sumland"><%= @leed.landfill1 %></td>
+        <td class="asphalt"><%= @leed.recycled1%></td>
+        <td class="asphalt"><%= @leed.salvage1%></td>
+        <td class="asphalt"><%= @leed.reused1%></td>
+        <td class="totales"><%= @leed.total1%></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>CONCRETE</th>
+        <td><%= @leed.method2 %></td>
+        <td class="sumland"><%= @leed.landfill2%></td>
+        <td class="concrete"><%= @leed.recycled2%></td>
+        <td class="concrete"><%= @leed.salvage2%></td>
+        <td class="concrete"><%= @leed.reused2%></td>
+        <td class="totales"><%= @leed.total2%></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>PLUMBING FIXTURES</th>
+        <td><%= @leed.method3 %></td>
+        <td class="sumland"><%= @leed.landfill3%></td>
+        <td class="plumbing"><%= @leed.recycled3%></td>
+        <td class="plumbing"><%= @leed.salvage3%></td>
+        <td class="plumbing"><%= @leed.reused3%></td>
+        <td class="totales"><%= @leed.total3%></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>FERROUS METALS</th>
+        <td><%= @leed.method4 %></td>
+        <td><%= @leed.landfill4 %></td>
+        <td><%= @leed.recycled4 %></td>
+        <td><%= @leed.salvage4 %></td>
+        <td><%= @leed.reused4 %></td>
+        <td><%= @leed.total4 %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>NON-FERROUS METALS</th>
+        <td><%= @leed.method5 %></td>
+        <td><%= @leed.landfill5 %></td>
+        <td><%= @leed.recycled5 %></td>
+        <td><%= @leed.salvage5 %></td>
+        <td><%= @leed.reused5 %></td>
+        <td><%= @leed.total5 %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>WOOD</th>
+        <td><%= @leed.method6 %></td>
+        <td><%= @leed.landfill6 %></td>
+        <td><%= @leed.recycled6 %></td>
+        <td><%= @leed.salvage6 %></td>
+        <td><%= @leed.reused6 %></td>
+        <td><%= @leed.total6 %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>GLASS</th>
+        <td><%= @leed.method7 %></td>
+        <td><%= @leed.landfill7 %></td>
+        <td><%= @leed.recycled7 %></td>
+        <td><%= @leed.salvage7 %></td>
+        <td><%= @leed.reused7 %></td>
+        <td><%= @leed.total7 %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>CLAY BRICK</th>
+        <td><%= @leed.method8 %></td>
+        <td><%= @leed.landfill8 %></td>
+        <td><%= @leed.recycled8 %></td>
+        <td><%= @leed.salvage8 %></td>
+        <td><%= @leed.reused8 %></td>
+        <td><%= @leed.total8 %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>BOND PAPER</th>
+        <td><%= @leed.method9 %></td>
+        <td><%= @leed.landfill9 %></td>
+        <td><%= @leed.recycled9 %></td>
+        <td><%= @leed.salvage9 %></td>
+        <td><%= @leed.reused9 %></td>
+        <td><%= @leed.total9 %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>NEWSPRINT</th>
+        <td><%= @leed.method10 %></td>
+        <td><%= @leed.landfill10 %></td>
+        <td><%= @leed.recycled10 %></td>
+        <td><%= @leed.salvage10 %></td>
+        <td><%= @leed.reused10 %></td>
+        <td><%= @leed.total10 %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>CARDBOARD</th>
+        <td><%= @leed.method11 %></td>
+        <td><%= @leed.landfill11 %></td>
+        <td><%= @leed.recycled11 %></td>
+        <td><%= @leed.salvage11 %></td>
+        <td><%= @leed.reused11 %></td>
+        <td><%= @leed.total11 %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>PLASTIC</th>
+        <td><%= @leed.method12 %></td>
+        <td><%= @leed.landfill12 %></td>
+        <td><%= @leed.recycled12 %></td>
+        <td><%= @leed.salvage12 %></td>
+        <td><%= @leed.reused12 %></td>
+        <td><%= @leed.total12 %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>GYPSUM</th>
+        <td><%= @leed.method13 %></td>
+        <td><%= @leed.landfill13 %></td>
+        <td><%= @leed.recycled13 %></td>
+        <td><%= @leed.salvage13 %></td>
+        <td><%= @leed.reused13 %></td>
+        <td><%= @leed.total13 %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>PAINT</th>
+        <td><%= @leed.method14 %></td>
+        <td><%= @leed.landfill14 %></td>
+        <td><%= @leed.recycled14 %></td>
+        <td><%= @leed.salvage14 %></td>
+        <td><%= @leed.reused14 %></td>
+        <td><%= @leed.total14 %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>INSULATION</th>
+        <td><%= @leed.method15 %></td>
+        <td><%= @leed.landfill15 %></td>
+        <td><%= @leed.recycled15 %></td>
+        <td><%= @leed.salvage15 %></td>
+        <td><%= @leed.reused15 %></td>
+        <td><%= @leed.total15 %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>C&D / TRASH</th>
+        <td><%= @leed.method16 %></td>
+        <td><%= @leed.landfill16 %></td>
+        <td><%= @leed.recycled16 %></td>
+        <td><%= @leed.salvage16 %></td>
+        <td><%= @leed.reused16 %></td>
+        <td><%= @leed.total16 %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>VEGETATION / TREES</th>
+        <td><%= @leed.method17 %></td>
+        <td><%= @leed.landfill17 %></td>
+        <td><%= @leed.recycled17 %></td>
+        <td><%= @leed.salvage17 %></td>
+        <td><%= @leed.reused17 %></td>
+        <td><%= @leed.total17 %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>FILL</th>
+        <td><%= @leed.method19 %></td>
+        <td><%= @leed.landfill19 %></td>
+        <td><%= @leed.recycled19 %></td>
+        <td><%= @leed.salvage19 %></td>
+        <td><%= @leed.reused19 %></td>
+        <td><%= @leed.total19 %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>OTHER</th>
+        <td><%= @leed.method18 %></td>
+        <td><%= @leed.landfill18 %></td>
+        <td><%= @leed.recycled18 %></td>
+        <td><%= @leed.salvage18 %></td>
+        <td><%= @leed.reused18 %></td>
+        <td><%= @leed.total18 %></td>
+      </tr>
+      </tbody>
+      <tr style="height: 20px;"></tr>
+      <tbody>
+      <tr>
+        <td></td>
+        <th>TOTAL LANDFILLED WASTE</th>
+        <th  class="totaltotal"><%= sprintf("%.2f", @leed.tlandwaste) %></th>
+        <td></td>
+        <td></td>
+        <th>TOTAL DIVERTED WASTE</th>
+        <th><%= sprintf("%.2f", @leed.tdivewaste) %></th>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <th>TOTAL CONSTRUCTION WASTE</th>
+        <th><%= sprintf("%.2f", @leed.tconswaste) %></th>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <th><strong>CREATED BY: __________________________</strong></th>
+
+  </div>
+  <br>
+  <br>
+
+<script>
+    document.getElementById("print-button").addEventListener("click", function() {
+        var printContents = document.getElementById("section-to-print").innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        window.location.reload();
+        document.body.innerHTML = originalContents;
+    });
+
+    const tableHeaders = document.querySelectorAll("thead, th");
+    for (const header of tableHeaders) {
+        header.style.backgroundColor = "#ceffce";
+    }
+
+</script>

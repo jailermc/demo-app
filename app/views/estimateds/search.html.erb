@@ -1,0 +1,21 @@
+<table>
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+    <th>Actions</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @estimated.each do |my_resource| %>
+    <tr>
+      <td><%= my_resource.address %></td>
+      <td>
+        <%= link_to 'Show', my_resource %>
+        <%= link_to 'Edit', edit_estimated_path(my_resource) %>
+        <%= link_to 'Destroy', my_resource, method: :delete, data: { confirm: 'Are you sure?' } %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

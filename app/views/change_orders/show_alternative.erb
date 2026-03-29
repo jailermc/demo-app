@@ -1,0 +1,163 @@
+<br>
+
+<%= button_tag "Print", id: "print-button" %>
+
+<br>
+<br>
+<div id="section-to-print">
+  <div>
+    <%= image_tag  "https://thunderdemolition.com/wp-content/uploads/2024/08/Untitled-design-3.png", size: "170" %>
+  </div>
+  <div id="table">
+    <div align="center">
+      <h1>CHARGE ORDER # <%= @change_order.daily_number %></h1>
+    </div>
+    <h2>THUNDER DEMOLITION INC.</h2>
+    <p><strong>7373 N.E 3RD COURT<br>
+    MIAMI, FL 33138</strong> </p>
+    <p><strong>PHONE:</strong> (305) 757-9444</p>
+    <p><strong>EMAIL: </strong>info@thunderdemolition.com</p>
+    <table  class="table table-bordered table-sm" style="width:100%">
+      <thead>
+      <tr>
+        <th>COMPANY NAME</th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tr style="height: 20px;"></tr>
+      <tbody>
+      <tr>
+        <td><%= @change_order.cname %></td>
+        <td></td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tr style="height: 20px;"></tr>
+      <tbody>
+      <tr>
+        <tH>PROJECT NAME</tH>
+        <tH>JOB SITE ADDRESS</tH>
+        <td></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td><%= @change_order.code %></td>
+        <td><%= @change_order.job_site %></td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tr style="height: 20px;"></tr>
+      <tbody>
+      <tr>
+        <tH>PHONE</tH>
+        <th>EMAIL</th>
+        <th>DATE OF REQUEST</th>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td><%= @change_order.phone %></td>
+        <td><%= @change_order.email %></td>
+        <td ><%= @change_order.date.strftime('%m/%d/%Y') %></td>
+      </tr>
+      </tbody>
+      <tr style="height: 20px;"></tr>
+      <tbody>
+      <tr>
+        <td class="bottom-line"></td>
+        <td class="bottom-line"></td>
+        <td class="bottom-line"></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>CONTRACT AMOUNT:</th>
+        <th></th>
+        <th><%= number_to_currency(@change_order.corder4, :precision => 2) %></th>
+      </tr>
+      </tbody>
+      <tr style="height: 20px;"></tr>
+      <tbody>
+      <tr>
+        <th>CHARGE ORDER DESCRIPTION:</th>
+        <td><%= @change_order.description %></td>
+        <td><%= number_to_currency(@change_order.corder1, :precision => 2) %></td>
+      </tr>
+      </tbody>
+      <tr style="height: 20px;"></tr>
+      <tbody>
+      <tr>
+        <th>EXCLUSIONS:</th>
+        <td><%= @change_order.vendor %></td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>ADDITIONAL DAYS:</th>
+        <td></td>
+        <td><%= @change_order.corder5 %></td>
+      </tr>
+      </tbody>
+      <tr style="height: 20px;"></tr>
+      <tbody>
+      <tr>
+        <th>MATERIAL / SUBCONTRATORS</th>
+        <th>DESCRIPTION</th>
+        <th>PRICE</th>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th><%= @change_order.mdefault1 %></th>
+        <td><%= @change_order.mdescription1 %></td>
+        <td><%= @change_order.mtotal1 %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th><%= @change_order.mdefault2 %></th>
+        <td><%= @change_order.mdescription2 %></td>
+        <td><%= @change_order.mtotal2 %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th><%= @change_order.mdefault3 %></th>
+        <td><%= @change_order.mdescription3 %></td>
+        <td><%= @change_order.mtotal3 %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>COST:</th>
+        <td></td>
+        <th><%= @change_order.cost %></th>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+  <br>
+  <br>
+<%= link_to 'Edit', edit_change_order_path(@change_order) %> |
+<%= link_to 'Back', change_orders_path %>
+
+<script>
+      document.getElementById("print-button").addEventListener("click", function() {
+            var printContents = document.getElementById("section-to-print").innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            window.location.reload();
+            document.body.innerHTML = originalContents;
+      });
+
+      const tableHeaders = document.querySelectorAll("thead, th");
+      for (const header of tableHeaders) {
+            header.style.backgroundColor = "#DDEAFFFF";
+      }
+
+</script>

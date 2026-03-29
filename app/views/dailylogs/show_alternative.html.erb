@@ -1,0 +1,110 @@
+<button id="print-button">Print</button>
+
+<div id="table">
+</div>
+<br>
+<br>
+<div id="section-to-print" >
+  <div>
+    <div>
+      <img src="http://nebula.wsimg.com/ca926fcc559ff44413f5a1d88806c8a4?AccessKeyId=79FB6C32635B7E4BB634&disposition=0&alloworigin=1" />
+      <h2>Thunder Demolition Inc </h2>
+    </div>
+    <h2 ALIGN="center">REPORT # <%= @dailylog.daily_number%></h2>
+  </div>
+  <table  class="table table-bordered table-sm"  style="width:80%">
+    <thead>
+    <tr>
+      <th class="color">COMPANY NAME</th>
+      <th class="color"></th>
+      <th class="color"></th>
+      <th class="color">LOCATION</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><%= @cost_sheet.name%></td>
+      <td></td>
+      <td></td>
+      <td><%= @cost_sheet.address%></td>
+    </tr>
+    </tbody>
+    <tr style="height: 20px;"></tr>
+    <thead>
+    <tr>
+      <th class="color"></th>
+      <th class="color">DATE</th>
+      <th class="color">WEATHER</th>
+      <th class="color"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td></td>
+      <th>
+        <% if @dailylog.date %>
+          <%= @dailylog.date.strftime('%m/%d/%Y') %>
+        <% else %>
+        <% end %>
+      </th>
+      <td><%=  @whater_sel %></td>
+      <td></td>
+    </tr>
+    </tbody>
+    <tr style="height: 20px;"></tr>
+  </table>
+  <table>
+    <% if @dailylog.avatar.attached? %>
+      <tbody>
+      <% @dailylog.avatar.each do |image| %>
+        <tr>
+          <td>
+            <div class="image-container">
+              <%= image_tag rails_blob_path(image), style: 'width:100%; height:auto;' %>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    <% end %>
+  </table>
+  <br>
+  <br>
+  <h3>WORK DESCRIPTION: </h3>
+ <p><%= @dailylog.remarks %></p>
+<br>
+  <br>
+<h3>COMMENTS: </h3>
+<p><%= @dailylog.comments %></p>
+</div>
+<br>
+<br>
+<div>
+
+</div>
+<br>
+<br>
+<%= link_to 'Edit', edit_dailylog_path(@dailylog) %> |
+
+<script>
+    document.getElementById("print-button").addEventListener("click", function() {
+        var printContents = document.getElementById("section-to-print").innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        window.location.reload();
+        document.body.innerHTML = originalContents;
+    });
+
+    const tableHeaders = document.querySelectorAll(".color");
+    for (const header of tableHeaders) {
+        header.style.backgroundColor = "rgb(206,228,255)";
+    }
+
+    const celdas = document.querySelectorAll(".celda");
+    celdas.forEach(celda => {
+        if (celda.textContent) {
+            celda.style.backgroundColor = "#FFFF00";
+        }
+    });
+</script>

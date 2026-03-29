@@ -1,0 +1,27 @@
+<%= form_with(model: employee) do |f| %>
+  <%= error_messages_for 'user' %>
+
+  <div id="user_form">
+    <!--[form:user]-->
+    <div class="splitcontent">
+      <div class="splitcontentleft">
+        <fieldset class="box tabular">
+          <legend><%=l(:label_information_plural)%></legend>
+          <p><%= label_tag  "Name:" %> <%= f.text_field :name, :required => true %></p>
+          <p><%= label_tag  "Last Name:" %> <%= f.text_field :lastname, :required => true %></p>
+          <p><%= label_tag "Position:" %><%= f.select :function,options_for_select([['', 0], ['LABOR', 1], ['OPERATOR', 2], ['SUPERVISOR', 3], ['DRIVER', 4]], selected: @selected), {}  %>
+          <p><%= label_tag "Active:" %><%= f.check_box :active1  %></p>
+          <p>
+            <%= label_tag "Project:" %>
+            <%= f.select :cost_sheet_id, options_for_select([["", nil]] + @cost_sheet.map { |project| [project.address, project.id] }, @selected_project_id), {} %>
+          </p>
+        </fieldset>
+      </div>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  </div>
+  <br>
+  <br>
+<%end %>

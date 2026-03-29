@@ -1,0 +1,134 @@
+@import "bootstrap";
+
+/* ============================================
+   Thunder Demolition - Custom Styles
+   ============================================ */
+
+/* --- Color Variables --- */
+$td-blue:    #3E5B76;
+$td-blue-lt: #628DB6;
+$td-green:   #a2fc9e;
+$td-green-lt:#e3ffe3;
+$td-blue2:   #a3ccf8;
+$td-blue2-lt:#d2ecff;
+
+/* --- Body & Layout --- */
+body {
+  background-color: #f4f6f9;
+  font-family: Verdana, sans-serif;
+  font-size: 14px;
+  color: #333;
+}
+
+.container-fluid {
+  max-width: 1600px;
+}
+
+/* --- Navbar --- */
+.navbar-brand {
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+}
+
+/* --- Page headers --- */
+h1 {
+  font-size: 1.4rem;
+  color: $td-blue;
+  margin-bottom: 1rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid $td-blue;
+}
+
+/* --- Tables --- */
+.table thead th {
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+/* Green header for cost sheets */
+.table-cost thead th,
+.thead-green th {
+  background-color: $td-green !important;
+  color: #1a3a1a;
+}
+
+/* Blue header for estimateds */
+.table-estimated thead th,
+.thead-blue th {
+  background-color: $td-blue2 !important;
+  color: #0a1f3a;
+}
+
+/* Gray header default */
+.table thead th {
+  background-color: #e9ecef;
+}
+
+/* --- Status badges on index tables --- */
+.status-active   { color: #0d6efd; font-weight: 600; }
+.status-completed{ color: #198754; font-weight: 600; }
+.status-pending  { color: #c97e00; font-weight: 600; }
+
+/* --- Address color coding in cost sheets --- */
+.addr-complete { background-color: $td-green-lt; }
+.addr-started  { background-color: $td-blue2-lt; }
+
+/* --- Redmine celda classes (used in show/form views) --- */
+.celda {
+  background-color: #fff9c4;
+  font-weight: bold;
+  text-align: right;
+}
+
+.celda2 {
+  background-color: #e3f2fd;
+  font-weight: bold;
+}
+
+/* --- Form sections --- */
+.section-title {
+  background-color: $td-blue;
+  color: white;
+  padding: 6px 12px;
+  margin: 16px 0 8px 0;
+  font-weight: bold;
+  font-size: 13px;
+  border-radius: 3px;
+}
+
+/* --- Print button --- */
+#print-button {
+  @extend .btn;
+  @extend .btn-outline-secondary;
+  @extend .btn-sm;
+  margin-bottom: 1rem;
+}
+
+/* --- Contextual action bar (top of index pages) --- */
+.contextual {
+  float: right;
+  margin-bottom: 0.5rem;
+}
+
+/* --- Buttons spacing in tables --- */
+.buttons .btn, td .btn {
+  margin-right: 3px;
+  margin-bottom: 2px;
+}
+
+/* --- Form inputs in tables (estimation forms) --- */
+#table input[type="text"],
+#table input[type="number"],
+#table input[type="date"] {
+  font-size: 12px;
+  padding: 2px 4px;
+  height: auto;
+}
+
+/* --- Print styles --- */
+@media print {
+  nav, .contextual, #print-button, form, .btn { display: none !important; }
+  #section-to-print { display: block !important; }
+  body { background: white; font-size: 11px; }
+  .table { font-size: 10px; }
+}

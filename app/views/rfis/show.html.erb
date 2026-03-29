@@ -1,0 +1,142 @@
+<p id="notice"><%= notice %></p>
+<button id="print-button">Print</button>
+  <br>
+  <br>
+
+<div id="section-to-print">
+  <div>
+    <img src="http://nebula.wsimg.com/ca926fcc559ff44413f5a1d88806c8a4?AccessKeyId=79FB6C32635B7E4BB634&disposition=0&alloworigin=1">
+  </div>
+  <div id="table">
+    <div align="center">
+      <h1>Request For Information # <%=@rfi.number %></h1>
+    </div>
+    <h2>THUNDER DEMOLITION INC.</h2>
+    <p><strong>7373 N.E 3RD COURT<br>
+      MIAMI, FL 33138</strong> </p>
+    <p><strong>PHONE:</strong> (305) 757-9444</p>
+  <h3></h3>
+  <div id="table">
+    <table  class="table table-bordered table-sm"  style="width:80%">
+      <thead>
+      <tr>
+        <th>COMPANY NAME</th>
+        <th>PROJECT NAME</th>
+        <th>LOCATION</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td><%= @rfi.cname %></td>
+        <td><%= @rfi.pname %></td>
+        <td><%= @rfi.location %></td>
+      </tr>
+      </tbody>
+      <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th>RIF Number</th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td></td>
+        <td></td>
+        <td><%= @rfi.number %></td>
+
+      </tr>
+      </tbody>
+      <tr style="height: 20px;"></tr>
+      <tbody>
+      <tr>
+        <th colspan="2">RFI OVERVIEW</th>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td colspan="2"><%= @rfi.overview  %></td>
+      </tr>
+      </tbody>
+      <tr style="height: 20px;"></tr>
+      <tbody>
+      <tr>
+        <th colspan="2">REQUEST / CLARIFICATION REQUIRED</th>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td colspan="2"><%= @rfi.request %></td>
+      </tr>
+      </tbody>
+      <tr style="height: 20px;"></tr>
+      <tbody>
+      <tr>
+        <th>Name of Requesting Party</th>
+        <th></th>
+        <th>Date of Request</th>
+
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td ><%= @rfi.name_request%></td>
+        <td ></td>
+        <td ><%= @rfi.date %></td>
+      </tr>
+      </tbody>
+      <tr style="height: 60px;"></tr>
+
+      <tbody>
+      <tr>
+        <th colspan="2">RESPONSE</th>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td colspan="2"><%= @rfi.response%></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>Name of Responding Party</th>
+        <th></th>
+        <th>Date of response</th>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td ><%= @rfi.name_responding %></td>
+        <td ></td>
+        <td ><%= @rfi.date2 %></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+</div>
+  <br>
+  <br>
+  <br>
+  <br>
+<script>
+      document.getElementById("print-button").addEventListener("click", function() {
+            var printContents = document.getElementById("section-to-print").innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            window.location.reload();
+            document.body.innerHTML = originalContents;
+      });
+
+      const tableHeaders = document.querySelectorAll("th");
+      for (const header of tableHeaders) {
+            header.style.backgroundColor = "#DDEAFFFF";
+      }
+
+
+</script>
+
+<%= link_to 'Edit', edit_rfi_path(@rfi) %> |
+<%= link_to 'Back', rfis_path %>

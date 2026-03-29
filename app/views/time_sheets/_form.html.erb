@@ -1,0 +1,81 @@
+<%= form_with(model: time_sheet) do |form| %>
+  <% if time_sheet.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(time_sheet.errors.count, "error") %> prohibited this time_sheet from being saved:</h2>
+
+      <ul>
+        <% time_sheet.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <div id="table">
+      <div>
+        <table class="table table-bordered table-sm"  style="width:80%">
+          <thead>
+          <tr>
+            <th>ADDRESS</th>
+            <th>NAME PROJECT</th>
+            <th>WEEK</th>
+            <th>REF # <%= form.number_field :cost_sheet_id, value: @variante ,style: "width:100px;" %></th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr>
+            <td><%= form.text_field :address, value: @employee_data %></td>
+            <td></td>
+            <td><%= form.date_field :week, :required => true%></td>
+            <td></td>
+            <td></td>
+          </tr>
+          </tbody>
+        </table>
+        <table id="principal2" class="table table-bordered table-sm" style="width:80%">
+          <thead>
+          <tr>
+            <th>EMPLOYEE</th>
+            <th>MON</th>
+            <th>TUE</th>
+            <th>WED</th>
+            <th>THR</th>
+            <th>FRI</th>
+            <th>SAT</th>
+            <th>SUN</th>
+            <th>TOTAL</th>
+          </tr>
+          </thead>
+          <% if @employees.present? %>
+            <tbody>
+            <% @employees.each_with_index do |emp, index| %>
+              <% if emp.active1 == 1 %> <!-- Add this condition to check if active is equal to 1 -->
+                <tr>
+                  <td><%= form.label "#{emp.name} #{emp.lastname}", employee: "employee_names[#{index}]", id: "name_#{index}", style: "width:60px;" %></td>
+                  <td><%= form.text_field "mon_#{index}", id: "mon_#{index}", style: "width:60px;" %></td>
+                  <td><%= form.text_field "tue_#{index}", id: "tue_#{index}", style: "width:60px;" %></td>
+                  <td><%= form.text_field "wed_#{index}", id: "wed_#{index}", style: "width:60px;" %></td>
+                  <td><%= form.text_field "thr_#{index}", id: "thr_#{index}", style: "width:60px;" %></td>
+                  <td><%= form.text_field "fri_#{index}", id: "fri_#{index}", style: "width:60px;" %></td>
+                  <td><%= form.text_field "sat_#{index}", id: "sat_#{index}", style: "width:60px;" %></td>
+                  <td><%= form.text_field "sun_#{index}", id: "sun_#{index}", style: "width:60px;" %></td>
+                  <td><%= form.text_field "total_#{index}", id: "total_#{index}", style: "width:60px;" %></td>
+                </tr>
+              <% end %>
+            <% end %>
+            </tbody>
+          <% end %>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+<br>
+<br>

@@ -1,0 +1,226 @@
+<%= form_with(model: roi) do |form| %>
+  <% if roi.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(roi.errors.count, "error") %> prohibited this roi from being saved:</h2>
+      <ul>
+        <% roi.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<BR>
+  <div id="table">
+    <table  class="table table-bordered table-sm"  style="width:50%">
+      <tbody>
+      <tr>
+        <th>COST OF PROPERTY  </th>
+        <td></td>
+        <td>$: <%= form.text_field ':salvage1', id: "salvage1", style: "width:70px;" %> </td>
+        <td ></td>
+
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>MONTHLY LEASE  </th>
+        <td>$: <%= form.text_field ':salvage2', id: "salvage2", style: "width:70px;" %></td>
+        <td> </td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>FOR YEAR  </th>
+        <td></td>
+        <td><%= form.text_field ':salvage30', id: "salvage30", style: "width:70px;" %> </td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tr style="height: 20px;"></tr>
+      <tbody>
+      <tr>
+        <th>ANNUAL  EXPENSES</th>
+        <th></th>
+        <td></td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tbody>
+      <tr>
+        <th></th>
+        <th>REPAIRS</th>
+        <td class="expenses"><%= form.text_field '',  style: "width:70px;" %></td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th></th>
+        <th>TAXES</th>
+        <td class="expenses"><%= form.text_field :salvage4, style: "width:70px;" %> </td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <TH></TH>
+        <th>EXPENSISE</th>
+        <td class="expenses"><%= form.text_field :salvage5, style: "width:70px;" %></td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <TH></TH>
+        <th>INSURANCE</th>
+        <td class="expenses"><%= form.text_field :salvage6, style: "width:70px;" %></td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <TH></TH>
+        <th>UTILITIES</th>
+        <td class="expenses"><%= form.text_field :salvage60, style: "width:70px;" %></td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <TH></TH>
+        <th>MAINTENANCE</th>
+        <td class="expenses"><%= form.text_field :salvage61, style: "width:70px;" %></td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td class="bottom-line"></td>
+        <td class="bottom-line"></td>
+        <td class="bottom-line"></td>
+        <td class="bottom-line"></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <TH>TOTAL ANNUAL EXPENSES</TH>
+        <th></th>
+        <td><%= form.text_field :salvage7, id: "texpenses", style: "width:70px;" %></td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tr style="height: 20px;"></tr>
+      <tbody>
+      <tr>
+        <th>INCOME</th>
+        <td></td>
+        <td><%= form.text_field :salvage8, id: "salvage8", style: "width:70px;" %></td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>EXPENSES</th>
+        <TD></TD>
+        <td><%= form.text_field :salvage9, id: "salvage9", style: "width:70px;" %></td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>TOTAL ANNUAL COST OF PROPERTY</th>
+        <TD></TD>
+        <td> <%= form.text_field :salvage18, id: "salvage18", style: "width:70px;" %></td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tr style="height: 20px;"></tr>
+      <tbody>
+      <tr>
+        <th>PERCENTAGE OF PROFIT</th>
+        <TD></TD>
+        <td>  %: <%= form.text_field :salvage18, id: "salvage50", style: "width:70px;" %></td>
+        <td></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <br>
+  <br>
+<% end %>
+
+<script>
+
+    const tableHeaders = document.querySelectorAll("thead, th");
+    for (const header of tableHeaders) {
+        header.style.backgroundColor = "#cbdffc";
+    }
+
+    $(document).ready(function() {
+        $('input').on('input', function () {
+            porcentage();
+            updatesum();
+            income();
+            expenses();
+            total();
+            profit();
+        });
+    });
+
+    function updatesum() {
+        var total3 = 0;
+        $('.expenses input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total3 += value3;
+        });
+        $('#texpenses').val(total3);
+
+    }
+    function porcentage() {
+        let v1 = $('#salvage2').val();
+        va1 = parseFloat(v1)
+        vv1 =(isNaN(va1) ? 0 : va1)
+        let total = vv1 * 12;
+        $('#salvage30').val(total);
+    }
+
+    function income() {
+        let v1 = $('#salvage30').val();
+        $('#salvage8').val(v1);
+    }
+
+    function expenses() {
+        let v1 = $('#texpenses').val();
+        $('#salvage9').val(v1);
+    }
+
+    function total() {
+        let v1 = $('#salvage8').val();
+        let v2 = $('#salvage9').val();
+        va1 = parseFloat(v1)
+        va2 = parseFloat(v2)
+        vv1 =(isNaN(va1) ? 0 : va1)
+        vv2 =(isNaN(va2) ? 0 : va2)
+        let total = vv1 - vv2;
+        $('#salvage18').val(total);
+    }
+
+    function profit() {
+        let v1 = $('#salvage18').val();
+        let v2 = $('#salvage1').val();
+        va1 = parseFloat(v1)
+        va2 = parseFloat(v2)
+        vv1 =(isNaN(va1) ? 0 : va1)
+        vv2 =(isNaN(va2) ? 0 : va2)
+        let total = vv1 / vv2 * 100;
+        $('#salvage50').val(total);
+    }
+
+</script>

@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Rois</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @rois.each do |roi| %>
+      <tr>
+        <td><%= link_to 'Show', roi %></td>
+        <td><%= link_to 'Edit', edit_roi_path(roi) %></td>
+        <td><%= link_to 'Destroy', roi, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Roi', new_roi_path %>

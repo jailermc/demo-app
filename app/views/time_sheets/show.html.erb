@@ -1,0 +1,96 @@
+
+<div>
+  <button id="print-button">Print</button>
+  <br>
+  <br>
+  <div id="table">
+    <div>
+      <div id="section-to-print" >
+      <table class="table table-bordered table-sm" style="width:70%">
+        <thead>
+        <tr>
+          <th class="color">ADDRESS</th>
+          <th class="color">NAME PROJECT</th>
+          <th class="color">WEEK</th>
+          <th></th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td><%= @time_sheet.address %></td>
+          <td></td>
+          <th>
+          <% current_date = @time_sheet.week %> <!-- Obtén la fecha actual -->
+          <% next_week_date = current_date + 6.days %> <!-- Suma 7 días a la fecha actual -->
+          <%= current_date.strftime('%m/%d/%Y') %> -
+          <%= next_week_date.strftime('%m/%d/%Y') %>
+        </th>
+          <td></td>
+          <td></td>
+        </tr>
+        </tbody>
+      </table>
+      <table id="principal2" class="table table-bordered table-sm" style="width:70%">
+        <thead>
+        <tr>
+          <th class="color">EMPLOYEE</th>
+          <th class="color">MON</th>
+          <th class="color">TUE</th>
+          <th class="color">WED</th>
+          <th class="color">THR</th>
+          <th class="color">FRI</th>
+          <th>SAT</th>
+          <th>SUN</th>
+          <th>TOTAL</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @employees.each_with_index do |emp, index| %>
+          <% if emp.active1 == 1 %> <!-- Add this condition to check if active is equal to 1 -->
+          <tr>
+            <td><%= "#{emp.name} #{emp.lastname}" %></td>
+            <td><%= @time_sheet.send("mon_#{index}") %></td>
+            <td><%= @time_sheet.send("tue_#{index}") %></td>
+            <td><%= @time_sheet.send("wed_#{index}") %></td>
+            <td><%= @time_sheet.send("thr_#{index}") %></td>
+            <td><%= @time_sheet.send("fri_#{index}") %></td>
+            <td><%= @time_sheet.send("sat_#{index}") %></td>
+            <td><%= @time_sheet.send("sun_#{index}") %></td>
+            <td><%= @time_sheet.send("total_#{index}") %></td>
+          </tr>
+        <% end %>
+        <% end %>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<%= link_to 'Edit', edit_time_sheet_path(@time_sheet) %> |
+
+<script>
+    document.getElementById("print-button").addEventListener("click", function() {
+        var printContents = document.getElementById("section-to-print").innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        window.location.reload();
+        document.body.innerHTML = originalContents;
+    });
+
+    const tableHeaders = document.querySelectorAll(".color");
+    for (const header of tableHeaders) {
+        header.style.backgroundColor = "rgb(206,228,255)";
+    }
+
+
+    const celdas = document.querySelectorAll(".celda");
+    celdas.forEach(celda => {
+        if (celda.textContent) {
+            celda.style.backgroundColor = "#FFFF00";
+        }
+    });
+
+</script>

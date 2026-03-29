@@ -1,0 +1,1616 @@
+<%= form_with(model: dailylog, html: { multipart: true })  do |form| %>
+  <% if dailylog.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(estimated.errors.count, "error") %> prohibited this estimated from being saved:</h2>
+      <ul>
+        <% estimated.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <br>
+  <br>
+  <div id="table">
+    <table  class="table table-bordered table-sm"  style="width:60%">
+      <thead>
+      <tr>
+        <th>COMPANY NAME</th>
+        <th></th>
+        <th></th>
+        <th>LOCATION</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td><%= @cost_sheet.name %></td>
+        <td></td>
+        <td></td>
+        <td><%= form.text_field :location, id: "location", value: @cost_sheet.address %></td>
+      </tr>
+      </tbody>
+      <tr style="height: 20px;"></tr>
+      <thead>
+      <tr >
+        <th></th>
+        <th>DATE</th>
+        <th>WEATHER</th>
+        <th>COST SHEET ID</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td></td>
+        <td><%= form.date_field :date, :required => true %></td>
+        <td><%= form.select :whater ,options_for_select([['', 0],['RAINY', 1], ['CLOUDY', 2], ['SUNNY', 3], ['DUSTY', 4], ['SNOW', 5], ['FOG', 6]], selected: @whater_sel) %></td>
+        <td><%= form.text_field :cost_sheet_id, value: @variante, style: "width:60px;"%></td>
+      </tr>
+      </tbody>
+      <tr style="height: 20px;"></tr>
+      <thead>
+            <tr>
+              <th>DESCRIPTION</th>
+              <th>MANPOWER</th>
+              <th>QTY</th>
+              <th>MEN HRS</th>
+              <th>EQUIPMENT</th>
+              <th>QTY HOURS</th>
+            </tr>
+      </thead>
+            <tbody>
+            <tr>
+              <td><%=@estimates.adescription1 %></td>
+              <td><%= form.select :alabor1 ,options_for_select([['', 0], ['LABOR', 1], ['OPERATOR', 2], ['SUPERVISOR', 3], ['DRIVER', 4]], selected: @estimates.alabor1), {}, id: 'my-select1'  %></td>
+              <td id="manqty1-row1" class="manl"> <div ><%= form.text_field :manqty1, id: "manqty1", style: "width:60px;" %></div></td>
+              <td id="hour1-row1"  class="hoursl"> <div ><%= form.text_field :hour1, id: "hour1", style: "width:60px;" %></div></td>
+              <td id="omanqty1-row1" class="mano"> <div ><%= form.text_field :omanqty1, id: "omanqty1", style: "width:60px;" %></div></td>
+              <td id="ohour1-row1" class="hourso"> <div ><%= form.text_field :ohour1, id: "ohour1", style: "width:60px;" %></div></td>
+              <td id="smanqty1-row1" class="mans"> <div ><%= form.text_field :smanqty1, id: "smanqty1", style: "width:60px;" %></div></td>
+              <td id="shour1-row1" class="hourss"> <div ><%= form.text_field :shour1, id: "shour1", style: "width:60px;" %></div></td>
+              <td id="dmanqty1-row1" class="mand"> <div ><%= form.text_field :dmanqty1, id: "dmanqty1", style: "width:60px;" %></div></td>
+              <td id="dhour1-row1" class="hoursd"> <div ><%= form.text_field :dhour1, id: "dhour1", style: "width:60px;" %></div></td>
+              <td>EXCAVATOR</td>
+              <td><%= form.text_field :equipqty1, id: "equipqty1", style: "width:60px;"%></td>
+            </tr>
+            </tbody>
+      <tbody>
+      <tr>
+        <td><%=@estimates.adescription2 %></td>
+        <td><%= form.select :alabor2 ,options_for_select([['', 0], ['LABOR', 1], ['OPERATOR', 2], ['SUPERVISOR', 3], ['DRIVER', 4]], selected: @estimates.alabor2), {}, id: 'my-select2'  %></td>
+        <td id="manqty1-row2"  class="manl"> <div ><%= form.text_field :manqty2, id: "manqty2", style: "width:60px;" %></div></td>
+        <td id="hour1-row2"  class="hoursl"> <div ><%= form.text_field :hour2, id: "hour2", style: "width:60px;" %></div></td>
+        <td id="omanqty1-row2" class="mano"> <div ><%= form.text_field :omanqty2, id: "omanqty2", style: "width:60px;" %></div></td>
+        <td id="ohour1-row2" class="hourso"> <div ><%= form.text_field :ohour2, id: "ohour2", style: "width:60px;" %></div></td>
+        <td id="smanqty1-row2" class="mans"> <div ><%= form.text_field :smanqty2, id: "smanqty2", style: "width:60px;" %></div></td>
+        <td id="shour1-row2" class="hourss"> <div ><%= form.text_field :shour2, id: "shour2", style: "width:60px;" %></div></td>
+        <td id="dmanqty1-row2" class="mand"> <div ><%= form.text_field :dmanqty2, id: "dmanqty2", style: "width:60px;" %></div></td>
+        <td id="dhour1-row2" class="hoursd"> <div ><%= form.text_field :dhour2, id: "dhour2", style: "width:60px;" %></div></td>
+        <td>EXCAVATOR 2</td>
+        <td><%= form.text_field :equipqty2, id: "equipqty2", style: "width:60px;"%></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td><%=@estimates.adescriptio3 %></td>
+        <td><%= form.select :alabor3 ,options_for_select([['', 0], ['LABOR', 1], ['OPERATOR', 2], ['SUPERVISOR', 3], ['DRIVER', 4]], selected: @estimates.alabor3), {}, id: 'my-select3'  %></td>
+        <td id="manqty1-row3"  class="manl"> <div ><%= form.text_field :manqty3, id: "manqty3", style: "width:60px;" %></div></td>
+        <td id="hour1-row3"  class="hoursl"> <div ><%= form.text_field :hour3, id: "hour3", style: "width:60px;" %></div></td>
+        <td id="omanqty1-row3"  class="mano"> <div ><%= form.text_field :omanqty3, id: "omanqty3", style: "width:60px;" %></div></td>
+        <td id="ohour1-row3" class="hourso"> <div ><%= form.text_field :ohour3, id: "ohour3", style: "width:60px;" %></div></td>
+        <td id="smanqty1-row3" class="mans"> <div ><%= form.text_field :smanqty3, id: "smanqty3", style: "width:60px;" %></div></td>
+        <td id="shour1-row3" class="hourss"> <div ><%= form.text_field :shour3, id: "shour3", style: "width:60px;" %></div></td>
+        <td id="dmanqty1-row3" class="mand"> <div ><%= form.text_field :dmanqty3, id: "dmanqty3", style: "width:60px;" %></div></td>
+        <td id="dhour1-row3" class="hoursd"> <div ><%= form.text_field :dhour3, id: "dhour3", style: "width:60px;" %></div></td>
+        <td>SCISSOR LIF</td>
+        <td><%= form.text_field :equipqty3, id: "equipqty3", style: "width:60px;"%></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td><%=@estimates.adescription4 %></td>
+        <td><%= form.select :alabor4 ,options_for_select([['', 0], ['LABOR', 1], ['OPERATOR', 2], ['SUPERVISOR', 3], ['DRIVER', 4]], @estimates.alabor4), {}, id: 'my-select4'  %></td>
+        <td id="manqty1-row4" class="manl"> <div ><%= form.text_field :manqty4, id: "manqty4", style: "width:60px;" %></div></td>
+        <td id="hour1-row4" class="hoursl"> <div ><%= form.text_field :hour4, id: "hour4", style: "width:60px;" %></div></td>
+        <td id="omanqty1-row4" class="mano"> <div ><%= form.text_field :omanqty4, id: "omanqty4", style: "width:60px;" %></div></td>
+        <td id="ohour1-row4" class="hourso"> <div ><%= form.text_field :ohour4, id: "ohour4", style: "width:60px;" %></div></td>
+        <td id="smanqty1-row4" class="mans"> <div ><%= form.text_field :smanqty4, id: "smanqty4", style: "width:60px;" %></div></td>
+        <td id="shour1-row4" class="hourss"> <div ><%= form.text_field :shour4, id: "shour4", style: "width:60px;" %></div></td>
+        <td id="dmanqty1-row4" class="mand"> <div ><%= form.text_field :dmanqty4, id: "dmanqty4", style: "width:60px;" %></div></td>
+        <td id="dhour1-row4" class="hoursd"> <div ><%= form.text_field :dhour4, id: "dhour4", style: "width:60px;" %></div></td>
+        <td>LOADER</td>
+        <td><%= form.text_field :equipqty4, id: "equipqty4", style: "width:60px;"%></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td><%=@estimates.adescription5 %></td>
+        <td><%= form.select :alabor5 ,options_for_select([['', 0], ['LABOR', 1], ['OPERATOR', 2], ['SUPERVISOR', 3], ['DRIVER', 4]], selected: @estimates.alabor5), {}, id: 'my-select5'  %></td>
+        <td id="manqty1-row5" class="manl"> <div ><%= form.text_field :manqty5, id: "manqty5", style: "width:60px;" %></div></td>
+        <td id="hour1-row5" class="hoursl" > <div ><%= form.text_field :hour5, id: "hour5", style: "width:60px;" %></div></td>
+        <td id="omanqty1-row5" class="mano"> <div ><%= form.text_field :omanqty5, id: "omanqty5", style: "width:60px;" %></div></td>
+        <td id="ohour1-row5" class="hourso"> <div ><%= form.text_field :ohour5, id: "ohour5", style: "width:60px;" %></div></td>
+        <td id="smanqty1-row5" class="mans"> <div ><%= form.text_field :smanqty5, id: "smanqty5", style: "width:60px;" %></div></td>
+        <td id="shour1-row5" class="hourss"> <div ><%= form.text_field :shour5, id: "shour5", style: "width:60px;" %></div></td>
+        <td id="dmanqty1-row5" class="mand"> <div ><%= form.text_field :dmanqty5, id: "dmanqty5", style: "width:60px;" %></div></td>
+        <td id="dhour1-row5" class="hoursd"> <div ><%= form.text_field :dhour5, id: "dhour5", style: "width:60px;" %></div></td>
+        <td>DUMP TRUCK</td>
+        <td><%= form.text_field :equipqty5, id: "equipqty5", style: "width:60px;"%></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td><%=@estimates.adescription6 %></td>
+        <td><%= form.select :alabor6 ,options_for_select([['', 0], ['LABOR', 1], ['OPERATOR', 2], ['SUPERVISOR', 3], ['DRIVER', 4]], selected: @estimates.alabor7), {}, id: 'my-select6'  %></td>
+        <td id="manqty1-row6"  class="manl"> <div ><%= form.text_field :manqty6, id: "manqty6", style: "width:60px;" %></div></td>
+        <td id="hour1-row6" class="hoursl"> <div ><%= form.text_field :hour6, id: "hour6", style: "width:60px;" %></div></td>
+        <td id="omanqty1-row6" class="mano"> <div ><%= form.text_field :omanqty6, id: "omanqty6", style: "width:60px;" %></div></td>
+        <td id="ohour1-row6" class="hourso"> <div ><%= form.text_field :ohour6, id: "ohour6", style: "width:60px;" %></div></td>
+        <td id="smanqty1-row6"  class="mans"> <div ><%= form.text_field :smanqty6, id: "smanqty6", style: "width:60px;" %></div></td>
+        <td id="shour1-row6" class="hourss"> <div ><%= form.text_field :shour6, id: "shour6", style: "width:60px;" %></div></td>
+        <td id="dmanqty1-row6" class="mand"> <div ><%= form.text_field :dmanqty6, id: "dmanqty6", style: "width:60px;" %></div></td>
+        <td id="dhour1-row6" class="hoursd"> <div ><%= form.text_field :dhour6, id: "dhour6", style: "width:60px;" %></div></td>
+        <td>BOBCAT</td>
+        <td><%= form.text_field :equipqty6, id: "equipqty6", style: "width:60px;"%></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td><%=@estimates.adescription7 %></td>
+      <td><%= form.select :alabor7 ,options_for_select([['', 0], ['LABOR', 1], ['OPERATOR', 2], ['SUPERVISOR', 3], ['DRIVER', 4]], selected: @estimates.alabor8), {}, id: 'my-select7'  %></td>
+      <td id="manqty1-row7" class="manl"> <div ><%= form.text_field :manqty7, id: "manqty7", style: "width:60px;" %></div></td>
+      <td id="hour1-row7" class="hoursl"> <div ><%= form.text_field :hour7, id: "hour7", style: "width:60px;" %></div></td>
+      <td id="omanqty1-row7" class="mano"> <div ><%= form.text_field :omanqty7, id: "omanqty7", style: "width:60px;" %></div></td>
+      <td id="ohour1-row7" class="hourso"> <div ><%= form.text_field :ohour7, id: "ohour7", style: "width:60px;" %></div></td>
+      <td id="smanqty1-row7" class="mans"> <div ><%= form.text_field :smanqty7, id: "smanqty7", style: "width:60px;" %></div></td>
+      <td id="shour1-row7" class="hourss"> <div ><%= form.text_field :shour7, id: "shour7", style: "width:60px;" %></div></td>
+      <td id="dmanqty1-row7" class="mand"> <div ><%= form.text_field :dmanqty7, id: "dmanqty7", style: "width:60px;" %></div></td>
+      <td id="dhour1-row7" class="hoursd"> <div ><%= form.text_field :dhour7, id: "dhour7", style: "width:60px;" %></div></td>
+        <td>FLOOR SCRAPER</td>
+        <td><%= form.text_field :equipqty7,  style: "width:60px;"%></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td><%=@estimates.adescription8 %></td>
+      <td><%= form.select :alabor8 ,options_for_select([['', 0], ['LABOR', 1], ['OPERATOR', 2], ['SUPERVISOR', 3], ['DRIVER', 4]], selected: @estimates.alabor9), {}, id: 'my-select8'  %></td>
+      <td id="manqty1-row8" class="manl"> <div ><%= form.text_field :manqty8, id: "manqty8", style: "width:60px;" %></div></td>
+      <td id="hour1-row8" class="hoursl"> <div ><%= form.text_field :hour8, id: "hour8", style: "width:60px;" %></div></td>
+      <td id="omanqty1-row8" class="mano"> <div ><%= form.text_field :omanqty8, id: "omanqty8", style: "width:60px;" %></div></td>
+      <td id="ohour1-row8" class="hourso"> <div ><%= form.text_field :ohour8, id: "ohour8", style: "width:60px;" %></div></td>
+      <td id="smanqty1-row8" class="mans"> <div ><%= form.text_field :smanqty8, id: "smanqty8", style: "width:60px;" %></div></td>
+      <td id="shour1-row8" class="hourss"> <div ><%= form.text_field :shour8, id: "shour8", style: "width:60px;" %></div></td>
+      <td id="dmanqty1-row8" class="mand"> <div ><%= form.text_field :dmanqty8, id: "dmanqty8", style: "width:60px;" %></div></td>
+      <td id="dhour1-row8" class="hoursd"> <div ><%= form.text_field :dhour8, id: "dhour8", style: "width:60px;" %></div></td>
+        <td>WATER TRUCK</td>
+        <td><%= form.text_field :equipqty8, style: "width:60px;"%></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td><%=@estimates.adescription9 %></td>
+      <td><%= form.select :alabor9 ,options_for_select([['', 0], ['LABOR', 1], ['OPERATOR', 2], ['SUPERVISOR', 3], ['DRIVER', 4]], selected: @estimates.alabor10), {}, id: 'my-select9'  %></td>
+      <td id="manqty1-row9" class="manl"> <div ><%= form.text_field :manqty9, id: "manqty9", style: "width:60px;" %></div></td>
+      <td id="hour1-row9" class="hoursl"> <div ><%= form.text_field :hour9, id: "hour9", style: "width:60px;" %></div></td>
+      <td id="omanqty1-row9" class="mano"> <div ><%= form.text_field :omanqty9, id: "omanqty9", style: "width:60px;" %></div></td>
+      <td id="ohour1-row9" class="hourso"> <div ><%= form.text_field :ohour9, id: "ohour9", style: "width:60px;" %></div></td>
+      <td id="smanqty1-row9" class="mans"> <div ><%= form.text_field :smanqty9, id: "smanqty9", style: "width:60px;" %></div></td>
+      <td id="shour1-row9" class="hourss"> <div ><%= form.text_field :shour9, id: "shour9", style: "width:60px;" %></div></td>
+      <td id="dmanqty1-row9" class="mand"> <div ><%= form.text_field :dmanqty9, id: "dmanqty9", style: "width:60px;" %></div></td>
+      <td id="dhour1-row9" class="hoursd"> <div ><%= form.text_field :dhour9, id: "dhour9", style: "width:60px;" %></div></td>
+        <td>COMPRESSOR</td>
+        <td><%= form.text_field :equipqty9, style: "width:60px;"%></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td><%=@estimates.adescription10 %></td>
+        <td><%= form.select :alabor10 ,options_for_select([['', 0], ['LABOR', 1], ['OPERATOR', 2], ['SUPERVISOR', 3], ['DRIVER', 4]], selected: @estimates.alabor11), {}, id: 'my-select10'  %></td>
+        <td id="manqty1-row10" class="manl"> <div ><%= form.text_field :manqty10, id: "manqty10", style: "width:60px;" %></div></td>
+        <td id="hour1-row10" class="hoursl"> <div ><%= form.text_field :hour10, id: "hour10", style: "width:60px;" %></div></td>
+        <td id="omanqty1-row10" class="mano"> <div ><%= form.text_field :omanqty10, id: "omanqty10", style: "width:60px;" %></div></td>
+        <td id="ohour1-row10" class="hourso"> <div ><%= form.text_field :ohour10, id: "ohour10", style: "width:60px;" %></div></td>
+        <td id="smanqty1-row10" class="mans"> <div ><%= form.text_field :smanqty10, id: "smanqty10", style: "width:60px;" %></div></td>
+        <td id="shour1-row10" class="hourss"> <div ><%= form.text_field :shour10, id: "shour10", style: "width:60px;" %></div></td>
+        <td id="dmanqty1-row10" class="mand"> <div ><%= form.text_field :dmanqty10, id: "dmanqty10", style: "width:60px;" %></div></td>
+        <td id="dhour1-row10" class="hoursd"> <div ><%= form.text_field :dhour10, id: "dhour10", style: "width:60px;" %></div></td>
+        <td>UTILITY TRUCK</td>
+        <td><%= form.text_field :equipqty10, style: "width:60px;"%></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td><%=@estimates.adescription11 %></td>
+        <td><%= form.select :alabor11 ,options_for_select([['', 0], ['LABOR', 1], ['OPERATOR', 2], ['SUPERVISOR', 3], ['DRIVER', 4]], selected: @estimates.alabor12), {}, id: 'my-select11'  %></td>
+        <td id="manqty1-row11" class="manl"> <div ><%= form.text_field :manqty11, id: "manqty11", style: "width:60px;" %></div></td>
+        <td id="hour1-row11" class="hoursl"> <div ><%= form.text_field :hour11, id: "hour11", style: "width:60px;" %></div></td>
+        <td id="omanqty1-row11" class="mano"> <div ><%= form.text_field :omanqty11, id: "omanqty11", style: "width:60px;" %></div></td>
+        <td id="ohour1-row11" class="hourso"> <div ><%= form.text_field :ohour11, id: "ohour11", style: "width:60px;" %></div></td>
+        <td id="smanqty1-row11" class="mans"> <div ><%= form.text_field :smanqty11, id: "smanqty11", style: "width:60px;" %></div></td>
+        <td id="shour1-row11" class="hourss"> <div ><%= form.text_field :shour11, id: "shour11", style: "width:60px;" %></div></td>
+        <td id="dmanqty1-row11" class="mand"> <div ><%= form.text_field :dmanqty11, id: "dmanqty11", style: "width:60px;" %></div></td>
+        <td id="dhour1-row11" class="hoursd"> <div ><%= form.text_field :dhour11, id: "dhour11", style: "width:60px;" %></div></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><%=@estimates.adescription12 %></td>
+        <td><%= form.select :alabor12 ,options_for_select([['', 0], ['LABOR', 1], ['OPERATOR', 2], ['SUPERVISOR', 3], ['DRIVER', 4]], selected: @selector[11]), {}, id: 'my-select12'  %></td>
+        <td id="manqty1-row12" class="manl"> <div ><%= form.text_field :manqty12, id: "manqty12", style: "width:60px;" %></div></td>
+        <td id="hour1-row12" class="hoursl"> <div ><%= form.text_field :hour12, id: "hour12", style: "width:60px;" %></div></td>
+        <td id="omanqty1-row12" class="mano"> <div ><%= form.text_field :omanqty12, id: "omanqty12", style: "width:60px;" %></div></td>
+        <td id="ohour1-row12" class="hourso"> <div ><%= form.text_field :ohour12, id: "ohour12", style: "width:60px;" %></div></td>
+        <td id="smanqty1-row12" class="mans"> <div ><%= form.text_field :smanqty12, id: "smanqty12", style: "width:60px;" %></div></td>
+        <td id="shour1-row12" class="hourss"> <div ><%= form.text_field :shour12, id: "shour12", style: "width:60px;" %></div></td>
+        <td id="dmanqty1-row12" class="mand"> <div ><%= form.text_field :dmanqty12, id: "dmanqty12", style: "width:60px;" %></div></td>
+        <td id="dhour1-row12" class="hoursd"> <div ><%= form.text_field :dhour12, id: "dhour12", style: "width:60px;" %></div></td>
+        <th>FUEL</th>
+        <th>QTY: <%= form.text_field :fuel, style: "width:60px;"%></th>
+      </tr>
+      </tbody>
+      <tr style="height: 20px;"></tr>
+      <thead>
+      <tr>
+        <th>MANPOWER</th>
+        <th> QTYS</th>
+        <th> HOURS</th>
+        <th>OVER T. HOURS</th>
+        <TH></TH>
+      </tr>
+      </thead>
+            <tbody>
+            <tr>
+              <th>LABOR</th>
+              <td><%= form.text_field :totallqty, id: "totallqty", style: "width:60px;"%></td>
+              <td><%= form.text_field :totalhoursl, id: "totalhoursl", style: "width:60px;"%></td>
+              <td><%= form.text_field :overl, style: "width:60px;"%></td>
+              <td></td>
+            </tr>
+            </tbody>
+      <tbody>
+      <tr>
+        <tH>OPERATOR</tH>
+        <td><%= form.text_field :totaloqty, id: "totaloqty", style: "width:60px;"%></td>
+        <td><%= form.text_field :totalhourso, id: "totalhourso", style: "width:60px;"%></td>
+        <td><%= form.text_field :overo, style: "width:60px;"%></td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <tH>SUPERVISOR</tH>
+        <td><%= form.text_field :totalsqty, id: "totalsqty", style: "width:60px;"%></td>
+        <td><%= form.text_field :totalhourss, id: "totalhourss", style: "width:60px;"%></td>
+        <td><%= form.text_field :overs, style: "width:60px;"%></td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <tH>DRIVER</tH>
+        <td><%= form.text_field :totaldqty, id: "totaldqty", style: "width:60px;"%></td>
+        <td><%= form.text_field :totalhoursd, id: "totalhoursd", style: "width:60px;"%></td>
+        <td><%= form.text_field :overd, style: "width:60px;"%></td>
+        <td></td>
+      </tr>
+      </tbody>
+    </table>
+    <div style="height: 20px;"></div>
+  </div>
+    <div id="table">
+      <table  class="table table-bordered table-sm"  style="width:60%">
+      <thead>
+      <tr>
+        <th>CONCRETE</th>
+        <th>TRANSPORTER</th>
+        <th>QTY</th>
+        <th>PRICE</th>
+        <th>TOTAL P</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <th></th>
+        <td><%= form.text_field :ctransporter1, id: "ctransporter1", style: "width:120px;"%></td>
+        <td  class="cqty1"><%= form.text_field :cqty1, id: "cqty1", style: "width:60px;"%></td>
+        <td ><%= form.text_field :cpricing1, id: "cpricing1",  style: "width:80px;"%></td>
+        <td><%= form.text_field :ctotal10, id: "ctotal10",  style: "width:80px;"%></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th></th>
+        <td><%= form.text_field :ctransporter2, id: "ctransporter2", style: "width:120px;"%></td>
+        <td class="cqty1"><%= form.text_field :cqty2, id: "cqty2", style: "width:60px;"%></td>
+        <td><%= form.text_field :cpricing20, id: "cpricing20",  style: "width:80px;"%></td>
+        <td><%= form.text_field :ctotal20, id: "ctotal20",  style: "width:80px;"%></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th></th>
+        <td><%= form.text_field :ctransporter3, id: "ctransporter3", style: "width:120px;"%></td>
+        <td class="cqty1"><%= form.text_field :cqty3, id: "cqty3", style: "width:60px;"%></td>
+        <td><%= form.text_field :cpricing30, id: "cpricing30",  style: "width:80px;"%></td>
+        <td><%= form.text_field :ctotal30, id: "ctotal30",  style: "width:80px;"%></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th></th>
+        <td><%= form.text_field :ctransporter4, id: "ctransporter4", style: "width:120px;"%></td>
+        <td class="cqty1"><%= form.text_field :cqty4, id: "cqty4", style: "width:60px;"%></td>
+        <td><%= form.text_field :cpricing40, id: "cpricing40",  style: "width:80px;"%></td>
+        <td><%= form.text_field :ctotal40, id: "ctotal40",  style: "width:80px;"%></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <tH>TONS: <%= form.text_field :tconcrete,  style: "width:60px;"%></tH>
+        <tH>QTYS: </tH>
+        <tH><%= form.text_field :concrete, id:'concrete', style: "width:60px;"%></tH>
+        <th>TOTAL PRICE</th>
+        <tH><%= form.text_field :pconcrete, id:'totalconcrete', style: "width:80px;"%></tH>
+      </tr>
+      </tbody>
+        <thead>
+        <tr>
+          <th>CONCRETE / REBAR</th>
+          <th>TRANSPORTER</th>
+          <th>QTY</th>
+          <th>PRICE</th>
+          <th>TOTAL P</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :xtransporter1, id: "xtransporter1", style: "width:120px;"%></td>
+          <td  class="xqty1"><%= form.text_field :xqty1, id: "xqty1", style: "width:60px;"%></td>
+          <td ><%= form.text_field :xpricing1, id: "xpricing1",  style: "width:80px;"%></td>
+          <td><%= form.text_field :xtotal10, id: "xtotal10",  style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :xtransporter2, id: "xtransporter2", style: "width:120px;"%></td>
+          <td class="xqty1"><%= form.text_field :xqty2, id: "xqty2", style: "width:60px;"%></td>
+          <td><%= form.text_field :xpricing2, id: "xpricing20",  style: "width:80px;"%></td>
+          <td><%= form.text_field :xtotal20, id: "xtotal20",  style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :xtransporter3, id: "xtransporter3", style: "width:120px;"%></td>
+          <td class="xqty1"><%= form.text_field :xqty3, id: "xqty3", style: "width:60px;"%></td>
+          <td><%= form.text_field :xpricing3, id: "xpricing30",  style: "width:80px;"%></td>
+          <td><%= form.text_field :xtotal30, id: "xtotal30",  style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :xtransporter4, id: "xtransporter4", style: "width:120px;"%></td>
+          <td class="xqty1"><%= form.text_field :xqty4, id: "xqty4", style: "width:60px;"%></td>
+          <td><%= form.text_field :xpricing4, id: "xpricing40",  style: "width:80px;"%></td>
+          <td><%= form.text_field :xtotal40, id: "xtotal40",  style: "width:80px;"%></td>
+        </tr>
+
+        </tbody>
+        <tbody>
+        <tr>
+          <tH>TONS: <%= form.text_field :trebar,  style: "width:60px;"%></tH>
+          <tH>QTYS: </tH>
+          <tH><%= form.text_field :rebar, id:'rebar', style: "width:60px;"%></tH>
+          <th>TOTAL PRICE</th>
+          <tH><%= form.text_field :prebar, id:'totalrebar', style: "width:80px;"%></tH>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+        <thead>
+        <tr>
+          <th>ASPHALT</th>
+          <th>TRANSPORTER</th>
+          <th>QTY</th>
+          <th>PRICE</th>
+          <th>TOTAL P</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :atransporter1,  id:'atransporter1',  style: "width:120px;"%></td>
+          <td class="aqty1"><%= form.text_field :aqty1,  id:'aqty1',  style: "width:60px;"%></td>
+          <td><%= form.text_field :apricing1,  id:'apricing1',  style: "width:80px;"%></td>
+          <td><%= form.text_field :atotal1,  id:'atotal1',  style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :atransporter2, id:'atransporter2', style: "width:120px;"%></td>
+          <td class="aqty1"><%= form.text_field :aqty2, id:'aqty2', style: "width:60px;"%></td>
+          <td><%= form.text_field :apricing20, id:'apricing20', style: "width:80px;"%></td>
+          <td><%= form.text_field :atotal20, id:'atotal20', style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :atransporter3, id: "atransporter3", style: "width:120px;"%></td>
+          <td class="aqty1"><%= form.text_field :aqty3, id: "aqty3", style: "width:60px;"%></td>
+          <td><%= form.text_field :apricing3, id: "apricing3",  style: "width:80px;"%></td>
+          <td><%= form.text_field :atotal3, id: "atotal3",  style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :atransporter4, id: "atransporter4", style: "width:120px;"%></td>
+          <td class="aqty1"><%= form.text_field :aqty4, id: "aqty4", style: "width:60px;"%></td>
+          <td><%= form.text_field :apricing4, id: "apricing4",  style: "width:80px;"%></td>
+          <td><%= form.text_field :atotal4, id: "atotal4",  style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <tH>TONS: <%= form.text_field :tasphalt,  style: "width:60px;"%></tH>
+          <tH>QTYS: </tH>
+          <tH><%= form.text_field :asphalt, id:'asphalt', style: "width:60px;"%></tH>
+          <th>TOTAL PRICE</th>
+          <td><%= form.text_field :pasphalt, id:'pasphalt', style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+      <tr style="height: 20px;"></tr>
+        <thead>
+        <tr>
+          <th>FILL</th>
+          <th>TRANSPORTER</th>
+          <th>QTY</th>
+          <th>PRICE</th>
+          <th>TOTAL P</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :ftransporter1,   style: "width:120px;"%></td>
+          <td class="fqty1"><%= form.text_field :fqty1,  id:'fqty1', style: "width:60px;"%></td>
+          <td><%= form.text_field :fpricing10,  id:'fpricing10', style: "width:80px;"%></td>
+          <td><%= form.text_field :ftotal10,  id:'ftotal10', style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :ftransporter2, style: "width:120px;"%></td>
+          <td class="fqty1"><%= form.text_field :fqty2, id:'fqty2', style: "width:60px;"%></td>
+          <td><%= form.text_field :fpricing20, id:'fpricing20', style: "width:80px;"%></td>
+          <td><%= form.text_field :ftotal20, id:'ftotal20', style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :ftransporter3, id: "ftransporter3", style: "width:120px;"%></td>
+          <td class="fqty1"><%= form.text_field :fqty3, id: "fqty3", style: "width:60px;"%></td>
+          <td><%= form.text_field :fpricing3, id: "fpricing3",  style: "width:80px;"%></td>
+          <td><%= form.text_field :ftotal3, id: "ftotal3",  style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :ftransporter4, id: "ftransporter4", style: "width:120px;"%></td>
+          <td class="fqty1"><%= form.text_field :fqty4, id: "fqty4", style: "width:60px;"%></td>
+          <td><%= form.text_field :fpricing4, id: "fpricing4",  style: "width:80px;"%></td>
+          <td><%= form.text_field :ftotal4, id: "ftotal4",  style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <tH>TONS: <%= form.text_field :tfill,  style: "width:60px;"%></tH>
+          <tH>QTYS: </tH>
+          <tH><%= form.text_field :fill, id:'fill', style: "width:60px;"%></tH>
+          <th>TOTAL PRICE</th>
+          <td><%= form.text_field :pfill, id:'pfill', style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+        <thead>
+        <tr>
+          <th>VEGETATION</th>
+          <th>TRANSPORTER</th>
+          <th>QTY</th>
+          <th>PRICE</th>
+          <th>TOTAL P</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :vtransporter1,  style: "width:120px;"%></td>
+          <td class="vqty1"><%= form.text_field :vqty1, id:'vqty1',  style: "width:60px;"%></td>
+          <td><%= form.text_field :vpricing10, id:'vpricing10',  style: "width:80px;"%></td>
+          <td><%= form.text_field :vtotal10, id:'vtotal10',  style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :vtransporter2, style: "width:120px;"%></td>
+          <td class="vqty1"><%= form.text_field :vqty2, id:'vqty2',  style: "width:60px;"%></td>
+          <td><%= form.text_field :vpricing20, id:'vpricing20',  style: "width:80px;"%></td>
+          <td><%= form.text_field :vtotal20, id:'vtotal20',  style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :vtransporter3, id: "vtransporter3", style: "width:120px;"%></td>
+          <td class="vqty1"><%= form.text_field :vqty3, id: "vqty3", style: "width:60px;"%></td>
+          <td><%= form.text_field :vpricing3, id: "vpricing3",  style: "width:80px;"%></td>
+          <td><%= form.text_field :vtotal3, id: "vtotal3",  style: "width:80px;"%></td>
+        </tr>
+
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :vtransporter4, id: "vtransporter4", style: "width:120px;"%></td>
+          <td class="vqty1"><%= form.text_field :vqty4, id: "vqty4", style: "width:60px;"%></td>
+          <td><%= form.text_field :vpricing4, id: "vpricing4",  style: "width:80px;"%></td>
+          <td><%= form.text_field :vtotal4, id: "vtotal4",  style: "width:80px;"%></td>
+        </tr>
+
+        </tbody>
+        <tbody>
+        <tr>
+          <tH>TONS: <%= form.text_field :tvegetation,  style: "width:60px;"%></tH>
+          <tH>QTYS: </tH>
+          <tH><%= form.text_field :vegitation, id:'vegitation', style: "width:60px;"%></tH>
+          <th>TOTAL PRICE</th>
+          <td><%= form.text_field :pvegitation, id:'pvegitation', style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+        <thead>
+        <tr>
+          <th>C&D / TRASH</th>
+          <th>TRANSPORTER</th>
+          <th>QTY</th>
+          <th>PRICE</th>
+          <th>TOTAL P</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :ttransporter1,   style: "width:120px;"%></td>
+          <td class="tqty1"><%= form.text_field :tqty1, id:'tqty1', style: "width:60px;"%></td>
+          <td><%= form.text_field :tpricing10, id:'tpricing10', style: "width:80px;"%></td>
+          <td><%= form.text_field :ttotal10, id:'ttotal10', style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :ttransporter2, style: "width:120px;"%></td>
+          <td class="tqty1"><%= form.text_field :tqty2, id:'tqty2', style: "width:60px;"%></td>
+          <td><%= form.text_field :tpricing20, id:'tpricing20', style: "width:80px;"%></td>
+          <td><%= form.text_field :ttotal20, id:'ttotal20', style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :ttransporter3, id: "ttransporter3", style: "width:120px;"%></td>
+          <td class="tqty1"><%= form.text_field :tqty3, id: "tqty3", style: "width:60px;"%></td>
+          <td><%= form.text_field :tpricing3, id: "tpricing3",  style: "width:80px;"%></td>
+          <td><%= form.text_field :ttotal3, id: "ttotal3",  style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :ttransporter4, id: "ttransporter4", style: "width:120px;"%></td>
+          <td class="tqty1"><%= form.text_field :tqty4, id: "tqty4", style: "width:60px;"%></td>
+          <td><%= form.text_field :tpricing4, id: "tpricing4",  style: "width:80px;"%></td>
+          <td><%= form.text_field :ttotal4, id: "ttotal4",  style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <tH>TONS: <%= form.text_field :ttrash,  style: "width:60px;"%></tH>
+          <tH>QTYS: </tH>
+          <tH><%= form.text_field :trash, id:'trash', style: "width:60px;"%></tH>
+          <th>TOTAL PRICE</th>
+          <td><%= form.text_field :ptrash, id:'ptrash', style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+        <thead>
+        <tr>
+          <th>ROCK</th>
+          <th>TRANSPORTER</th>
+          <th>QTY</th>
+          <th>PRICE</th>
+          <th>TOTAL P</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :rtransporter1,   style: "width:120px;"%></td>
+          <td class="rqty1"><%= form.text_field :rqty1, id:'rqty1', style: "width:60px;"%></td>
+          <td><%= form.text_field :rpricing1, id:'rpricing1', style: "width:80px;"%></td>
+          <td><%= form.text_field :rtotal1, id:'rtotal1', style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :rtransporter2, style: "width:120px;"%></td>
+          <td class="rqty1"><%= form.text_field :rqty2, id:'rqty2', style: "width:60px;"%></td>
+          <td><%= form.text_field :rpricing2, id:'rpricing2', style: "width:80px;"%></td>
+          <td><%= form.text_field :rtotal2, id:'rtotal2', style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :rtransporter3, id: "rtransporter3", style: "width:120px;"%></td>
+          <td class="rqty1"><%= form.text_field :rqty3, id: "rqty3", style: "width:60px;"%></td>
+          <td><%= form.text_field :rpricing3, id: "rpricing3",  style: "width:80px;"%></td>
+          <td><%= form.text_field :rtotal3, id: "rtotal3",  style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :rtransporter4, id: "rtransporter4", style: "width:120px;"%></td>
+          <td class="rqty1"><%= form.text_field :rqty4, id: "rqty4", style: "width:60px;"%></td>
+          <td><%= form.text_field :rpricing4, id: "rpricing4",  style: "width:80px;"%></td>
+          <td><%= form.text_field :rtotal4, id: "rtotal4",  style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <tH>TONS: <%= form.text_field :trock,  style: "width:60px;"%></tH>
+          <tH>QTYS: </tH>
+          <tH><%= form.text_field :rock, id:'rock', style: "width:60px;"%></tH>
+          <th>TOTAL PRICE</th>
+          <td><%= form.text_field :prock, id:'prock', style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+        <thead>
+        <tr>
+          <th>MISCELLANEOUS</th>
+          <th>DETAIL</th>
+          <th></th>
+          <th>PRICE</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :mtransporter1,   style: "width:120px;"%></td>
+          <td></td>
+          <td><%= form.text_field :mpricing1, id:'mpricing1', style: "width:80px;"%></td>
+          <td style="display: none;" ><%= form.text_field :mtotal1, id:'mtotal1', style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :mtransporter2, style: "width:120px;"%></td>
+          <td ></td>
+          <td><%= form.text_field :mpricing2, id:'mpricing2', style: "width:80px;"%></td>
+          <td style="display: none;" ><%= form.text_field :rtotal2, id:'mtotal2', style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :mtransporter3, id: "mtransporter3", style: "width:120px;"%></td>
+          <td></td>
+          <td><%= form.text_field :mpricing3, id: "mpricing3",  style: "width:80px;"%></td>
+          <td style="display: none;" ><%= form.text_field :mtotal3, id: "mtotal3",  style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :mtransporter4, id: "mtransporter4", style: "width:120px;"%></td>
+          <td ></td>
+          <td><%= form.text_field :mpricing4, id: "mpricing4",  style: "width:80px;"%></td>
+          <td style="display: none;" ><%= form.text_field :mtotal4, id: "mtotal4",  style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :mtransporter5, id: "mtransporter5", style: "width:120px;"%></td>
+          <td></td>
+          <td><%= form.text_field :mpricing5, id: "mpricing5",  style: "width:80px;"%></td>
+          <td style="display: none;" ><%= form.text_field :mtotal5, id: "mtotal5",  style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <th></th>
+          <td><%= form.text_field :mtransporter6, id: "mtransporter6", style: "width:120px;"%></td>
+          <td ></td>
+          <td><%= form.text_field :mpricing6, id: "mpricing6",  style: "width:80px;"%></td>
+          <td style="display: none;" ><%= form.text_field :mtotal6, id: "mtotal6",  style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tbody>
+        <tr>
+          <tH></tH>
+          <tH></tH>
+          <th>TOTAL</th>
+          <td><%= form.text_field :pmisellaneous, id:'pmisellaneous', style: "width:80px;"%></td>
+        </tr>
+        </tbody>
+        <tr style="height: 20px;"></tr>
+          </table>
+          <br>
+         <%= form.text_area :remarks, rows: 8, cols: 185, placeholder: "WORK DESCRIPTION:" %> <br>
+          <br>
+    </div>
+  <br>
+  <%= form.text_area :comments, rows: 4, cols: 185, placeholder: "COMMENTS:" %>
+  <br>
+  <br>
+  <%= form.file_field :avatar, multiple: true %>
+  <br>
+  <br>
+  <div class="actions">
+    <%= form.submit 'Save daily Log' %>
+  </div>
+  <br>
+  <br>
+<% end %>
+
+<script>
+    $(document).ready(function(){
+        line(1);
+        line(2);
+        line(3);
+        line(4);
+        line(5);
+        line(6);
+        line(7);
+        line(8);
+        line(9);
+        line(10);
+        line(11);
+        line(12);
+        $('input').on('input', function(){
+            manl();
+            hoursl();
+            mano();
+            mans();
+            mand()
+            hourso();
+            hourss();
+            hoursd();
+            cqty1();
+            xqty1();
+            aqty1();
+            fqty1();
+            vqty1();
+            tqty1();
+            rqty1();
+            c_multitransporter1();
+            c_multitransporter2();
+            c_multitransporter3();
+            c_multitransporter4();
+            x_multitransporter1();
+            x_multitransporter2();
+            x_multitransporter3();
+            x_multitransporter4();
+            a_multitransporter1();
+            a_multitransporter2();
+            a_multitransporter3();
+            a_multitransporter4();
+            f_multitransporter1();
+            f_multitransporter2();
+            f_multitransporter3();
+            f_multitransporter4();
+            v_multitransporter1();
+            v_multitransporter2();
+            v_multitransporter3();
+            v_multitransporter4();
+            t_multitransporter1();
+            t_multitransporter2();
+            t_multitransporter3();
+            t_multitransporter4();
+            r_multitransporter(1);
+            r_multitransporter(2);
+            r_multitransporter(3);
+            r_multitransporter(4);
+            m_multitransporter(1);
+            m_multitransporter(2);
+            m_multitransporter(3);
+            m_multitransporter(4);
+            m_multitransporter(5);
+            m_multitransporter(6);
+            totalconcrete();
+            totalrebar();
+            totalasphalt();
+            totalfill();
+            totalvegitation();
+            totaltrash();
+            totalrock();
+            totalmis();
+        });
+    });
+
+    function manl() {
+        var total3 = 0;
+        $('.manl input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total3 += value3;
+        });
+        $('#totallqty').val(total3);
+    }
+    function hoursl() {
+        var total3 = 0;
+        $('.hoursl input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total3 += value3;
+        });
+        $('#totalhoursl').val(total3);
+    }
+
+    function mano() {
+        var total3 = 0;
+        $('.mano input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total3 += value3;
+        });
+        $('#totaloqty').val(total3);
+    }
+    function hourso() {
+        var total3 = 0;
+        $('.hourso input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total3 += value3;
+        });
+        $('#totalhourso').val(total3);
+    }
+
+    function mans() {
+        var total3 = 0;
+        $('.mans input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total3 += value3;
+        });
+        $('#totalsqty').val(total3);
+    }
+    function hourss() {
+        var total3 = 0;
+        $('.hourss input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total3 += value3;
+        });
+        $('#totalhourss').val(total3);
+    }
+
+    function mand() {
+        var total3 = 0;
+        $('.mand input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total3 += value3;
+        });
+        $('#totaldqty').val(total3);
+    }
+    function hoursd() {
+        var total3 = 0;
+        $('.hoursd input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total3 += value3;
+        });
+        $('#totalhoursd').val(total3);
+    }
+    function cqty1() {
+        var total3 = 0;
+        $('.cqty1 input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total3 += value3;
+        });
+        $('#concrete').val(total3);
+    }
+
+    function xqty1() {
+        var total3 = 0;
+        $('.xqty1 input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total3 += value3;
+        });
+        $('#rebar').val(total3);
+    }
+
+    function aqty1() {
+        var total3 = 0;
+        $('.aqty1 input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total3 += value3;
+        });
+        $('#asphalt').val(total3);
+    }
+    function fqty1() {
+        var total3 = 0;
+        $('.fqty1 input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total3 += value3;
+        });
+        $('#fill').val(total3);
+    }
+
+    function vqty1() {
+        var total3 = 0;
+        $('.vqty1 input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total3 += value3;
+        });
+        $('#vegitation').val(total3);
+    }
+
+    function tqty1() {
+        var total3 = 0;
+        $('.tqty1 input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total3 += value3;
+        });
+        $('#trash').val(total3);
+    }
+
+    function rqty1() {
+        var total3 = 0;
+        $('.rqty1 input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total3 += value3;
+        });
+        $('#rock').val(total3);
+    }
+
+    function c_multitransporter1() {
+        let v1 = $('#cqty1').val();
+        let v2 = $('#cpricing1').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#ctotal10').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#ctotal10').val(total);
+        }
+    }
+    function c_multitransporter2() {
+        let v1 = $('#cqty2').val();
+        let v2 = $('#cpricing20').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#ctotal20').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#ctotal20').val(total);
+        }
+    }
+    function c_multitransporter3() {
+        let v1 = $('#cqty3').val();
+        let v2 = $('#cpricing30').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#ctotal30').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#ctotal30').val(total);
+        }
+    }
+    function c_multitransporter4() {
+        let v1 = $('#cqty4').val();
+        let v2 = $('#cpricing40').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#ctotal40').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#ctotal40').val(total);
+        }
+    }
+
+    function x_multitransporter1() {
+        let v1 = $('#xqty1').val();
+        let v2 = $('#xpricing1').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#xtotal10').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#xtotal10').val(total);
+        }
+    }
+    function x_multitransporter2() {
+        let v1 = $('#xqty2').val();
+        let v2 = $('#xpricing20').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#xtotal20').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#xtotal20').val(total);
+        }
+    }
+    function x_multitransporter3() {
+        let v1 = $('#xqty3').val();
+        let v2 = $('#xpricing30').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#xtotal30').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#xtotal30').val(total);
+        }
+    }
+    function x_multitransporter4() {
+        let v1 = $('#xqty4').val();
+        let v2 = $('#xpricing40').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#xtotal40').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#xtotal40').val(total);
+        }
+    }
+
+    function a_multitransporter1() {
+        let v1 = $('#aqty1').val();
+        let v2 = $('#apricing1').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#atotal1').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#atotal1').val(total);
+        }
+    }
+    function a_multitransporter2() {
+        let v1 = $('#aqty2').val();
+        let v2 = $('#apricing20').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#atotal20').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#atotal20').val(total);
+        }
+    }
+
+    function a_multitransporter3() {
+        let v1 = $('#aqty3').val();
+        let v2 = $('#apricing3').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#atotal3').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#atotal3').val(total);
+        }
+    }
+    function a_multitransporter4() {
+        let v1 = $('#aqty4').val();
+        let v2 = $('#apricing4').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#atotal4').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#atotal4').val(total);
+        }
+    }
+
+
+    function f_multitransporter1() {
+        let v1 = $('#fqty1').val();
+        let v2 = $('#fpricing10').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#ftotal10').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#ftotal10').val(total);
+        }
+    }
+
+    function f_multitransporter2() {
+        let v1 = $('#fqty2').val();
+        let v2 = $('#fpricing20').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#ftotal20').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#ftotal20').val(total);
+        }
+    }
+
+    function f_multitransporter3() {
+        let v1 = $('#fqty3').val();
+        let v2 = $('#fpricing3').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#ftotal3').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#ftotal3').val(total);
+        }
+    }
+
+    function f_multitransporter4() {
+        let v1 = $('#fqty4').val();
+        let v2 = $('#fpricing4').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#ftotal4').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#ftotal4').val(total);
+        }
+    }
+
+    function v_multitransporter1() {
+        let v1 = $('#vqty1').val();
+        let v2 = $('#vpricing10').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#vtotal10').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#vtotal10').val(total);
+        }
+    }
+
+    function v_multitransporter2() {
+        let v1 = $('#vqty2').val();
+        let v2 = $('#vpricing20').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#vtotal20').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#vtotal20').val(total);
+        }
+    }
+
+    function v_multitransporter3() {
+        let v1 = $('#vqty3').val();
+        let v2 = $('#vpricing3').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#vtotal3').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#vtotal3').val(total);
+        }
+    }
+
+    function v_multitransporter4() {
+        let v1 = $('#vqty4').val();
+        let v2 = $('#vpricing4').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#vtotal4').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#vtotal4').val(total);
+        }
+    }
+
+    function t_multitransporter1() {
+        let v1 = $('#tqty1').val();
+        let v2 = $('#tpricing10').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#ttotal10').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#ttotal10').val(total);
+        }
+    }
+
+    function t_multitransporter2() {
+        let v1 = $('#tqty2').val();
+        let v2 = $('#tpricing20').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#ttotal20').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#ttotal20').val(total);
+        }
+    }
+
+    function t_multitransporter3() {
+        let v1 = $('#tqty3').val();
+        let v2 = $('#tpricing3').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#ttotal3').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#ttotal3').val(total);
+        }
+    }
+
+    function t_multitransporter4() {
+        let v1 = $('#tqty4').val();
+        let v2 = $('#tpricing4').val();
+        if (v2 === '') {
+            let total = 0;
+            $('#ttotal4').val(total);
+        } else {
+            let total = v1 * v2;
+            $('#ttotal4').val(total);
+        }
+    }
+
+
+    function r_multitransporter(num) {
+        let rtyId = `#rqty${num}`;
+        let rricingId = `#rpricing${num}`;
+        let totalId = `#rtotal${num}`;
+        let v1 = $(rtyId).val() * 1;
+        let v2 = $(rricingId).val() * 1;
+        let total = v2 === '' ? 0 : v1 * v2;
+        $(totalId).val(total);
+    }
+    function m_multitransporter(num) {
+        let rricingId = `#mpricing${num}`;
+        let totalId = `#mtotal${num}`;
+        let v1 =  1;
+        let v2 = $(rricingId).val() * 1;
+        let total = v2 === '' ? 0 : v1 * v2;
+        $(totalId).val(total);
+    }
+
+    function total_men() {
+        let v1 = $('#manqty1').val();
+        let v2 = $('#manqty2').val();
+        let v3 = $('#manqty3').val();
+        let v4 = $('#manqty4').val();
+        let v5 = $('#manqty5').val();
+        let v6 = $('#manqty6').val();
+        let v7 = $('#manqty7').val();
+        let v8 = $('#manqty8').val();
+        let v9 = $('#manqty9').val();
+        let v10 = $('#manqty10').val();
+        let v11 = $('#manqty11').val();
+        let v12 = $('#manqty12').val();
+        va1 = parseInt(v1)
+        va2 = parseInt(v2)
+        va3 = parseInt(v3)
+        va4 = parseInt(v4)
+        va5 = parseInt(v5)
+        va6 = parseInt(v6)
+        va7 = parseInt(v7)
+        va8 = parseInt(v8)
+        va9 = parseInt(v9)
+        va10 = parseInt(v10)
+        va11 = parseInt(v11)
+        va12 = parseInt(v12)
+        let total = va1 + va2 + va3 + va4 + va5 + va6 + va7 + va8 + va9 + va10 + va11 + va12;
+        $('#mantotal').val(total);
+    }
+    function total_hours() {
+        let v1 = $('#hour1').val();
+        let v2 = $('#hour2').val();
+        let v3 = $('#hour3').val();
+        let v4 = $('#hour4').val();
+        let v5 = $('#hour5').val();
+        let v6 = $('#hour6').val();
+        let v7 = $('#hour7').val();
+        let v8 = $('#hour8').val();
+        let v9 = $('#hour9').val();
+        let v10 = $('#hour10').val();
+        let v11 = $('#hour11').val();
+        let v12 = $('#hour12').val();
+        va1 = parseInt(v1)
+        va2 = parseInt(v2)
+        va3 = parseInt(v3)
+        va4 = parseInt(v4)
+        va5 = parseInt(v5)
+        va6 = parseInt(v6)
+        va7 = parseInt(v7)
+        va8 = parseInt(v8)
+        va9 = parseInt(v9)
+        va10 = parseInt(v10)
+        va11 = parseInt(v11)
+        va12 = parseInt(v12)
+        let total = va1 + va2 + va3 + va4 + va5 + va6 + va7 + va8 + va9 + va10 + va11 + va12;
+        $('#thours').val(total);
+    }
+
+    function total_equip() {
+        let v1 = $('#equipqty1').val();
+        let v2 = $('#equipqty2').val();
+        let v3 = $('#equipqty3').val();
+        let v4 = $('#equipqty4').val();
+        let v5 = $('#equipqty5').val();
+        let v6 = $('#equipqty6').val();
+        let v7 = $('#equipqty7').val();
+        let v8 = $('#equipqty8').val();
+        let v9 = $('#equipqty9').val();
+        let v10 = $('#equipqty10').val();
+        let v11 = $('#equipqty11').val();
+        let v12 = $('#equipqty12').val();
+        va1 = parseFloat(v1)
+        va2 = parseFloat(v2)
+        va3 = parseFloat(v3)
+        va4 = parseFloat(v4)
+        va5 = parseFloat(v5)
+        va6 = parseFloat(v6)
+        va7 = parseFloat(v7)
+        va8 = parseFloat(v8)
+        va9 = parseFloat(v9)
+        va10 = parseFloat(v10)
+        va11 = parseFloat(v11)
+        va12 = parseFloat(v12)
+        let total = va1 + va2 + va3 + va4 + va5 + va6 + va7 + va8 + va9 + va10 + va11 + va12;
+        $('#equiptotal').val(total);
+    }
+
+    function totalconcrete() {
+        let v1 = $('#ctotal10').val();
+        let v2 = $('#ctotal20').val();
+        let v3 = $('#ctotal30').val();
+        let v4 = $('#ctotal40').val();
+        va1 = parseFloat(v1)
+        va2 = parseFloat(v2)
+        va3 = parseFloat(v3)
+        va4 = parseFloat(v4)
+        if (v2 === '') {
+            let total = 0;
+            $('#totalconcrete').val(total);
+        } else {
+            let total = va1 + va2 + va3 + va4;
+            $('#totalconcrete').val(total);
+        }
+    }
+
+    function totalrebar() {
+        let v1 = $('#xtotal10').val();
+        let v2 = $('#xtotal20').val();
+        let v3 = $('#xtotal30').val();
+        let v4 = $('#xtotal40').val();
+        va1 = parseFloat(v1)
+        va2 = parseFloat(v2)
+        va3 = parseFloat(v3)
+        va4 = parseFloat(v4)
+        if (v2 === '') {
+            let total = 0;
+            $('#totalrebar').val(total);
+        } else {
+            let total = va1 + va2 + va3 + va4;
+            $('#totalrebar').val(total);
+        }
+    }
+
+    function totalasphalt() {
+        let v1 = $('#atotal1').val();
+        let v2 = $('#atotal20').val();
+        let v3 = $('#atotal3').val();
+        let v4 = $('#atotal4').val();
+        va1 = parseFloat(v1)
+        va2 = parseFloat(v2)
+        va3 = parseFloat(v3)
+        va4 = parseFloat(v4)
+        if (v2 === '') {
+            let total = 0;
+            $('#pasphalt').val(total);
+        } else {
+            let total = va1 + va2 + va3 + va4;
+            $('#pasphalt').val(total);
+        }
+    }
+
+    function totalfill() {
+        let v1 = $('#ftotal10').val();
+        let v2 = $('#ftotal20').val();
+        let v3 = $('#ftotal3').val();
+        let v4 = $('#ftotal4').val();
+        va1 = parseFloat(v1)
+        va2 = parseFloat(v2)
+        va3 = parseFloat(v3)
+        va4 = parseFloat(v4)
+        if (v2 === '') {
+            let total = 0;
+            $('#pfill').val(total);
+        } else {
+            let total = va1 + va2 + va3 + va4;
+            $('#pfill').val(total);
+        }
+    }
+
+    function totalvegitation() {
+        let v1 = $('#vtotal10').val();
+        let v2 = $('#vtotal20').val();
+        let v3 = $('#vtotal3').val();
+        let v4 = $('#vtotal4').val();
+        va1 = parseFloat(v1)
+        va2 = parseFloat(v2)
+        va3 = parseFloat(v3)
+        va4 = parseFloat(v4)
+        if (v2 === '') {
+            let total = 0;
+            $('#pvegitation').val(total);
+        } else {
+            let total = va1 + va2 + va3 + va4;
+            $('#pvegitation').val(total);
+        }
+
+    }
+
+    function totaltrash() {
+        let v1 = $('#ttotal10').val();
+        let v2 = $('#ttotal20').val();
+        let v3 = $('#ttotal3').val();
+        let v4 = $('#ttotal4').val();
+        va1 = parseFloat(v1)
+        va2 = parseFloat(v2)
+        va3 = parseFloat(v3)
+        va4 = parseFloat(v4)
+        if (v2 === '') {
+            let total = 0;
+            $('#ptrash').val(total);
+        } else {
+            let total = va1 + va2 + va3 + va4;
+            $('#ptrash').val(total);
+        }
+
+    }
+
+    function totalrock() {
+        let v1 = $('#rtotal1').val();
+        let v2 = $('#rtotal2').val();
+        let v3 = $('#rtotal3').val();
+        let v4 = $('#rtotal4').val();
+        va1 = parseFloat(v1)
+        va2 = parseFloat(v2)
+        va3 = parseFloat(v3)
+        va4 = parseFloat(v4)
+        if (v2 === '') {
+            let total = 0;
+            $('#prock').val(total);
+        } else {
+            let total = va1 + va2 + va3 + va4;
+            $('#prock').val(total);
+        }
+
+    }
+    function totalmis() {
+        let v1 = $('#mtotal1').val();
+        let v2 = $('#mtotal2').val();
+        let v3 = $('#mtotal3').val();
+        let v4 = $('#mtotal4').val();
+        let v5 = $('#mtotal5').val();
+        let v6 = $('#mtotal6').val();
+        va1 = parseFloat(v1)
+        va2 = parseFloat(v2)
+        va3 = parseFloat(v3)
+        va4 = parseFloat(v4)
+        va5 = parseFloat(v5)
+        va6 = parseFloat(v6)
+        if (v2 === '') {
+            let total = 0;
+            $('#pmisellaneous').val(total);
+        } else {
+            let total = va1 + va2 + va3 + va4 + va5 + va6;
+            $('#pmisellaneous').val(total);
+        }
+
+    }
+
+
+    const tableHeaders = document.querySelectorAll("thead th");
+    for (const header of tableHeaders) {
+        header.style.backgroundColor = "rgb(204,219,245)";
+    }
+
+    function line(rowNumber) {
+        var manqtyRows = $('#manqty1-row' + rowNumber + ', #hour1-row' + rowNumber),
+            omanqtyRows = $('#omanqty1-row' + rowNumber + ', #ohour1-row' + rowNumber),
+            smanqtyRows = $('#smanqty1-row' + rowNumber + ', #shour1-row' + rowNumber),
+            domanqtyRows = $('#dmanqty1-row' + rowNumber + ', #dhour1-row' + rowNumber),
+            select = $('#my-select' + rowNumber);
+
+        manqtyRows.show();
+        omanqtyRows.hide();
+        smanqtyRows.hide();
+        domanqtyRows.hide();
+
+        select.on('change', function() {
+            var valorSeleccionado = $(this).val();
+
+            console.log("El valor seleccionado es: " + valorSeleccionado);
+
+            switch(valorSeleccionado) {
+                case '1':
+                    manqtyRows.show();
+                    omanqtyRows.hide();
+                    smanqtyRows.hide();
+                    domanqtyRows.hide();
+                    break;
+                case '2':
+                    manqtyRows.hide();
+                    omanqtyRows.show();
+                    smanqtyRows.hide();
+                    domanqtyRows.hide();
+                    break;
+                case '3':
+                    manqtyRows.hide();
+                    omanqtyRows.hide();
+                    smanqtyRows.show();
+                    domanqtyRows.hide();
+                    break;
+                default:
+                    manqtyRows.hide();
+                    omanqtyRows.hide();
+                    smanqtyRows.hide();
+                    domanqtyRows.show();
+                    break;
+            }
+        });
+    }
+</script>
+

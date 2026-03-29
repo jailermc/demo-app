@@ -1,0 +1,959 @@
+<%
+  equip_rows = [
+    ['EXCAVATOR 1',   1,  nil],
+    ['EXCAVATOR 2',   2,  nil],
+    ['SCISSOR LIFT',  3,  nil],
+    ['LOADER',        4,  nil],
+    ['DUMP TRUCK',    5,  nil],
+    ['BOBCAT',        6,  nil],
+    ['UTILITY TRUCK', 12, nil],
+    ['FLOOR SCRAPER', 7,  nil],
+    ['WATER TRUCK',   8,  nil],
+    ['COMPRESSOR',    9,  nil],
+    [nil,             10, :edefault10],
+    [nil,             11, :edefault11],
+  ]
+  material_rows = [
+    { label: 'TRASH / C&D',       desc: :tdescription1, qty: :tqtyyds1,  price: :tpricing1, total: :ttotal1, dqty: :trash,      dtot: :ptrash },
+    { label: 'TREE / VEGETATION',  desc: :tdescription2, qty: :tqtyyds2,  price: :tpricing2, total: :ttotal2, dqty: :vegitation,  dtot: :pvegitation },
+    { label: 'CONCRETE',           desc: :tdescription3, qty: :tqtyyds3,  price: :tpricing3, total: :ttotal3, dqty: :concrete,    dtot: :pconcrete },
+    { label: 'CONCRETE / REBAR',   desc: :tdescription6, qty: :tqtyyds6,  price: :tpricing6, total: :ttotal6, dqty: :rebar,       dtot: :prebar },
+    { label: 'ASPHALT',            desc: :tdescription4, qty: :tqtyyds4,  price: :tpricing4, total: :ttotal4, dqty: :asphalt,     dtot: :pasphalt },
+    { label: 'FILL',               desc: :mdescription1, qty: :mqtysfft1, price: :mpricing1, total: :mtotal1, dqty: :fill,        dtot: :pfill },
+  ]
+  permit_rows = [
+    ['DEMO', 1], ['PLUMBING', 2], ['SEPTIC', 8], ['ELECTICAL', 3],
+    ['DERM', 4], ['TREE', 5], ['MECHANICAL', 6], ['MOT', 7],
+  ]
+  erosion_rows = [
+    { label: 'SILT FENCE',        desc: :mdescription2,   qty: :mqtysfft2, price: :mpricing2,   total: :mtotal2,   dqty: nil,   dtot: nil },
+    { label: 'ROCK',              desc: :tdescription5,   qty: :tqtysfft5, price: nil,           total: :ttotal5,   dqty: :rock, dtot: :prock },
+    { label: 'FILTER FABRIC',     desc: :ec_description3, qty: :ec_qty3,   price: :ec_pricing3,  total: :ec_total3, dqty: nil,   dtot: nil },
+    { label: 'TURBIDITY CURTIN',  desc: :ec_description4, qty: :ec_qty4,   price: :ec_pricing4,  total: :ec_total4, dqty: nil,   dtot: nil },
+    { label: 'GUTTER BUDDY',      desc: :ec_description5, qty: :ec_qty5,   price: :ec_pricing5,  total: :ec_total5, dqty: nil,   dtot: nil },
+    { label: 'SOD / HYDRO,SEEDS', desc: :mdescription9,   qty: :mqtysfft9, price: :mpricing9,    total: :mtotal9,   dqty: nil,   dtot: nil },
+  ]
+  temp_fence_rows = [
+    { label: 'POLICE FEE',       desc: :mdescription31, qty: :mqtysfft31, price: :mpricing31, total: :mtotal31 },
+    { label: 'CHAIN LINK FENCE', desc: :mdescription3,  qty: :mqtysfft3,  price: :mpricing3,  total: :mtotal3 },
+  ]
+  out_of_town_rows = [
+    { label: 'HOTEL',        desc: :mdescription17,   qty: :mqtysfft17,  price: :mpricing17,  total: :mtotal17 },
+    { label: 'MOBILIZATION', desc: :mov_pdescription2, qty: :mov_pqty2,  price: :mov_pricing2, total: :mov_total2 },
+    { label: 'PERDIEM',      desc: :mov_pdescription3, qty: :mov_pqty3,  price: :mov_pricing3, total: :mov_total3 },
+  ]
+  misc_rows = [
+    { label: 'ASBESTOS',           desc: :mdescription4,  qty: :mqtysfft4,  price: :mpricing4,  total: :mtotal4 },
+    { label: 'FREON REMOVAL',      desc: :mdescription11, qty: :mqtysfft11, price: :mpricing11, total: :mtotal11 },
+    { label: 'PUMP-OUT',           desc: :mdescription5,  qty: :mqtysfft5,  price: :mpricing5,  total: :mtotal5 },
+    { label: 'TORCHING',           desc: :mdescription7,  qty: :mqtysfft7,  price: :mpricing7,  total: :mtotal7 },
+    { label: 'TRASH CHUTE',        desc: :mdescription8,  qty: :mqtysfft8,  price: :mpricing8,  total: :mtotal8 },
+    { label: 'TEMP BATHS',         desc: :mdescription18, qty: :mqtysfft18, price: :mpricing18, total: :mtotal18 },
+    { label: 'BARRICANES',         desc: :mdescription19, qty: :mqtysfft19, price: :mpricing19, total: :mtotal19 },
+    { label: 'COVERED WALKWAY',    desc: :mdescription20, qty: :mqtysfft20, price: :mpricing20, total: :mtotal20 },
+    { label: 'TRIMMING / GRINDING',desc: :mdescription32, qty: :mqtysfft32, price: :mpricing32, total: :mtotal32 },
+  ]
+  scrap_rows = [
+    ['FERROUS',     13, :ferrous],
+    ['NON-FERROUS', 14, :nonferrous],
+    ['MISC',        15, :misc],
+  ]
+%>
+<%= form_with(model: cost_sheet) do |form| %>
+  <% if cost_sheet.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(cost_sheet.errors.count, "error") %> prohibited this cost sheet from being saved:</h2>
+      <ul>
+        <% cost_sheet.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <br>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+  <br>
+  <div>
+    <%= form.hidden_field :vsx, id: "vsx", value: @estimated.id, style: "width:60px;" %>
+    <%= form.label "Date:" %>
+    <%= form.date_field :date1, :required => true %>
+    <br><br>
+  </div>
+  <div>
+    <table class="table table-bordered table-sm" style="width:80%">
+      <tbody>
+      <tr>
+        <th style="text-align: left;">
+          <span style="margin-right: 20px;">Name:</span>
+          <%= form.text_field :name, value: @estimated.name %>
+          <span style="margin-right: 20px;">Address: :</span>
+          <%= form.text_field :address, value: @estimated.address %>
+        </th>
+        <th></th>
+        <th style="text-align: left;">
+          <span style="margin-right: 0px;"> Project Manager:</span>
+          <%= form.text_field :pmanager %>
+          <span style="margin-right: 35px;">Email:</span>
+          <%= form.text_field :pemail %>
+          <span style="margin-right: 20px;">Cell:</span>
+          <%= form.text_field :pcell %>
+        </th>
+        <th></th>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td> </td><td></td>
+        <th style="text-align: left;">
+          <span style="margin-right: 33px;">Supervisor:</span>
+          <%= form.text_field :supervisor %>
+          <span style="margin-right: 47px;">Cell:</span>
+          <%= form.text_field :scell %>
+        </th>
+        <th></th>
+      </tr>
+      </tbody>
+      <tr style="height: 20px;"></tr>
+      <tbody>
+      <tr>
+        <td> </td><td></td>
+        <th style="text-align: left;">
+          <span style="margin-right: 40px;">  Start Date:</span>
+          <%= form.date_field :sdate %>
+          <span style="margin-right: 0px;">Finish Date:</span>
+          <%= form.date_field :fdate %>
+        </th>
+        <th></th>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td> </td><td></td>
+        <th style="text-align: left;">
+          <span style="margin-right: 72px;">NOC:</span>
+          <%= form.text_field :noc %>
+          <span style="margin-right: 43px;">Date:</span>
+          <%= form.date_field :nocdate %>
+          <span style="margin-right: 20px;">Exp:</span>
+          <%= form.date_field :nocedate %>
+        </th>
+        <th></th>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td> </td><td></td>
+        <th style="text-align: left;">
+          <span style="margin-right: 73px;">NTO:</span>
+          <%= form.text_field :nto %>
+          <span style="margin-right: 43px;">Date:</span>
+          <%= form.date_field :ntodate %>
+        </th>
+        <th></th>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <br>
+    <div id="table">
+      <table class="table table-bordered table-sm" style="width:80%">
+        <thead>
+        <tr>
+          <th>ACTIVITY</th><th>DESCRIPTION</th><th>QTY MEN</th><th>DAYS</th>
+          <th>MEN HRS</th><th>PRICE HRS</th><th>TOTAL</th>
+          <th>ACTIVITY</th><th>QTY MEN</th><th>DAYS</th>
+          <th>MEN HRS</th><th>PRICE HRS</th><th>TOTAL</th>
+        </tr>
+        </thead>
+        <% (1..12).each do |i| %>
+          <% desc_field = i == 3 ? :adescriptio3 : :"adescription#{i}" %>
+          <tbody><tr>
+            <td class="celda2"><%= @selector1[i-1] %></td>
+            <td><%= @estimated.send(desc_field) %></td>
+            <td><%= @estimated.send("aemp#{i}") %></td>
+            <td><%= @estimated.send("adays#{i}") %></td>
+            <td><%= @estimated.send("ahours#{i}") == 0 ? "" : @estimated.send("ahours#{i}") %> <%= @estimated.send("over#{i}") == 0 ? "" : @estimated.send("over#{i}") %></td>
+            <td><%= @estimated.send("apricing#{i}") %></td>
+            <% val = @estimated.send("atotal#{i}") %>
+            <td><%= val == 0.0 ? "" : number_to_currency(val, precision: 2) %></td>
+            <th class="celda2"></th>
+            <td><%= instance_variable_get("@max#{i}") %></td>
+            <td><%= @dayly_counts[i-1] %></td>
+            <td><%= instance_variable_get("@sumhours#{i}") %></td>
+            <td><%= form.text_field :"apricing#{i}", id: "apricing#{i}", style: "width:60px;" %></td>
+            <td><%= form.text_field :"atotal#{i}", id: "atotal#{i}", style: "width:60px;" %></td>
+          </tr></tbody>
+        <% end %>
+        <tbody><tr>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+          <th class="celda2">OVER TIME</th>
+          <th class="celda2">TOTAL HOURS</th>
+          <td class="celda2">DAYS OT.</td>
+          <td class="celda2">OVER T.</td>
+          <td class="celda2">PRICE OVER T. </td>
+          <td></td>
+        </tr></tbody>
+        <% [['LABOR', :totalhoursl, @overl, :overl, :totalover1],
+            ['OPERATOR', :totalhourso, @overo, :overo, :totalover2],
+            ['SUPERVISOR', :totalhourss, @overs, :overs, :totalover3],
+            ['DRIVER', :totalhoursd, @overd, :overd, :totalover4]].each do |name, hours_col, over_count, over_col, totalover_field| %>
+          <tbody><tr>
+            <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            <th><%= name %></th>
+            <td><%= @daily&.sum(hours_col) || '' %></td>
+            <td><%= over_count %></td>
+            <td><%= @daily&.sum(over_col) || '' %></td>
+            <td class="celda1"><%= form.text_field totalover_field, id: totalover_field.to_s, style: "width:80px;" %></td>
+            <td></td>
+          </tr></tbody>
+        <% end %>
+        <tbody><tr>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+          <th class="celda2">TOTAL OVER T.</th>
+          <td class="celda2"></td><td class="celda2"></td><td class="celda2"></td>
+          <td class="celda2"><%= form.text_field :totaltotalover, id: "totaltotalover", style: "width:80px;" %></td>
+          <td></td>
+        </tr></tbody>
+        <tbody><tr>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+          <th>ADD. DAYS C.O</th>
+          <td><%= @change_order&.sum(:corder5) || '' %></td>
+        </tr></tbody>
+        <tr>
+          <tH>TOTAL</tH><td></td><td></td><td></td><td></td><td></td>
+          <td><%= number_to_currency(@estimated.atotal, precision: 2) %></td>
+          <tH>Qty Reports</tH>
+          <th><%= @daily.count %></th>
+          <th></th><th></th>
+          <th>TOTAL</th>
+          <th><%= form.text_field :atotal, id: "atotal", style: "width:60px;" %></th>
+        </tr>
+        <tbody><tr>
+          <tH></tH><td></td><td></td><td></td><td></td><td></td><td></td>
+          <tH>Last date Daily Log</tH>
+          <th><%= @daily.maximum(:date).present? ? @daily.maximum(:date).strftime('%m-%d-%y') : 0 %></th>
+          <th></th><th></th>
+          <th>DIFFERENCES</th>
+          <th><%= form.text_field :atotalvs, id: "atotalvs", style: "width:60px;" %></th>
+        </tr></tbody>
+
+        <%# === EQUIPMENT === %>
+        <thead><tr>
+          <th>EQUIP.</th><th>DESCRIPTION</th><th>QTY</th><th>DAYS</th>
+          <th>QTY. GAL.</th><th> GAL. PRICE</th><th>TOTAL</th>
+          <th>EQUIP.</th><Th>DESCRIPTION</Th><th>QTY</th><th>DAYS</th>
+          <th>QTY. GAL.</th><th>TOTA EQUIP.</th>
+        </tr></thead>
+        <tbody><tr>
+          <td class="celda2"></td><td></td><td></td><td></td><td></td>
+          <th>$ <%= @estimated.fpricing1 %></th><td></td>
+          <td class="celda2"></td><td></td><td></td><td></td>
+          <th>$ <%= form.text_field :fpricing1, id: "fpricing1", style: "width:100px;" %></th>
+          <td></td>
+        </tr></tbody>
+        <% equip_rows.each do |label, n, default_field| %>
+          <tbody><tr>
+            <% if label %>
+              <th class="celda2"><%= label %></th>
+            <% else %>
+              <td class="celda2"><%= @estimated.send(default_field) %></td>
+            <% end %>
+            <td><%= @estimated.send("edescription#{n}") %></td>
+            <td><%= @estimated.send("eqty#{n}") %></td>
+            <td><%= @estimated.send("edaywk#{n}") %></td>
+            <td><%= @estimated.send("eresult#{n}") %></td>
+            <td><%= @estimated.send("epricing#{n}") %></td>
+            <% val = @estimated.send("etotal#{n}") %>
+            <td><%= val == 0.0 ? "" : number_to_currency(val, precision: 2) %></td>
+            <% if label %>
+              <th class="celda2"><%= label %></th>
+            <% else %>
+              <th class="celda2"><%= form.text_field default_field, size: "10", maxlength: "254" %></th>
+            <% end %>
+            <td><%= n == 7 ? form.text_field(:edescription7, id: "adays2") : form.text_field(:"edescription#{n}") %></td>
+            <td><%= form.text_field :"eqty#{n}", id: "eqty#{n}", style: "width:60px;" %></td>
+            <td><%= form.text_field :"edaywk#{n}", id: "edaywk#{n}", style: "width:60px;" %></td>
+            <td><%= form.text_field :"eresult#{n}", id: "eresult#{n}", style: "width:60px;" %></td>
+            <td><%= form.text_field :"etotal#{n}", id: "etotal#{n}", style: "width:60px;" %></td>
+          </tr></tbody>
+        <% end %>
+        <tbody><tr>
+          <td class="celda2"></td><td></td><td></td>
+          <th>TOTAL GAL.</th>
+          <th><%= @estimated.totalfuel %></th>
+          <td></td><td></td>
+          <td class="celda2"></td><td></td><td></td>
+          <th>TOTAL GAL.</th>
+          <td><%= form.text_field :totalfuel, id: "totalfuel", value: (@daily.blank? ? 0 : @daily.sum(:fuel)), style: "width:60px;" %></td>
+          <td></td>
+        </tr></tbody>
+        <tbody><tr>
+          <td>TOTAL</td><td></td><td></td><td></td><td></td><td></td>
+          <% if @estimated.etotal == 0.0 %>
+            <td></td>
+          <% else %>
+            <td style="background-color: #FFFF00"><%= number_to_currency(@estimated.etotal, precision: 2) %></td>
+          <% end %>
+          <tH></tH><th></th><th></th><th></th><th></th>
+          <th><%= form.text_field :etotal, id: "etotal", style: "width:100px;" %></th>
+        </tr></tbody>
+        <tbody><tr>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+          <th></th><th></th><th></th><th></th>
+          <th>DIFFERENCES</th>
+          <th><%= form.text_field :etotalvs, id: "etotalvs", style: "width:60px;" %></th>
+        </tr></tbody>
+
+        <%# === SAW-CUTTING === %>
+        <thead><tr>
+          <th>SAW-CUTTING</th><th>DESCRIPTION</th><th>QTY/SF/LF</th><th>DAYS</th>
+          <TH></TH><th>UNIT.PRICE</th><th>TOTAL</th>
+          <th>SAW-CUTTING</th><th>DESCRIPTION</th><th>QTY/SF/LF</th><th>DAYS</th>
+          <th>UNIT.PRICE</th><th>TOTAL</th>
+        </tr></thead>
+        <% (1..3).each do |i| %>
+          <tbody><tr>
+            <td class="celda2"><%= @estimated.send("saw#{i}") %></td>
+            <td><%= @estimated.send("sdescription#{i}") %></td>
+            <td><%= @estimated.send("sqtysflf#{i}") %></td>
+            <td><%= @estimated.send("sdays#{i}") %></td>
+            <td></td>
+            <td><%= @estimated.send("spricing#{i}") %></td>
+            <% val = @estimated.send("stotal#{i}") %>
+            <td><%= val == 0.0 ? "" : number_to_currency(val, precision: 2) %></td>
+            <th class="celda2"><%= form.text_field :"saw#{i}", size: "10", maxlength: "254" %></th>
+            <td><%= form.text_field :"sdescription#{i}" %></td>
+            <td><%= form.text_field :"sqtysflf#{i}", id: "sqtysflf#{i}", style: "width:60px;" %></td>
+            <td><%= form.text_field :"sdays#{i}", id: "sdays#{i}", style: "width:60px;" %></td>
+            <td><%= form.text_field :"spricing#{i}", id: "spricing#{i}", style: "width:60px;" %></td>
+            <td><%= form.text_field :"stotal#{i}", id: "stotal#{i}", style: "width:60px;" %></td>
+          </tr></tbody>
+        <% end %>
+        <tbody><tr>
+          <tH>TOTAL</tH><td></td><td></td><td></td><td></td><td></td>
+          <td><%= number_to_currency(@estimated.stotal, precision: 2) %></td>
+          <tH>TOTAL</tH><th></th><th></th><th></th><TH></TH>
+          <th><%= form.text_field :stotal, id: "stotal", style: "width:60px;" %></th>
+        </tr></tbody>
+        <tbody><tr>
+          <tH></tH><td></td><td></td><td></td><td></td><td></td><td></td>
+          <th></th><TH></TH><th></th><th></th>
+          <th>DIFFERENCES</th>
+          <th><%= form.text_field :stotalvs, id: "stotalvs", style: "width:60px;" %></th>
+        </tr></tbody>
+
+        <%# === MATERIAL === %>
+        <thead><tr>
+          <th>MATERIAL</th><th>DESCRIPTION</th><th>QTY/YDS</th>
+          <th></th><th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+          <th>MATERIAL</th><th>DESCRIPTION</th><th>QTY/YDS</th>
+          <th></th><th></th><th>TOTAL</th>
+        </tr></thead>
+        <% material_rows.each do |r| %>
+          <tbody><tr>
+            <td class="celda2"><%= r[:label] %></td>
+            <td><%= @estimated.send(r[:desc]) %></td>
+            <td><%= @estimated.send(r[:qty]) %></td>
+            <td></td><td></td>
+            <td><%= @estimated.send(r[:price]) %></td>
+            <% val = @estimated.send(r[:total]) %>
+            <td><%= val == 0.0 ? "" : number_to_currency(val, precision: 2) %></td>
+            <td class="celda2"><%= r[:label] %></td>
+            <td><%= form.text_field r[:desc] %></td>
+            <td><%= form.text_field r[:qty], id: r[:qty].to_s, value: (@daily.blank? ? 0 : @daily.sum(r[:dqty])), style: "width:60px;" %></td>
+            <td></td><td></td>
+            <td><%= form.text_field r[:total], id: r[:total].to_s, value: (@daily.blank? ? 0 : @daily.sum(r[:dtot])), style: "width:60px;" %></td>
+          </tr></tbody>
+        <% end %>
+        <tbody><tr>
+          <tH>TOTAL</tH><td></td><td></td><td></td><td></td><td></td>
+          <td><%= number_to_currency(@estimated.ttotal, precision: 2) %></td>
+          <tH>TOTAL</tH><th></th><th></th><th></th><th></th>
+          <th><%= form.text_field :ttotal, id: "ttotal", style: "width:60px;" %></th>
+        </tr></tbody>
+        <tbody><tr>
+          <tH></tH><td></td><td></td><td></td><td></td><td></td><td></td>
+          <tH></tH><th></th><th></th><th></th>
+          <th>DIFFERENCES</th>
+          <th><%= form.text_field :ttotalvs, id: "ttotalvs", style: "width:60px;" %></th>
+        </tr></tbody>
+
+        <%# === PERMITS === %>
+        <thead><tr>
+          <th>PERMITS</th><th>DESCRIPTION</th><th>QTY</th>
+          <th></th><th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+          <th>PERMITS</th><th>DESCRIPTION</th><th>QTY</th>
+          <th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+        </tr></thead>
+        <% permit_rows.each do |label, n| %>
+          <tbody><tr>
+            <td class="celda2"><%= label %></td>
+            <td><%= @estimated.send("pdescription#{n}") %></td>
+            <td><%= @estimated.send("pqty#{n}") %></td>
+            <td></td><td></td>
+            <td><%= @estimated.send("ppricing#{n}") %></td>
+            <% val = @estimated.send("ptotal#{n}") %>
+            <td><%= val == 0.0 ? "" : number_to_currency(val, precision: 2) %></td>
+            <td class="celda2"><%= label %></td>
+            <td><%= form.text_field :"pdescription#{n}" %></td>
+            <td><%= form.text_field :"pqty#{n}", id: "pqty#{n}", style: "width:60px;" %></td>
+            <td></td>
+            <td><%= form.text_field :"ppricing#{n}", id: "ppricing#{n}", style: "width:60px;" %></td>
+            <td><%= form.text_field :"ptotal#{n}", id: "ptotal#{n}", style: "width:60px;" %></td>
+          </tr></tbody>
+        <% end %>
+        <tbody><tr>
+          <tH>TOTAL</tH><td></td><td></td><td></td><td></td><td></td>
+          <td><%= number_to_currency(@estimated.pptotal, precision: 2) %></td>
+          <tH>TOTAL</tH><th></th><th></th><th></th><th></th>
+          <th><%= form.text_field :pptotal, id: "ptotal", style: "width:60px;" %></th>
+        </tr></tbody>
+        <tbody><tr>
+          <tH></tH><td></td><td></td><td></td><td></td><td></td><td></td>
+          <tH></tH><th></th><th></th><th></th>
+          <th>DIFFERENCES</th>
+          <th><%= form.text_field :ptotalvs, id: "ptotalvs", style: "width:60px;" %></th>
+        </tr></tbody>
+
+        <%# === EROSION CONTROL === %>
+        <thead><tr>
+          <th>ERROSION CONTROL</th><th>DESCRIPTION</th><th>QTY</th>
+          <th></th><th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+          <th>ERROSION CONTROL</th><th>DESCRIPTION</th><th>QTY</th>
+          <th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+        </tr></thead>
+        <% erosion_rows.each do |r| %>
+          <tbody><tr>
+            <td class="celda2"><%= r[:label] %></td>
+            <td><%= @estimated.send(r[:desc]) %></td>
+            <td><%= @estimated.send(r[:qty]) %></td>
+            <td></td><td></td>
+            <% if r[:price] %>
+              <td><%= @estimated.send(r[:price]) %></td>
+            <% else %>
+              <td></td>
+            <% end %>
+            <% val = @estimated.send(r[:total]) %>
+            <td><%= val == 0.0 ? "" : number_to_currency(val, precision: 2) %></td>
+            <td class="celda2"><%= r[:label] %></td>
+            <td><%= form.text_field r[:desc] %></td>
+            <% if r[:dqty] %>
+              <td><%= form.text_field r[:qty], id: r[:qty].to_s, value: (@daily.blank? ? 0 : @daily.sum(r[:dqty])), style: "width:60px;" %></td>
+            <% else %>
+              <td><%= form.text_field r[:qty], id: r[:qty].to_s, style: "width:60px;" %></td>
+            <% end %>
+            <td></td>
+            <% if r[:price] %>
+              <td><%= form.text_field r[:price], id: r[:price].to_s, style: "width:60px;" %></td>
+            <% else %>
+              <td></td>
+            <% end %>
+            <% if r[:dtot] %>
+              <td><%= form.text_field r[:total], id: r[:total].to_s, value: (@daily.blank? ? 0 : @daily.sum(r[:dtot])), style: "width:60px;" %></td>
+            <% else %>
+              <td><%= form.text_field r[:total], id: r[:total].to_s, style: "width:60px;" %></td>
+            <% end %>
+          </tr></tbody>
+        <% end %>
+        <tbody><tr>
+          <tH>TOTAL</tH><td></td><td></td><td></td><td></td><td></td>
+          <td><%= number_to_currency(@estimated.ec_total, precision: 2) %></td>
+          <tH>TOTAL</tH><th></th><th></th><th></th><th></th>
+          <th><%= form.text_field :ec_total, id: "ec_total", style: "width:60px;" %></th>
+        </tr></tbody>
+        <tbody><tr>
+          <tH></tH><td></td><td></td><td></td><td></td><td></td><td></td>
+          <tH></tH><th></th><th></th><th></th>
+          <th>DIFFERENCES</th>
+          <th><%= form.text_field :ec_totalvs, id: "ec_totalvs", style: "width:60px;" %></th>
+        </tr></tbody>
+
+        <%# === TEMP FENCE === %>
+        <thead><tr>
+          <th>TEMP FENCE</th><th>DESCRIPTION</th><th>QTY</th>
+          <th></th><th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+          <th>TEMP FENCE</th><th>DESCRIPTION</th><th>QTY</th>
+          <th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+        </tr></thead>
+        <% temp_fence_rows.each do |r| %>
+          <tbody><tr>
+            <td class="celda2"><%= r[:label] %></td>
+            <td><%= @estimated.send(r[:desc]) %></td>
+            <td><%= @estimated.send(r[:qty]) %></td>
+            <td></td><td></td>
+            <td><%= @estimated.send(r[:price]) %></td>
+            <% val = @estimated.send(r[:total]) %>
+            <td><%= val == 0.0 ? "" : number_to_currency(val, precision: 2) %></td>
+            <td class="celda2"><%= r[:label] %></td>
+            <td><%= form.text_field r[:desc] %></td>
+            <td><%= form.text_field r[:qty], id: r[:qty].to_s, style: "width:60px;" %></td>
+            <td></td>
+            <td><%= form.text_field r[:price], id: r[:price].to_s, style: "width:60px;" %></td>
+            <td><%= form.text_field r[:total], id: r[:total].to_s, style: "width:60px;" %></td>
+          </tr></tbody>
+        <% end %>
+        <tbody><tr>
+          <tH>TOTAL</tH><td></td><td></td><td></td><td></td><td></td>
+          <td><%= number_to_currency(@estimated.tf_total, precision: 2) %></td>
+          <tH>TOTAL</tH><th></th><th></th><th></th><th></th>
+          <th><%= form.text_field :tf_total, id: "tf_total", style: "width:60px;" %></th>
+        </tr></tbody>
+        <tbody><tr>
+          <tH></tH><td></td><td></td><td></td><td></td><td></td><td></td>
+          <tH></tH><th></th><th></th><th></th>
+          <th>DIFFERENCES</th>
+          <th><%= form.text_field :tf_totalvs, id: "tf_totalvs", style: "width:60px;" %></th>
+        </tr></tbody>
+
+        <%# === OUT OF TOWN === %>
+        <thead><tr>
+          <th>OUT OF TOWN</th><th>DESCRIPTION</th><th>QTY</th>
+          <th></th><th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+          <th>PERDIEM</th><th>DESCRIPTION</th><th>QTY</th>
+          <th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+        </tr></thead>
+        <% out_of_town_rows.each do |r| %>
+          <tbody><tr>
+            <td class="celda2"><%= r[:label] %></td>
+            <td><%= @estimated.send(r[:desc]) %></td>
+            <td><%= @estimated.send(r[:qty]) %></td>
+            <td></td><td></td>
+            <td><%= @estimated.send(r[:price]) %></td>
+            <% val = @estimated.send(r[:total]) %>
+            <td><%= val == 0.0 ? "" : number_to_currency(val, precision: 2) %></td>
+            <td class="celda2"><%= r[:label] %></td>
+            <td><%= form.text_field r[:desc] %></td>
+            <td><%= form.text_field r[:qty], id: r[:qty].to_s, style: "width:60px;" %></td>
+            <td></td>
+            <td><%= form.text_field r[:price], id: r[:price].to_s, style: "width:60px;" %></td>
+            <td><%= form.text_field r[:total], id: r[:total].to_s, style: "width:60px;" %></td>
+          </tr></tbody>
+        <% end %>
+        <tbody><tr>
+          <tH>TOTAL</tH><td></td><td></td><td></td><td></td><td></td>
+          <td><%= number_to_currency(@estimated.per_total, precision: 2) %></td>
+          <tH>TOTAL</tH><th></th><th></th><th></th><th></th>
+          <th><%= form.text_field :per_total, id: "per_total", style: "width:60px;" %></th>
+        </tr></tbody>
+        <tbody><tr>
+          <tH></tH><td></td><td></td><td></td><td></td><td></td><td></td>
+          <tH></tH><th></th><th></th><th></th>
+          <th>DIFFERENCES</th>
+          <th><%= form.text_field :per_totalvs, id: "per_totalvs", style: "width:60px;" %></th>
+        </tr></tbody>
+
+        <%# === MISCELLANEOUS === %>
+        <thead><tr>
+          <th>MISCELLANEOUS</th><th>DESCRIPTION</th><th>QTY/SF/FT</th>
+          <th></th><th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+          <th>MISCELLANEOUS</th><th>DESCRIPTION</th><th>QTY/SF/FT</th>
+          <th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+        </tr></thead>
+        <% misc_rows.each do |r| %>
+          <tbody><tr>
+            <td class="celda2"><%= r[:label] %></td>
+            <td><%= @estimated.send(r[:desc]) %></td>
+            <td><%= @estimated.send(r[:qty]) %></td>
+            <td></td><td></td>
+            <td><%= @estimated.send(r[:price]) %></td>
+            <% val = @estimated.send(r[:total]) %>
+            <td><%= val == 0.0 ? "" : number_to_currency(val, precision: 2) %></td>
+            <td class="celda2"><%= r[:label] %></td>
+            <td><%= form.text_field r[:desc] %></td>
+            <td><%= form.text_field r[:qty], id: r[:qty].to_s, style: "width:60px;" %></td>
+            <td></td>
+            <td><%= form.text_field r[:price], id: r[:price].to_s, style: "width:60px;" %></td>
+            <td><%= form.text_field r[:total], id: r[:total].to_s, style: "width:60px;" %></td>
+          </tr></tbody>
+        <% end %>
+        <tbody><tr>
+          <tH>TOTAL</tH><td></td><td></td><td></td><td></td><td></td>
+          <td><%= number_to_currency(@estimated.mtotal, precision: 2) %></td>
+          <tH>TOTAL</tH><th></th><th></th><th></th><th></th>
+          <th><%= form.text_field :mtotal, id: "mtotal", style: "width:60px;" %></th>
+        </tr></tbody>
+        <tbody><tr>
+          <tH></tH><td></td><td></td><td></td><td></td><td></td><td></td>
+          <tH></tH><th></th><th></th><th></th>
+          <th>DIFFERENCES</th>
+          <th><%= form.text_field :mtotalvs, id: "mtotalvs", style: "width:60px;" %></th>
+        </tr></tbody>
+        <tr style="height: 20px;"></tr>
+
+        <%# === SUB C / ALT === %>
+        <thead><tr>
+          <th>SUB C / ALT-</th><th>DESCRIPTION</th><th>QTY/SF/FT</th>
+          <th>UNIT.PRICE</th><th></th><th>PROFIT(%)</th><th>TOTAL</th>
+          <th>SUB C / ALT-</th><th>DESCRIPTION</th><th>QTY/SF/FT</th>
+          <th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+        </tr></thead>
+        <% (1..3).each do |n| %>
+          <tbody><tr>
+            <td class="celda2"><%= @estimated.send("subdefault#{n}") %></td>
+            <td><%= @estimated.send("subdescription#{n}") %></td>
+            <td><%= @estimated.send("subqtysfft#{n}") %></td>
+            <td><%= @estimated.send("subpricing#{n}") %></td>
+            <td></td>
+            <td><%= @estimated.send("subporce#{n}") %></td>
+            <% val = @estimated.send("subtotal#{n}") %>
+            <td><%= val == 0.0 ? "" : number_to_currency(val, precision: 2) %></td>
+            <td class="celda2"><%= @estimated.send("subdefault#{n}") %></td>
+            <td><%= form.text_field :"subdescription#{n}" %></td>
+            <td><%= form.text_field :"subqtysfft#{n}", id: "subqtysfft#{n}", style: "width:60px;" %></td>
+            <td></td>
+            <td><%= form.text_field :"subpricing#{n}", id: "subpricing#{n}", style: "width:60px;" %></td>
+            <td><%= form.text_field :"subtotal#{n}", id: "subtotal#{n}", style: "width:60px;" %></td>
+          </tr></tbody>
+        <% end %>
+        <tbody><tr>
+          <tH>TOTAL</tH><td></td><td></td><td></td><td></td><td></td>
+          <td><%= number_to_currency(@estimated.subtotaltotal, precision: 2) %></td>
+          <tH>TOTAL</tH><th></th><th></th><th></th>
+          <th>TOTAL</th>
+          <th><%= form.text_field :subtotaltotal, id: "subtotaltotal", style: "width:60px;" %></th>
+        </tr></tbody>
+
+        <%# === SCRAP === %>
+        <thead><tr>
+          <th>SCRAP</th><th>DESCRIPTION</th><th>QTY/SF/FT</th>
+          <th></th><th></th><th>UNIT.PRICE</th><th>TOTAL</th>
+          <th>SCRAP</th><th>DESCRIPTION</th><th>QTY/SF/FT</th>
+          <th>TONS</th><th>UNIT.PRICE</th><th>TOTAL</th>
+        </tr></thead>
+        <% scrap_rows.each do |label, n, tons_field| %>
+          <tbody><tr>
+            <td class="celda2"><%= label %></td>
+            <td><%= @estimated.send("mdescription#{n}") %></td>
+            <td><%= @estimated.send("mqtysfft#{n}") %></td>
+            <td></td><td></td>
+            <td><%= @estimated.send("mpricing#{n}") %></td>
+            <% val = @estimated.send("mtotal#{n}") %>
+            <td><%= val == 0.0 ? "" : number_to_currency(val, precision: 2) %></td>
+            <td class="celda2"><%= label %></td>
+            <td><%= form.text_field :"mdescription#{n}" %></td>
+            <td><%= form.text_field :"mqtysfft#{n}", id: "mqtysfft#{n}", style: "width:60px;" %></td>
+            <td><%= form.text_field tons_field, style: "width:60px;" %></td>
+            <td><%= form.text_field :"mpricing#{n}", id: "mpricing#{n}", style: "width:60px;" %></td>
+            <td><%= form.text_field :"mtotal#{n}", id: "mtotal#{n}", style: "width:60px;" %></td>
+          </tr></tbody>
+        <% end %>
+        <tbody><tr>
+          <th style="background-color: rgb(155,255,148)"> SALVAGE</th>
+          <td></td><td></td><td></td><td></td><td></td>
+          <td><%= @estimated.totalsalvage %></td>
+          <th style="background-color: rgb(155,255,148)"> SALVAGE</th>
+          <td>$ :<%= form.text_field :mpricing12, id: "mpricing12", style: "width:100px;" %></td>
+          <td></td><td></td><td></td>
+          <td><%= form.text_field :mpricing12, id: "totalsalvage", style: "width:80px;" %></td>
+        </tr></tbody>
+        <tbody><tr>
+          <tH></tH><th></th><th></th><th></th><th></th>
+          <th>TOTAL SALVAGE</th>
+          <td style="background-color: rgb(155,255,148)"><%= number_to_currency(@estimated.salvage, precision: 2) %></td>
+          <th></th><th></th><th></th><th></th>
+          <th>TOTAL SALVAGE</th>
+          <th style="background-color: rgb(155,255,148)"><%= form.text_field :salvagetotal, id: "salvage1", style: "width:100px;" %></th>
+        </tr></tbody>
+        <tr style="height: 20px;"></tr>
+
+        <%# === SUMMARY === %>
+        <tbody><tr>
+          <th>SF / L.F</th>
+          <td><%= number_to_currency(@estimated.sf, precision: 2, unit: '') %></td>
+          <td></td><td></td><td></td>
+          <th>SUBTOTAL</th>
+          <td><%= number_to_currency(@estimated.subtotal, precision: 2) %></td>
+          <th></th><th></th><th></th><th></th>
+          <th>ACTUAL JOB COST TOTAL</th>
+          <th><%= form.text_field :subtotal, id: "subtotal", style: "width:80px;" %></th>
+        </tr></tbody>
+        <tbody><tr>
+          <th>PER SF / L.F $</th>
+          <td><%= number_to_currency(@estimated.persf, precision: 2) %></td>
+          <td></td><td></td><td></td>
+          <tH>PERCENTAGE %: <%= @estimated.profitporcen %></tH>
+          <td><%= number_to_currency(@estimated.profit, precision: 2) %></td>
+          <th></th>
+          <td class="celda2">Charge Order #1</td>
+          <td class="corder celda2"><%= form.text_field :vsa, id: "vsa", value: (@change_order[0].blank? ? 0 : @change_order[0].corder1), style: "width:100px;" %></td>
+          <td></td>
+          <th>DIFFERENCES OF ACTUAL COST</th>
+          <th><%= form.text_field :totalvs, id: "totalvs", style: "width:100px;", precision: 2 %></th>
+        </tr></tbody>
+        <tbody><tr>
+          <td></td><td></td><td></td><td></td><td></td>
+          <th> TOTAL CONTRACT </th>
+          <td><%= number_to_currency(@estimated.total, precision: 2) %></td>
+          <th></th>
+          <td class="celda2">Charge Order #2</td>
+          <td class="corder celda2"><%= form.text_field :vse, id: "vse", value: (@change_order[1].blank? ? 0 : @change_order[1].corder1), style: "width:100px;" %></td>
+          <td></td><td></td><td></td>
+        </tr></tbody>
+        <tbody><tr>
+          <td></td><td></td><td></td><td></td><td></td>
+          <th>SALVAGE</th>
+          <td><%= number_to_currency(@estimated.salvage, precision: 2) %></td>
+          <th></th>
+          <td class="celda2">Charge Order #3</td>
+          <td class="corder celda2"><%= form.text_field :vsm, id: "vsm", value: (@change_order[2].blank? ? 0 : @change_order[2].corder1), style: "width:100px;" %></td>
+          <tD></tD>
+          <th>PER SF / L.F $</th>
+          <th><%= form.text_field :persf, id: "persf", step: :any, style: "width:100px;", precision: 2 %></th>
+        </tr></tbody>
+        <tbody><tr>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><th></th>
+          <td class="celda2">Charge Order #4</td>
+          <td class="corder celda2"><%= form.text_field :vst, id: "vst", value: (@change_order[3].blank? ? 0 : @change_order[3].corder1), style: "width:100px;" %></td>
+          <td></td>
+          <th>DAILY LOGS EXPENSES</th>
+          <td><%= form.text_field :dailyexpenses, id: "dailyexpenses", value: (@expenses.blank? ? 0 : @expenses), style: "width:100px;" %></td>
+        </tr></tbody>
+        <tbody><tr>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><th></th>
+          <td class="celda2">Charge Order #5</td>
+          <td class="corder bottom-line celda2"><%= form.text_field :vsp, id: "vsp", value: (@change_order[4].blank? ? 0 : @change_order[4].corder1), style: "width:100px;" %></td>
+          <td></td>
+          <th class="celda2">PROFIT OF CHANGE O.</th>
+          <td class="celda2"><%= form.text_field :tcontract, id: "tcontract", style: "width:100px;" %></td>
+        </tr></tbody>
+        <tbody><tr>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+          <th class="celda2"> Total Change O.</th>
+          <td class="celda2"><%= form.text_field :sumco, id: "sumco", value: (@change_order.blank? ? 0 : @change_order.sum(:corder1)), style: "width:100px;" %></td>
+          <td></td>
+          <th>TOTAL SCRAP</th>
+          <td><%= form.text_field :salvage, id: "salvage", style: "width:100px;" %></td>
+        </tr></tbody>
+        <tbody><tr>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+          <th class="celda2">Cost of Change O.</th>
+          <td class="celda2"><%= form.text_field :charge_cost, id: "charge_cost", value: (@change_order.blank? ? 0 : @change_order.sum(:cost)), style: "width:100px;" %></td>
+          <td></td>
+          <th>TOTAL INVOICE</th>
+          <td><%= form.text_field :invoice, id: "invoice", style: "width:100px;", step: 'any' %></td>
+        </tr></tbody>
+        <tbody><tr>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+          <tD></tD><th></th><td></td><td></td>
+          <th>SUB C / ALT</th>
+          <td><%= form.text_field :vscontractor, id: "vscontractor", style: "width:100px;" %></td>
+        </tr></tbody>
+        <tbody><tr>
+          <td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+          <tD></tD><th></th><td></td><td></td>
+          <th>TOTAL PROFIT</th>
+          <td><%= form.text_field :tprofitsalvage, id: "tprofitsalvage", style: "width:100px;" %></td>
+        </tr></tbody>
+      </table>
+    </div>
+  </div>
+  <br><br>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+<br><br>
+<script>
+    // ── Generic helpers ─────────────────────────────────────────────
+    function calcQtyPrice(qtyId, priceId, totalId) {
+        const qty   = parseFloat($(`#${qtyId}`).val()) || 0;
+        const price = parseFloat($(`#${priceId}`).val()) || 0;
+        $(`#${totalId}`).val(qty * price);
+    }
+    function sumPrefix(prefix, count, outputId) {
+        let total = 0;
+        for (let i = 1; i <= count; i++) total += parseFloat($(`#${prefix}${i}`).val()) || 0;
+        $(`#${outputId}`).val(total);
+    }
+    function sumIds(ids, outputId) {
+        const total = ids.reduce((s, id) => s + (parseFloat($(`#${id}`).val()) || 0), 0);
+        $(`#${outputId}`).val(total);
+    }
+    function calcSaw(i) {
+        const qty   = parseFloat($(`#sqtysflf${i}`).val()) || 0;
+        const days  = parseFloat($(`#sdays${i}`).val()) || 0;
+        const price = parseFloat($(`#spricing${i}`).val()) || 0;
+        $(`#stotal${i}`).val(qty * days * price);
+    }
+    function calcActivity(i, sumhours, over, overIdx) {
+        const price = parseFloat($(`#apricing${i}`).val()) || 0;
+        $(`#atotal${i}`).val(sumhours * price);
+        $(`#totalover${overIdx}`).val(1.5 * price * over);
+    }
+    function calcVsDiff(estimated, actualId, vsId) {
+        const va2 = parseFloat(String(estimated).replace(/,/g, '')) || 0;
+        const va1 = parseFloat($(`#${actualId}`).val()) || 0;
+        $(`#${vsId}`).val(va2 - va1);
+    }
+
+    // ── Activity config: [rowIdx, sumhours, overHours, totaloverIdx] ──
+    // NOTE: row 10 intentionally uses sumhours1 (preserving original behavior)
+    const activityRows = [
+        [1,  <%= @sumhours1 || 0 %>,  <%= @daily&.sum(:overl) || 0 %>, 1],
+        [2,  <%= @sumhours2 || 0 %>,  <%= @daily&.sum(:overo) || 0 %>, 2],
+        [3,  <%= @sumhours3 || 0 %>,  <%= @daily&.sum(:overs) || 0 %>, 3],
+        [4,  <%= @sumhours4 || 0 %>,  <%= @daily&.sum(:overd) || 0 %>, 4],
+        [5,  <%= @sumhours5 || 0 %>,  <%= @daily&.sum(:overd) || 0 %>, 5],
+        [6,  <%= @sumhours6 || 0 %>,  <%= @daily&.sum(:overd) || 0 %>, 6],
+        [7,  <%= @sumhours7 || 0 %>,  <%= @daily&.sum(:overl) || 0 %>, 7],
+        [8,  <%= @sumhours8 || 0 %>,  <%= @daily&.sum(:overo) || 0 %>, 8],
+        [9,  <%= @sumhours9 || 0 %>,  <%= @daily&.sum(:overs) || 0 %>, 9],
+        [10, <%= @sumhours1 || 0 %>,  <%= @daily&.sum(:overl) || 0 %>, 10],
+        [11, <%= @sumhours11 || 0 %>, <%= @daily&.sum(:overo) || 0 %>, 11],
+        [12, <%= @sumhours12 || 0 %>, <%= @daily&.sum(:overs) || 0 %>, 12],
+    ];
+
+    // ── VS difference config: [estimated value, actual field id, vs field id] ──
+    const vsRows = [
+        [<%= @estimated.atotal %>,        'atotal',        'atotalvs'],
+        [<%= @estimated.etotal %>,        'etotal',        'etotalvs'],
+        [<%= @estimated.stotal %>,        'stotal',        'stotalvs'],
+        [<%= @estimated.ftotal || 0 %>,   'ftotal',        'ftotalvs'],
+        [<%= @estimated.ttotal %>,        'ttotal',        'ttotalvs'],
+        [<%= @estimated.pptotal %>,       'ptotal',        'ptotalvs'],
+        [<%= @estimated.ec_total %>,      'ec_total',      'ec_totalvs'],
+        [<%= @estimated.tf_total %>,      'tf_total',      'tf_totalvs'],
+        [<%= @estimated.per_total %>,     'per_total',     'per_totalvs'],
+        [<%= @estimated.mtotal %>,        'mtotal',        'mtotalvs'],
+        [<%= @estimated.subtotaltotal || 0 %>, 'subtotaltotal', 'vscontractor'],
+    ];
+
+    // ── Master run-all function ─────────────────────────────────────
+    function runAll() {
+        // Activities
+        activityRows.forEach(([i, h, o, oi]) => calcActivity(i, h, o, oi));
+        totalover();
+        // Fuel
+        calcQtyPrice('fqtysflf1', 'fpricing1', 'ftotal1');
+        // Saw
+        for (let i = 1; i <= 3; i++) calcSaw(i);
+        // Permits
+        for (let i = 1; i <= 8; i++) calcQtyPrice(`pqty${i}`, `ppricing${i}`, `ptotal${i}`);
+        // Erosion
+        [3,4,5].forEach(n => calcQtyPrice(`ec_qty${n}`, `ec_pricing${n}`, `ec_total${n}`));
+        // Mobilization
+        [2,3].forEach(n => calcQtyPrice(`mov_pqty${n}`, `mov_pricing${n}`, `mov_total${n}`));
+        // Misc/Scrap/Fence/Hotel (all mqtysfft×mpricing→mtotal pattern)
+        [2,3,4,5,6,7,8,9,11,13,14,15,16,17,18,19,20,31,32].forEach(n =>
+            calcQtyPrice(`mqtysfft${n}`, `mpricing${n}`, `mtotal${n}`)
+        );
+        // Sub-contractors
+        [1,2,3].forEach(n => calcQtyPrice(`subqtysfft${n}`, `subpricing${n}`, `subtotal${n}`));
+        // Section totals
+        totalA(); totalE(); totalF(); totalS(); totalT(); totalP();
+        total_ec(); total_tf(); total_per(); totalM(); totalcontractor();
+        salvage(); totalscrap();
+        // VS differences
+        vsRows.forEach(([est, aid, vid]) => calcVsDiff(est, aid, vid));
+        // Final
+        subtotal(); totalvs(); total(); porce(); persf();
+        totalsalvage(); sumcorder(); invoice(); totaltotal(); totalprof_salvage();
+    }
+
+    // ── Section total functions ──────────────────────────────────────
+    function totalA() {
+        const va1 = parseFloat($('#totaltotalover').val()) || 0;
+        let total = 0;
+        for (let i = 1; i <= 12; i++) total += parseFloat($(`#atotal${i}`).val()) || 0;
+        $('#atotal').val(total + va1);
+    }
+    function totalE() {
+        let total = parseFloat($('#totalfuel').val()) || 0;
+        for (let i = 1; i <= 12; i++) total += parseFloat($(`#etotal${i}`).val()) || 0;
+        $('#etotal').val(total);
+    }
+    function totalF() { sumPrefix('ftotal', 1, 'ftotal'); }
+    function totalS() { sumPrefix('stotal', 3, 'stotal'); }
+    function totalT() { sumIds(['ttotal1','ttotal2','ttotal3','ttotal4','mtotal1','ttotal5','ttotal6'], 'ttotal'); }
+    function totalP() { sumPrefix('ptotal', 8, 'ptotal'); }
+    function total_ec() { sumIds(['mtotal2','ttotal5','ec_total3','ec_total4','ec_total5','mtotal9'], 'ec_total'); }
+    function total_tf() { sumIds(['mtotal31','mtotal3'], 'tf_total'); }
+    function total_per() { sumIds(['mtotal17','mov_total2','mov_total3'], 'per_total'); }
+    function totalM() { sumIds(['mtotal4','mtotal5','mtotal7','mtotal8','mtotal9','mtotal11','mtotal18','mtotal19','mtotal20','mtotal32'], 'mtotal'); }
+    function totalcontractor() { sumIds(['subtotal1','subtotal2','subtotal3'], 'subtotaltotal'); }
+    function totalover() { sumPrefix('totalover', 4, 'totaltotalover'); }
+    function totalscrap() { sumIds(['mtotal13','mtotal14','mtotal15','totalsalvage'], 'salvage1'); }
+
+    function subtotal() {
+        sumIds(['atotal','etotal','stotal','ttotal','ptotal','mtotal','ec_total','tf_total','per_total'], 'subtotal');
+    }
+    function totalvs() {
+        sumIds(['atotalvs','etotalvs','stotalvs','ttotalvs','ptotalvs','mtotalvs','ec_totalvs','tf_totalvs','per_totalvs'], 'totalvs');
+    }
+    function total() {
+        $('#total').val((parseFloat($('#subtotal').val()) || 0) + (parseFloat($('#profit').val()) || 0));
+    }
+    function porce() {
+        const sub = parseFloat($('#subtotal').val()) || 0;
+        const pct = parseFloat($('#porce').val()) || 0;
+        $('#profit').val(sub * pct / 100);
+    }
+    function persf() {
+        const v1 = parseFloat($('#tprofitsalvage').val()) || 0;
+        const va2 = parseFloat("<%= @estimated.sf %>".replace(/,/g, '')) || 1;
+        $('#persf').val(v1 / va2);
+    }
+    function salvage() {
+        $('#totalsalvage').val(parseFloat($('#mpricing12').val()) || 0);
+    }
+    function totalsalvage() {
+        $('#salvage').val(parseFloat($('#salvage1').val()) || 0);
+    }
+    function sumcorder() {
+        var total3 = 0;
+        var cost = "<%= @change_order.sum(:cost) %>";
+        $('.corder input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) value3 = 0;
+            total3 += value3;
+        });
+        $('#tcontract').val(total3 - cost);
+    }
+    function invoice() {
+        var va2 = parseFloat("<%= @estimated.total %>".replace(/,/g, '')) || 0;
+        var valor = parseFloat($('#tcontract').val()) || 0;
+        $('#invoice').val(va2 + valor);
+    }
+    function totaltotal() {
+        var va2 = parseFloat("<%= @estimated.total %>".replace(/,/g, '')) || 0;
+        var valor = parseFloat($('#subtotal').val()) || 0;
+        $('#totalcost1').val(va2 + valor);
+    }
+    function totalprof_salvage() {
+        var va1 = parseFloat("<%= @estimated.profit %>".replace(/,/g, '')) || 0;
+        var va2 = parseFloat($('#totalvs').val()) || 0;
+        var va3 = parseFloat($('#salvage').val()) || 0;
+        var va4 = parseFloat($('#vscontractor').val()) || 0;
+        var va5 = parseFloat($('#tcontract').val()) || 0;
+        var va6 = parseFloat($('#dailyexpenses').val()) || 0;
+        $('#tprofitsalvage').val(va1 + va2 + va3 + va4 + va5 - va6);
+    }
+
+    // ── Init ────────────────────────────────────────────────────────
+    $(function() {
+        runAll();
+        const miBoton = document.getElementById('miBoton');
+        miBoton.style.backgroundColor = "#32CD32";
+        miBoton.style.color = "white";
+        miBoton.style.border = "none";
+        miBoton.style.borderRadius = "5px";
+        miBoton.style.margin = "10px";
+        miBoton.style.fontFamily = "Arial, sans-serif";
+    });
+    $(document).ready(function() {
+        $('#table').on('input', runAll);
+    });
+
+    const tableHeaders = document.querySelectorAll("thead th");
+    for (const header of tableHeaders) {
+        header.style.backgroundColor = "rgba(187,186,186,0.94)";
+    }
+    var celdas = document.getElementsByClassName("celda2");
+    for (var i = 0; i < celdas.length; i++) {
+        celdas[i].style.backgroundColor = "#d0e5ff";
+        celdas[i].style.fontWeight = "bold";
+    }
+</script>

@@ -1,0 +1,560 @@
+<%= form_with(model: leed) do |form| %>
+  <% if leed.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(estimated.errors.count, "error") %> prohibited this estimated from being saved:</h2>
+      <ul>
+        <% leed.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <br>
+  <br>
+  <div id="table">
+    <table  class="table table-bordered table-sm"  style="width:80%">
+      <thead>
+      <tr>
+        <th>PROJECT</th>
+        <th>DATE</th>
+        <th></th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td><%= form.text_field :project, id: "location", value: @location%></td>
+        <td><%= form.date_field :date ,:required => true %></td>
+        <td></td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tr style="height: 20px;"></tr>
+      <tbody>
+      <tr>
+        <th>TOTAL CONSTRUCTION WASTE	</th>
+        <td></td>
+       <td></td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>TOTAL DIVERTED WASTE</th>
+        <td></td>
+        <th>PERCENT OF WASTE DIVERTED</th>
+        <td><%= form.text_field :porcen, id: "porcentage", style: "width:70px;" %> %</td>
+      </tr>
+      </tbody>
+      <tr style="height: 20px;"></tr>
+      <tr style="height: 20px;"></tr>
+    </table>
+    <br>
+    <table  class="table table-bordered table-sm"  style="width:80%">
+      <thead>
+      <tr>
+        <th>MATERIAL</th>
+        <th>DISPOSAL HAULER</th>
+        <th>DISPOSED IN LANDFILL<p>(TONS)</th>
+        <th>RECYCLED<p>(TONS)</th>
+        <th>SALVAGED<p>(TONS)</th>
+        <th>REUSED<p>(TONS)</th>
+        <th>TOTAL DIVERTED<p>(TONS)</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <th>ASPHALT</th>
+        <td><%= form.text_field :method1 %></td>
+        <td class="sumland"><%= form.text_field :landfill1, id: "landfill1", style: "width:70px;" %></td>
+        <td class="asphalt"><%= form.text_field :recycled1,value: @tasphalt, style: "width:70px;" %></td>
+        <td class="asphalt"><%= form.text_field :salvage1, id: "salvage1", style: "width:70px;" %></td>
+        <td class="asphalt"><%= form.text_field :reused1, id: "reused1", style: "width:70px;" %></td>
+        <td class="totales"><%= form.text_field :total1, id: "total1", style: "width:70px;" %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>CONCRETE</th>
+        <td><%= form.text_field :method2 %></td>
+        <td class="sumland"><%= form.text_field :landfill2, id: "landfill2", style: "width:70px;" %></td>
+        <td class="concrete"><%= form.text_field :recycled2,value: @concrete , id: "recycled2", style: "width:70px;" %></td>
+        <td class="concrete"><%= form.text_field :salvage2, id: "salvage2", style: "width:70px;" %></td>
+        <td class="concrete"><%= form.text_field :reused2, id: "reused2", style: "width:70px;" %></td>
+        <td class="totales"><%= form.text_field :total2, id: "total2", style: "width:70px;" %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>PLUMBING FIXTURES</th>
+        <td><%= form.text_field :method3 %></td>
+        <td class="sumland"><%= form.text_field :landfill3, id: "landfill3", style: "width:70px;" %></td>
+        <td class="plumbing"><%= form.text_field :recycled3, id: "recycled3", style: "width:70px;" %></td>
+        <td class="plumbing"><%= form.text_field :salvage3, id: "salvage3", style: "width:70px;" %></td>
+        <td class="plumbing"><%= form.text_field :reused3, id: "reused3", style: "width:70px;" %></td>
+        <td class="totales"><%= form.text_field :total3, id: "total3", style: "width:70px;" %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>FERROUS METALS</th>
+        <td><%= form.text_field :method4 %></td>
+        <td class="sumland"><%= form.text_field :landfill4, id: "landfill4", style: "width:70px;" %></td>
+        <td class="ferrous"><%= form.text_field :recycled4,  value: @ferrous, id: "recycled4", style: "width:70px;" %></td>
+        <td class="ferrous"><%= form.text_field :salvage4,id: "salvage4", style: "width:70px;" %></td>
+        <td class="ferrous"><%= form.text_field :reused4, id: "reused4", style: "width:70px;" %></td>
+        <td  class="totales"><%= form.text_field :total4, id: "total4", style: "width:70px;" %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>NON-FERROUS METALS</th>
+        <td><%= form.text_field :method5 %></td>
+        <td class="sumland"><%= form.text_field :landfill5, id: "landfill5", style: "width:70px;" %></td>
+        <td class="nonferrous"><%= form.text_field :recycled5,  value: @nonferrous, id: "recycled5", style: "width:70px;" %></td>
+        <td class="nonferrous"><%= form.text_field :salvage5, id: "salvage5", style: "width:70px;" %></td>
+        <td class="nonferrous"><%= form.text_field :reused5, id: "reused5", style: "width:70px;" %></td>
+        <td  class="totales"><%= form.text_field :total5, id: "total5", style: "width:70px;" %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>WOOD</th>
+        <td><%= form.text_field :method6 %></td>
+        <td class="sumland"><%= form.text_field :landfill6, id: "landfill6", style: "width:70px;" %></td>
+        <td class="wood"><%= form.text_field :recycled6, id: "recycled6", style: "width:70px;" %></td>
+        <td class="wood"><%= form.text_field :salvage6, id: "salvage6", style: "width:70px;" %></td>
+        <td class="wood"><%= form.text_field :reused6, id: "reused6", style: "width:70px;" %></td>
+        <td  class="totales"><%= form.text_field :total6, id: "total6", style: "width:70px;" %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>GLASS</th>
+        <td><%= form.text_field :method7 %></td>
+        <td class="sumland"><%= form.text_field :landfill7, id: "landfill7", style: "width:70px;" %></td>
+        <td class="glass"><%= form.text_field :recycled7, id: "recycled7", style: "width:70px;" %></td>
+        <td class="glass"><%= form.text_field :salvage7, id: "salvage7", style: "width:70px;" %></td>
+        <td class="glass"><%= form.text_field :reused7, id: "reused7", style: "width:70px;" %></td>
+        <td class="totales"><%= form.text_field :total7, id: "total7", style: "width:70px;" %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>CLAY BRICK</th>
+        <td><%= form.text_field :method8 %></td>
+        <td class="sumland"><%= form.text_field :landfill8, id: "landfill8", style: "width:70px;" %></td>
+        <td class="brick"><%= form.text_field :recycled8, id: "recycled8", style: "width:70px;" %></td>
+        <td class="brick"><%= form.text_field :salvage8, id: "salvage8", style: "width:70px;" %></td>
+        <td class="brick"><%= form.text_field :reused8, id: "reused8", style: "width:70px;" %></td>
+        <td class="totales"><%= form.text_field :total8, id: "total8", style: "width:70px;" %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>BOND PAPER</th>
+        <td><%= form.text_field :method9 %></td>
+        <td class="sumland"><%= form.text_field :landfill9, id: "landfill9", style: "width:70px;" %></td>
+        <td class="paper"><%= form.text_field :recycled9, id: "recycled9", style: "width:70px;" %></td>
+        <td class="paper"><%= form.text_field :salvage9, id: "salvage9", style: "width:70px;" %></td>
+        <td class="paper"><%= form.text_field :reused9, id: "reused9", style: "width:70px;" %></td>
+        <td class="totales"><%= form.text_field :total9, id: "total9", style: "width:70px;" %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>NEWSPRINT</th>
+        <td><%= form.text_field :method10 %></td>
+        <td class="sumland"><%= form.text_field :landfill10, id: "landfill10", style: "width:70px;" %></td>
+        <td class="newsprint"><%= form.text_field :recycled10, id: "recycled10", style: "width:70px;" %></td>
+        <td class="newsprint"><%= form.text_field :salvage10, id: "salvage10", style: "width:70px;" %></td>
+        <td class="newsprint"><%= form.text_field :reused10, id: "reused10", style: "width:70px;" %></td>
+        <td class="totales"><%= form.text_field :total10, id: "total10", style: "width:70px;" %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>CARDBOARD</th>
+        <td><%= form.text_field :method11 %></td>
+        <td class="sumland"><%= form.text_field :landfill11, id: "landfill11", style: "width:70px;" %></td>
+        <td class="cardboard"><%= form.text_field :recycled11, id: "recycled11", style: "width:70px;" %></td>
+        <td class="cardboard"><%= form.text_field :salvage11, id: "salvage11", style: "width:70px;" %></td>
+        <td class="cardboard"><%= form.text_field :reused11, id: "reused11", style: "width:70px;" %></td>
+        <td class="totales"><%= form.text_field :total11, id: "total11", style: "width:70px;" %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>PLASTIC</th>
+        <td><%= form.text_field :method12 %></td>
+        <td class="sumland"><%= form.text_field :landfill12, id: "landfill12", style: "width:70px;" %></td>
+        <td class="plastic"><%= form.text_field :recycled12, id: "recycled12", style: "width:70px;" %></td>
+        <td class="plastic"><%= form.text_field :salvage12, id: "salvage12", style: "width:70px;" %></td>
+        <td class="plastic"><%= form.text_field :reused12, id: "reused12", style: "width:70px;" %></td>
+        <td class="totales"><%= form.text_field :total12, id: "total12", style: "width:70px;" %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>GYPSUM</th>
+        <td><%= form.text_field :method13 %></td>
+        <td class="sumland"><%= form.text_field :landfill13, id: "landfill13", style: "width:70px;" %></td>
+        <td class="gypsun"><%= form.text_field :recycled13, id: "recycled13", style: "width:70px;" %></td>
+        <td class="gypsun"><%= form.text_field :salvage13, id: "salvage13", style: "width:70px;" %></td>
+        <td class="gypsun"><%= form.text_field :reused13, id: "reused13", style: "width:70px;" %></td>
+        <td class="totales"><%= form.text_field :total13, id: "total13", style: "width:70px;" %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>PAINT</th>
+        <td><%= form.text_field :method14 %></td>
+        <td class="sumland"><%= form.text_field :landfill14, id: "landfill14",  class: 'sumland',style: "width:70px;" %></td>
+        <td class="paint"><%= form.text_field :recycled14, id: "recycled14", style: "width:70px;" %></td>
+        <td class="paint"><%= form.text_field :salvage14, id: "salvage14", style: "width:70px;" %></td>
+        <td class="paint"><%= form.text_field :reused14, id: "reused14", style: "width:70px;" %></td>
+        <td class="totales"><%= form.text_field :total14, id: "total14", style: "width:70px;" %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>INSULATION</th>
+        <td><%= form.text_field :method15 %></td>
+        <td class="sumland"><%= form.text_field :landfill15, id: "landfill15",  class: 'sumland',style: "width:70px;" %></td>
+        <td class="insulation"><%= form.text_field :recycled15, id: "recycled15", style: "width:70px;" %></td>
+        <td class="insulation"><%= form.text_field :salvage15, id: "salvage15", style: "width:70px;" %></td>
+        <td class="insulation"><%= form.text_field :reused15, id: "reused15", style: "width:70px;" %></td>
+        <td class="totales"><%= form.text_field :total15, id: "total15", style: "width:70px;" %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>C&D / TRASH</th>
+        <td><%= form.text_field :method16 %></td>
+        <td  class="sumland"><%= form.text_field :landfill16,value: @ttrash, id: "landfill16",  class: 'sumland',style: "width:70px;" %></td>
+        <td class="cd"><%= form.text_field :recycled16, id: "recycled16", style: "width:70px;" %></td>
+        <td class="cd"><%= form.text_field :salvage16, id: "salvage16", style: "width:70px;" %></td>
+        <td class="cd"><%= form.text_field :reused16, id: "reused16", style: "width:70px;" %></td>
+        <td class="totales"><%= form.text_field :total16, id: "total16", style: "width:70px;" %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>VEGETATION / TREES</th>
+        <td><%= form.text_field :method17 %></td>
+        <td class="sumland"><%= form.text_field :landfill17, id: "landfill17",  class: 'sumland',style: "width:70px;" %></td>
+        <td class="vegetation"><%= form.text_field :recycled17,value: @tvegetation,  id: "recycled17", style: "width:70px;" %></td>
+        <td class="vegetation"><%= form.text_field :salvage17, id: "salvage17", style: "width:70px;" %></td>
+        <td class="vegetation"><%= form.text_field :reused17, id: "reused17", style: "width:70px;" %></td>
+        <td class="totales"><%= form.text_field :total17, id: "total17", style: "width:70px;" %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>FILL</th>
+        <td><%= form.text_field :method19 %></td>
+        <td class="sumland"><%= form.text_field :landfill19,  id: "landfill17",  class: 'sumland',style: "width:70px;" %></td>
+        <td class="fill"><%= form.text_field :recycled19,value: @tfill, id: "recycled19", style: "width:70px;" %></td>
+        <td class="fill"><%= form.text_field :salvage19, id: "salvage19", style: "width:70px;" %></td>
+        <td class="fill"><%= form.text_field :reused19, id: "reused19", style: "width:70px;" %></td>
+        <td class="totales"><%= form.text_field :total19, id: "total19", style: "width:70px;" %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>OTHER</th>
+        <td><%= form.text_field :method18 %></td>
+        <td class="sumland"><%= form.text_field :landfill18, id: "landfill18",  class: 'sumland',style: "width:70px;" %></td>
+        <td class="other"><%= form.text_field :recycled18, value: @misc, id: "recycled18", style: "width:70px;" %></td>
+        <td class="other"><%= form.text_field :salvage18, id: "salvage18", style: "width:70px;" %></td>
+        <td class="other"><%= form.text_field :reused18, id: "reused18", style: "width:70px;" %></td>
+        <td class="totales"><%= form.text_field :total18, id: "total18", style: "width:70px;" %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td></td>
+        <th>TOTAL LANDFILLED WASTE</th>
+        <td  class="totaltotal"><%= form.text_field :tlandwaste, id: "tlandwaste", style: "width:70px;" %></td>
+        <td></td>
+        <td></td>
+        <th>TOTAL DIVERTED WASTE</th>
+        <td class="totaltotal"><%= form.text_field :tdivewaste, id: "tdivewaste", style: "width:70px;" %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <th>TOTAL CONSTRUCTION WASTE</th>
+        <td ><%= form.text_field :tconswaste, id: "tconswaste", style: "width:70px;" %></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <br>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+  <br>
+  <br>
+<% end %>
+
+
+
+<script>
+
+    const tableHeaders = document.querySelectorAll("thead, th");
+    for (const header of tableHeaders) {
+        header.style.backgroundColor = "#dfffdf";
+    }
+
+    $(document).ready(function() {
+            updatesum();
+            porcentage();
+            $('.sumland, .asphalt, .concrete, .plumbing, .ferrous, .nonferrous, .wood, .glass, .brick, .paper, .newsprint, .cardboard, .plastic, .gypsun, .paint, .insulation, .cd, .vegetation, .fill, .other input').on('input', function () {
+                updatesum();
+                porcentage();
+            });
+        });
+    
+    function updatesum() {
+        var total = 0;
+        $('.sumland input').each(function () {
+            var value = parseFloat($(this).val());
+            if (isNaN(value)) {
+                value = 0;
+            }
+            total += value;
+        });
+        $('#tlandwaste').val(total);
+
+        var total2 = 0;
+        $('.asphalt input').each(function () {
+            var value2 = parseFloat($(this).val());
+            if (isNaN(value2)) {
+                value2 = 0;
+            }
+            total2 += value2;
+        });
+        $('#total1').val(total2);
+
+        var total3 = 0;
+        $('.concrete input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total3 += value3;
+        });
+        $('#total2').val(total3);
+
+        var total4 = 0;
+        $('.plumbing input').each(function () {
+            var value4 = parseFloat($(this).val());
+            if (isNaN(value4)) {
+                value4 = 0;
+            }
+            total4 += value4;
+        });
+        $('#total3').val(total4);
+
+        var total5 = 0;
+        $('.ferrous input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total5 += value3;
+        });
+        $('#total4').val(total5);
+
+        var total6 = 0;
+        $('.nonferrous input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total6 += value3;
+        });
+        $('#total5').val(total6);
+
+        var total7 = 0;
+        $('.wood input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total7 += value3;
+        });
+        $('#total6').val(total7);
+
+        var total8 = 0;
+        $('.glass input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total8 += value3;
+        });
+        $('#total7').val(total8);
+
+        var total9 = 0;
+        $('.brick input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total9 += value3;
+        });
+        $('#total8').val(total9);
+
+        var total10 = 0;
+        $('.paper input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total10 += value3;
+        });
+        $('#total9').val(total10);
+
+        var total11 = 0;
+        $('.newsprint input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total11 += value3;
+        });
+        $('#total10').val(total11);
+
+        var total12 = 0;
+        $('.cardboard input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total12 += value3;
+        });
+        $('#total11').val(total12);
+
+        var total13 = 0;
+        $('.plastic input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total13 += value3;
+        });
+        $('#total12').val(total13);
+
+
+        var total14 = 0;
+        $('.gypsun input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total14 += value3;
+        });
+        $('#total13').val(total14);
+
+        var total15 = 0;
+        $('.paint input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total15 += value3;
+        });
+        $('#total14').val(total15);
+
+
+        var total16 = 0;
+        $('.insulation input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total16 += value3;
+        });
+        $('#total15').val(total16);
+
+        var total17 = 0;
+        $('.cd input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total17 += value3;
+        });
+        $('#total16').val(total17);
+
+        var total18 = 0;
+        $('.other input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total18 += value3;
+        });
+        $('#total18').val(total18);
+
+        var total25 = 0;
+        $('.vegetation input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total25 += value3;
+        });
+        $('#total17').val(total25);
+
+        var total30 = 0;
+        $('.fill input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total30 += value3;
+        });
+        $('#total19').val(total30);
+
+
+        var total19 = 0;
+        $('.totales input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total19 += value3;
+        });
+        $('#tdivewaste').val(total19);
+
+        var total20 = 0;
+        $('.totaltotal input').each(function () {
+            var value3 = parseFloat($(this).val());
+            if (isNaN(value3)) {
+                value3 = 0;
+            }
+            total20 += value3;
+        });
+        $('#tconswaste').val(total20);
+
+    }
+
+    function porcentage() {
+        let v1 = $('#tdivewaste').val();
+        let v2 = $('#tconswaste').val();
+        va1 = parseFloat(v1)
+        va2 = parseFloat(v2)
+        let ttotal = va1 / va2 * 100;
+        $('#porcentage').val(ttotal);
+    }
+
+</script>

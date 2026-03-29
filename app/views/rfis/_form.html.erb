@@ -1,0 +1,128 @@
+<%= form_with(model: rfi) do |form| %>
+  <% if @rfi.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(estimated.errors.count, "error") %> prohibited this estimated from being saved:</h2>
+      <ul>
+        <% estimated.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <br>
+  <br>
+   <%= form.hidden_field :estimateds_id, value: params[:parametro] %>
+  <div id="table">
+    <table  class="table table-bordered table-sm"  style="width:60%">
+      <thead>
+      <tr>
+        <th>COMPANY NAME</th>
+        <th>PROJECT NAME</th>
+        <th>LOCATION</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td><%= form.text_field :cname,  :size=>"20", :maxlength=>"254" %></td>
+        <td><%= form.text_field :pname, :size=>"20", :maxlength=>"254" %></td>
+        <td><%= form.text_field  :location, :size=>"20", :maxlength=>"254" %></td>
+        <td></td>
+      </tr>
+      </tbody>
+      <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th>RIF Number</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td></td>
+        <td></td>
+        <td><%= form.number_field :number, style: "width:100px;" %></td>
+        <td></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th colspan="2">RFI OVERVIEW</th>
+        <th colspan="2"></th>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td colspan="4"><%= form.text_area :overview, rows: 5, cols: 60 %></td>
+      </tr>
+      </tbody>
+
+      <tr>
+        <th colspan="4">REQUEST / CLARIFICATION REQUIRED</th>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td colspan="4"><%= form.text_area :request, rows: 5, cols: 60 %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>Name of Requesting Party</th>
+        <th></th>
+        <th></th>
+        <th>Date of Request</th>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td ><%= form.text_field :name_request%></td>
+        <td ></td>
+        <td ></td>
+        <td ><%= form.date_field :date %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th colspan="4">RESPONSE</th>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td colspan="4"><%= form.text_area :response, rows: 5, cols: 60 %></td>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <th>Name of Responding Party</th>
+        <th></th>
+        <th></th>
+        <th>Date of response</th>
+      </tr>
+      </tbody>
+      <tbody>
+      <tr>
+        <td ><%= form.text_field :name_responding%></td>
+        <td ></td>
+        <td ></td>
+        <td ><%= form.date_field :date2 %></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <br>
+  <br>
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+  <br>
+  <br>
+<% end %>
+<script>
+    const tableHeaders = document.querySelectorAll("th");
+    for (const header of tableHeaders) {
+        header.style.backgroundColor = "#DDEAFFFF";
+    }
+
+</script>
