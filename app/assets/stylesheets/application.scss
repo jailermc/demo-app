@@ -14,10 +14,10 @@ $td-blue2-lt:#d2ecff;
 
 /* --- Body & Layout --- */
 body {
-  background-color: #f4f6f9;
-  font-family: Verdana, sans-serif;
-  font-size: 14px;
-  color: #333;
+  background-color: #f0f2f5;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  font-size: 13px;
+  color: #2d3748;
 }
 
 .container-fluid {
@@ -25,75 +25,153 @@ body {
 }
 
 /* --- Navbar --- */
+.navbar {
+  background: linear-gradient(135deg, #1a2535 0%, #2d3f55 100%) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
+
 .navbar-brand {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
+  font-weight: 700;
   letter-spacing: 0.5px;
+  color: #e2ecf8 !important;
+}
+
+.navbar-nav .nav-link {
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  color: #b8cce0 !important;
+  padding: 0.4rem 0.75rem;
+  border-radius: 4px;
+  transition: background 0.15s, color 0.15s;
+
+  &:hover {
+    background: rgba(255,255,255,0.1);
+    color: #fff !important;
+  }
 }
 
 /* --- Page headers --- */
 h1 {
-  font-size: 1.4rem;
+  font-size: 1.25rem;
+  font-weight: 700;
   color: $td-blue;
   margin-bottom: 1rem;
   padding-bottom: 0.4rem;
   border-bottom: 2px solid $td-blue;
+  letter-spacing: 0.3px;
+}
+
+/* --- Table wrapper card --- */
+#table {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 16px;
+  margin-bottom: 20px;
+  overflow-x: auto;
 }
 
 /* --- Tables --- */
-.table thead th {
-  font-size: 13px;
-  vertical-align: middle;
+.table {
+  margin-bottom: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 12px;
+
+  th, td {
+    padding: 6px 10px;
+    vertical-align: middle;
+    border-color: #dee2e6;
+  }
+
+  /* Header rows */
+  thead th {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    background: linear-gradient(180deg, #4a6fa5 0%, #3a5a8c 100%) !important;
+    color: #fff !important;
+    border-color: #3a5a8c;
+    white-space: nowrap;
+  }
+
+  /* Body rows */
+  tbody tr {
+    transition: background-color 0.12s ease;
+
+    &:hover > td, &:hover > th {
+      background-color: rgba(163, 204, 248, 0.18) !important;
+    }
+  }
+
+  /* th inside tbody (section labels) */
+  tbody th {
+    font-weight: 600;
+    background-color: #f8f9fa;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
 }
 
-/* Green header for cost sheets */
+/* Green header variant (cost sheets) */
 .table-cost thead th,
 .thead-green th {
-  background-color: $td-green !important;
-  color: #1a3a1a;
+  background: linear-gradient(180deg, #2e7d32 0%, #1b5e20 100%) !important;
+  color: #fff !important;
+  border-color: #1b5e20 !important;
 }
 
-/* Blue header for estimateds */
+/* Blue header variant (estimateds) */
 .table-estimated thead th,
 .thead-blue th {
-  background-color: $td-blue2 !important;
-  color: #0a1f3a;
-}
-
-/* Gray header default */
-.table thead th {
-  background-color: #e9ecef;
+  background: linear-gradient(180deg, #1565c0 0%, #0d47a1 100%) !important;
+  color: #fff !important;
+  border-color: #0d47a1 !important;
 }
 
 /* --- Status badges on index tables --- */
-.status-active   { color: #0d6efd; font-weight: 600; }
-.status-completed{ color: #198754; font-weight: 600; }
-.status-pending  { color: #c97e00; font-weight: 600; }
+.status-active    { color: #0d6efd; font-weight: 600; }
+.status-completed { color: #198754; font-weight: 600; }
+.status-pending   { color: #c97e00; font-weight: 600; }
 
 /* --- Address color coding in cost sheets --- */
 .addr-complete { background-color: $td-green-lt; }
 .addr-started  { background-color: $td-blue2-lt; }
 
-/* --- Redmine celda classes (used in show/form views) --- */
+/* --- celda classes (pricing / activity labels) --- */
 .celda {
-  background-color: #fff9c4;
-  font-weight: bold;
+  background-color: #fffde7 !important;
+  font-weight: 600;
   text-align: right;
+  color: #5d4037;
 }
 
 .celda2 {
-  background-color: #e3f2fd;
-  font-weight: bold;
+  background-color: #e8f4fd !important;
+  font-weight: 600;
+  color: #1a3a5c;
+}
+
+.celda20 {
+  background-color: #f3e5f5 !important;
+  font-weight: 600;
+  color: #4a148c;
 }
 
 /* --- Form sections --- */
 .section-title {
-  background-color: $td-blue;
+  background: linear-gradient(135deg, $td-blue 0%, $td-blue-lt 100%);
   color: white;
   padding: 6px 12px;
   margin: 16px 0 8px 0;
-  font-weight: bold;
-  font-size: 13px;
-  border-radius: 3px;
+  font-weight: 700;
+  font-size: 12px;
+  border-radius: 5px;
+  letter-spacing: 0.4px;
 }
 
 /* --- Print button --- */
@@ -104,7 +182,7 @@ h1 {
   margin-bottom: 1rem;
 }
 
-/* --- Contextual action bar (top of index pages) --- */
+/* --- Contextual action bar --- */
 .contextual {
   float: right;
   margin-bottom: 0.5rem;
@@ -116,19 +194,41 @@ h1 {
   margin-bottom: 2px;
 }
 
-/* --- Form inputs in tables (estimation forms) --- */
+/* --- Form inputs inside tables --- */
 #table input[type="text"],
 #table input[type="number"],
-#table input[type="date"] {
+#table input[type="date"],
+#table select {
   font-size: 12px;
-  padding: 2px 4px;
+  padding: 3px 6px;
   height: auto;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  background-color: #fdfdfe;
+  transition: border-color 0.15s, box-shadow 0.15s;
+
+  &:focus {
+    border-color: #86b7fe;
+    box-shadow: 0 0 0 2px rgba(13,110,253,0.15);
+    outline: none;
+  }
+}
+
+/* --- Index page tables (cleaner rows) --- */
+.table-hover tbody tr:hover {
+  background-color: rgba(163, 204, 248, 0.15);
 }
 
 /* --- Print styles --- */
 @media print {
   nav, .contextual, #print-button, form, .btn { display: none !important; }
   #section-to-print { display: block !important; }
-  body { background: white; font-size: 11px; }
-  .table { font-size: 10px; }
+  #table { box-shadow: none; padding: 0; }
+  body { background: white; font-size: 10px; }
+  .table { font-size: 9px; }
+  .table thead th {
+    background: #e0e0e0 !important;
+    color: #000 !important;
+    -webkit-print-color-adjust: exact;
+  }
 }

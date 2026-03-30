@@ -756,16 +756,6 @@ overtime_rows = [
         document.body.innerHTML = originalContents;
     });
 
-    var celdas = document.getElementsByClassName("celda2");
-    for (var i = 0; i < celdas.length; i++) {
-        celdas[i].style.backgroundColor = "#d0e5ff";
-        celdas[i].style.fontWeight = "bold";
-    }
-
-    const tableHeaders = document.querySelectorAll("thead th");
-    for (const header of tableHeaders) {
-        header.style.backgroundColor = "rgba(217,213,213,0.94)";
-    }
     const tableCells = document.querySelectorAll("td");
     for (const cell of tableCells) {
         if (cell.textContent.trim().length === 0 ||
@@ -792,12 +782,6 @@ overtime_rows = [
         } else {
             cell.style.backgroundColor = "#ff9797";
         }
-    }
-
-    var celdas10 = document.getElementsByClassName("celda2");
-    for (var i = 0; i < celdas10.length; i++) {
-        celdas[i].style.backgroundColor = "#d2ddf3";
-        celdas[i].style.fontWeight = "bold";
     }
 
     function compareQty(base) {
