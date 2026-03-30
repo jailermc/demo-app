@@ -189,6 +189,7 @@ h1 {
 }
 
 /* --- Buttons spacing in tables --- */
+.buttons form, td form { display: inline; }
 .buttons .btn, td .btn {
   margin-right: 3px;
   margin-bottom: 2px;
