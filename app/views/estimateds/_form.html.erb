@@ -13,7 +13,7 @@
   <div class="actions"><%= form.submit %></div>
   <br>
 
-  <div id="table">
+  <div id="table" oninput="runCalculations()">
     <table class="table table-bordered table-sm" style="width:70%">
       <thead>
         <tr>
@@ -55,14 +55,14 @@
             </td>
             <td><%= form.text_field :"apricing#{i}", id: "apricing#{i}", style: "width:100px;" %></td>
             <td><%= form.text_field :"atotal#{i}", id: "atotal#{i}", style: "width:100px;" %></td>
-            <td><button type="button" class="btn btn-outline-danger btn-sm del-labor-row" title="Remove row">×</button></td>
+            <td><button type="button" onclick="delLaborRow(this)" class="btn btn-outline-danger btn-sm" title="Remove row">×</button></td>
           </tr>
         </tbody>
       <% end %>
       <tbody>
         <tr>
           <td colspan="8" class="py-1">
-            <button type="button" id="add-labor-row" class="btn btn-success btn-sm">+ Add Row</button>
+            <button type="button" onclick="addLaborRow()" class="btn btn-success btn-sm">+ Add Row</button>
           </td>
         </tr>
       </tbody>
@@ -107,14 +107,14 @@
             <td><%= form.text_field :"eresult#{n}", id: "eresult#{n}", style: "width:60px;" %></td>
             <td><%= form.text_field :"epricing#{n}", id: "epricing#{n}", style: "width:100px;" %></td>
             <td><%= form.text_field :"etotal#{n}", id: "etotal#{n}", style: "width:100px;" %></td>
-            <td><button type="button" class="btn btn-outline-danger btn-sm del-equip-row" title="Remove row">×</button></td>
+            <td><button type="button" onclick="delEquipRow(this)" class="btn btn-outline-danger btn-sm" title="Remove row">×</button></td>
           </tr>
         </tbody>
       <% end %>
       <tbody>
         <tr>
           <td colspan="8" class="py-1">
-            <button type="button" id="add-equip-row" class="btn btn-success btn-sm">+ Add Row</button>
+            <button type="button" onclick="addEquipRow()" class="btn btn-success btn-sm">+ Add Row</button>
           </td>
         </tr>
       </tbody>
@@ -462,69 +462,71 @@ function initRows(selector) {
   if ($(selector + ':visible').length === 0) $(selector).first().show();
 }
 
-function setupEstimatesForm() {
-  initRows('.labor-row');
-  initRows('.equip-row');
-
-  $('#add-labor-row').off('click.est').on('click.est', function() {
-    var hidden = $('.labor-row:hidden').first();
-    if (hidden.length) { hidden.show(); }
-    else { alert('Maximum 12 labor rows reached.'); }
-  });
-
-  $('#add-equip-row').off('click.est').on('click.est', function() {
-    var hidden = $('.equip-row:hidden').first();
-    if (hidden.length) { hidden.show(); }
-    else { alert('Maximum 12 equipment rows reached.'); }
-  });
-
-  $('#table').off('click.est', '.del-labor-row').on('click.est', '.del-labor-row', function() {
-    var row = $(this).closest('.labor-row');
-    row.find('select').val('0');
-    row.find('input').val('');
-    row.hide();
-    if ($('.labor-row:visible').length === 0) $('.labor-row').first().show();
-    totalA(); subtotal(); porce(); total(); persf();
-  });
-
-  $('#table').off('click.est', '.del-equip-row').on('click.est', '.del-equip-row', function() {
-    var row = $(this).closest('.equip-row');
-    row.find('input').val('');
-    row.hide();
-    if ($('.equip-row:visible').length === 0) $('.equip-row').first().show();
-    total_gallons(); totalE(); subtotal(); porce(); total(); persf();
-  });
+// ---- Dynamic row functions (global, called via onclick) ----
+function addLaborRow() {
+  var rows = document.querySelectorAll('.labor-row');
+  for (var i = 0; i < rows.length; i++) {
+    if (rows[i].style.display === 'none') { rows[i].style.display = ''; return; }
+  }
+  alert('Maximum 12 labor rows reached.');
 }
 
-document.addEventListener('turbolinks:load', setupEstimatesForm);
+function addEquipRow() {
+  var rows = document.querySelectorAll('.equip-row');
+  for (var i = 0; i < rows.length; i++) {
+    if (rows[i].style.display === 'none') { rows[i].style.display = ''; return; }
+  }
+  alert('Maximum 12 equipment rows reached.');
+}
 
-$(document).ready(function() {
-  $('#table').on('input', function() {
-    for (let i = 1; i <= 12; i++) {
-      calculateHours(i);
-      calculateActivity(i);
-      calculatefuel(i);
-    }
-    total_gallons();
-    fuel();
-    for (let i = 1; i <= 3; i++) saw(i);
-    [['tqtyyds1','tpricing1','ttotal1'], ['tqtyyds2','tpricing2','ttotal2'],
-     ['tqtyyds3','tpricing3','ttotal3'], ['tqtyyds4','tpricing4','ttotal4'],
-     ['tqtysfft5','tpricing5','ttotal5'],['tqtyyds6','tpricing6','ttotal6']
-    ].forEach(([q, p, t]) => calcQtyPrice(q, p, t));
-    for (let i = 1; i <= 8; i++) calcQtyPrice(`pqty${i}`, `ppricing${i}`, `ptotal${i}`);
-    [3, 4, 5].forEach(i => calculate_npdes(i));
-    calcQtyPrice('mqtysfft2', 'mpricing2', 'mtotal2');
-    calcQtyPrice('mov_pqty2', 'mov_pricing2', 'mov_total2');
-    calcQtyPrice('mov_pqty3', 'mov_pricing3', 'mov_total3');
-    [1,2,3,4,5,6,7,8,9,11,13,14,15,17,18,19,20,31,32].forEach(i => calculatemis(i));
-    for (let i = 1; i <= 3; i++) contractor(i);
-    totalA(); totalE(); totalf(); totalS(); totalT(); totalP();
-    total_npdes(); total_temp_fence(); total_perdiem();
-    totalM(); totalcontractor(); salvage(); totalscrap();
-    subtotal(); porce(); total(); persf();
-  });
-});
+function delLaborRow(btn) {
+  var row = btn.closest('.labor-row');
+  row.querySelectorAll('select').forEach(function(s) { s.value = '0'; });
+  row.querySelectorAll('input').forEach(function(i) { i.value = ''; });
+  row.style.display = 'none';
+  var visible = document.querySelectorAll('.labor-row:not([style*="display: none"])');
+  if (visible.length === 0) document.querySelector('.labor-row').style.display = '';
+  if (typeof totalA !== 'undefined') { totalA(); subtotal(); porce(); total(); persf(); }
+}
+
+function delEquipRow(btn) {
+  var row = btn.closest('.equip-row');
+  row.querySelectorAll('input').forEach(function(i) { i.value = ''; });
+  row.style.display = 'none';
+  var visible = document.querySelectorAll('.equip-row:not([style*="display: none"])');
+  if (visible.length === 0) document.querySelector('.equip-row').style.display = '';
+  if (typeof total_gallons !== 'undefined') { total_gallons(); totalE(); subtotal(); porce(); total(); persf(); }
+}
+
+// ---- Hide empty rows on load ----
+initRows('.labor-row');
+initRows('.equip-row');
+
+function runCalculations() {
+  for (let i = 1; i <= 12; i++) {
+    calculateHours(i);
+    calculateActivity(i);
+    calculatefuel(i);
+  }
+  total_gallons();
+  fuel();
+  for (let i = 1; i <= 3; i++) saw(i);
+  [['tqtyyds1','tpricing1','ttotal1'], ['tqtyyds2','tpricing2','ttotal2'],
+   ['tqtyyds3','tpricing3','ttotal3'], ['tqtyyds4','tpricing4','ttotal4'],
+   ['tqtysfft5','tpricing5','ttotal5'],['tqtyyds6','tpricing6','ttotal6']
+  ].forEach(([q, p, t]) => calcQtyPrice(q, p, t));
+  for (let i = 1; i <= 8; i++) calcQtyPrice(`pqty${i}`, `ppricing${i}`, `ptotal${i}`);
+  [3, 4, 5].forEach(i => calculate_npdes(i));
+  calcQtyPrice('mqtysfft2', 'mpricing2', 'mtotal2');
+  calcQtyPrice('mov_pqty2', 'mov_pricing2', 'mov_total2');
+  calcQtyPrice('mov_pqty3', 'mov_pricing3', 'mov_total3');
+  [1,2,3,4,5,6,7,8,9,11,13,14,15,17,18,19,20,31,32].forEach(i => calculatemis(i));
+  for (let i = 1; i <= 3; i++) contractor(i);
+  totalA(); totalE(); totalf(); totalS(); totalT(); totalP();
+  total_npdes(); total_temp_fence(); total_perdiem();
+  totalM(); totalcontractor(); salvage(); totalscrap();
+  subtotal(); porce(); total(); persf();
+}
 
 // ---- Helpers ----
 function calcQtyPrice(qtyId, priceId, totalId) {
