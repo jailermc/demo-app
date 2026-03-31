@@ -445,16 +445,14 @@
 <script>
 // ---- Dynamic row management ----
 function isRowEmpty(tbody) {
-  var empty = true;
-  tbody.find('select').each(function() {
-    if ($(this).val() != '0' && $(this).val() != '') { empty = false; }
-  });
-  if (!empty) return false;
+  var selectVal = tbody.find('select').val();
+  if (selectVal && selectVal !== '0') return false;
+  var hasData = false;
   tbody.find('input[type=text], input[type=number]').each(function() {
     var v = $.trim($(this).val());
-    if (v !== '' && v !== '0') { empty = false; return false; }
+    if (v !== '' && parseFloat(v) !== 0) { hasData = true; return false; }
   });
-  return empty;
+  return !hasData;
 }
 
 function initRows(selector) {
