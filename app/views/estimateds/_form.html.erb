@@ -39,11 +39,11 @@
       <thead>
         <tr>
           <th>ACTIVITY</th><th>DESCRIPTION</th><th>QTY MEN</th><th>DAYS</th>
-          <th>MEN HRS + OVER T.</th><th>PRICE PER HRS</th><th>TOTAL</th>
+          <th>MEN HRS + OVER T.</th><th>PRICE PER HRS</th><th>TOTAL</th><th></th>
         </tr>
       </thead>
       <% (1..12).each do |i| %>
-        <tbody>
+        <tbody class="labor-row">
           <tr>
             <td class="celda2"><%= form.select :"alabor#{i}", options_for_select([['', 0], ['LABOR', 1], ['OPERATOR', 2], ['SUPERVISOR', 3], ['DRIVER', 4]], selected: @estimated.send("alabor#{i}")) %></td>
             <td><%= form.text_field(i == 3 ? :adescriptio3 : :"adescription#{i}", size: "30", maxlength: "254") %></td>
@@ -55,14 +55,23 @@
             </td>
             <td><%= form.text_field :"apricing#{i}", id: "apricing#{i}", style: "width:100px;" %></td>
             <td><%= form.text_field :"atotal#{i}", id: "atotal#{i}", style: "width:100px;" %></td>
+            <td><button type="button" class="btn btn-outline-danger btn-sm del-labor-row" title="Remove row">×</button></td>
           </tr>
         </tbody>
       <% end %>
       <tbody>
         <tr>
+          <td colspan="8" class="py-1">
+            <button type="button" id="add-labor-row" class="btn btn-success btn-sm">+ Add Row</button>
+          </td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr>
           <th></th><th></th><th></th><th></th><th></th>
           <th>TOTAL OK? <%= form.check_box :check_box_a, required: true %></th>
           <th style="background-color: rgb(197,255,194)"><%= form.text_field :atotal, id: "atotal", style: "width:100px;" %></th>
+          <th></th>
         </tr>
       </tbody>
 
@@ -70,20 +79,20 @@
       <thead>
         <tr>
           <th>EQUIP.</th><th>DESCRIPTION</th><th>QTY</th><th>DAYS</th>
-          <th>QTY. GAL.</th><th>GAL. PRICE</th><th>TOTAL</th>
+          <th>QTY. GAL.</th><th>GAL. PRICE</th><th>TOTAL</th><th></th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td class="celda2"></td><td></td><td></td><td></td><td></td>
           <th>$ <%= form.text_field :fpricing1, id: "fpricing1", style: "width:100px;" %></th>
-          <td></td>
+          <td></td><td></td>
         </tr>
       </tbody>
       <% [['EXCAVATOR', 1], ['EXCAVATOR 2', 2], ['SCISSOR LIFT', 3], ['LOADER', 4],
           ['DUMP TRUCK', 5], ['BOBCAT', 6], ['UTILITY TRUCK', 12], ['FLOOR SCRAPER', 7],
           ['WATER TRUCK', 8], ['COMPRESSOR', 9], [nil, 10], [nil, 11]].each do |label, n| %>
-        <tbody>
+        <tbody class="equip-row">
           <tr>
             <td class="celda2">
               <% if label %>
@@ -98,15 +107,23 @@
             <td><%= form.text_field :"eresult#{n}", id: "eresult#{n}", style: "width:60px;" %></td>
             <td><%= form.text_field :"epricing#{n}", id: "epricing#{n}", style: "width:100px;" %></td>
             <td><%= form.text_field :"etotal#{n}", id: "etotal#{n}", style: "width:100px;" %></td>
+            <td><button type="button" class="btn btn-outline-danger btn-sm del-equip-row" title="Remove row">×</button></td>
           </tr>
         </tbody>
       <% end %>
       <tbody>
         <tr>
+          <td colspan="8" class="py-1">
+            <button type="button" id="add-equip-row" class="btn btn-success btn-sm">+ Add Row</button>
+          </td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr>
           <td class="celda2"></td><td></td>
           <th>TOTAL GAL.</th>
           <th><%= form.text_field :totalfuel, id: "totalfuel", style: "width:60px;" %></th>
-          <td></td><td></td><td></td>
+          <td></td><td></td><td></td><td></td>
         </tr>
       </tbody>
       <tbody>
@@ -114,6 +131,7 @@
           <th></th><th></th><th></th><th></th><th></th>
           <th>TOTAL OK? <%= form.check_box :check_box_e, required: true %></th>
           <th style="background-color: rgb(197,255,194)"><%= form.text_field :etotal, id: "etotal", style: "width:100px;" %></th>
+          <th></th>
         </tr>
       </tbody>
 
@@ -425,7 +443,60 @@
 <% end %>
 
 <script>
+// ---- Dynamic row management ----
+function isRowEmpty(tbody) {
+  var empty = true;
+  tbody.find('select').each(function() {
+    if ($(this).val() != '0' && $(this).val() != '') { empty = false; }
+  });
+  if (!empty) return false;
+  tbody.find('input[type=text], input[type=number]').each(function() {
+    var v = $.trim($(this).val());
+    if (v !== '' && v !== '0') { empty = false; return false; }
+  });
+  return empty;
+}
+
+function initRows(selector) {
+  $(selector).each(function() {
+    if (isRowEmpty($(this))) $(this).hide();
+  });
+  if ($(selector + ':visible').length === 0) $(selector).first().show();
+}
+
 $(document).ready(function() {
+  initRows('.labor-row');
+  initRows('.equip-row');
+
+  $('#add-labor-row').on('click', function() {
+    var hidden = $('.labor-row:hidden').first();
+    if (hidden.length) { hidden.show(); }
+    else { alert('Maximum 12 labor rows reached.'); }
+  });
+
+  $('#add-equip-row').on('click', function() {
+    var hidden = $('.equip-row:hidden').first();
+    if (hidden.length) { hidden.show(); }
+    else { alert('Maximum 12 equipment rows reached.'); }
+  });
+
+  $(document).on('click', '.del-labor-row', function() {
+    var row = $(this).closest('.labor-row');
+    row.find('select').val('0');
+    row.find('input').val('');
+    row.hide();
+    if ($('.labor-row:visible').length === 0) $('.labor-row').first().show();
+    totalA(); subtotal(); porce(); total(); persf();
+  });
+
+  $(document).on('click', '.del-equip-row', function() {
+    var row = $(this).closest('.equip-row');
+    row.find('input').val('');
+    row.hide();
+    if ($('.equip-row:visible').length === 0) $('.equip-row').first().show();
+    total_gallons(); totalE(); subtotal(); porce(); total(); persf();
+  });
+
   $('#table').on('input', function() {
     for (let i = 1; i <= 12; i++) {
       calculateHours(i);
