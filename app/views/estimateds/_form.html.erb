@@ -462,23 +462,23 @@ function initRows(selector) {
   if ($(selector + ':visible').length === 0) $(selector).first().show();
 }
 
-$(document).ready(function() {
+function setupEstimatesForm() {
   initRows('.labor-row');
   initRows('.equip-row');
 
-  $('#add-labor-row').on('click', function() {
+  $('#add-labor-row').off('click.est').on('click.est', function() {
     var hidden = $('.labor-row:hidden').first();
     if (hidden.length) { hidden.show(); }
     else { alert('Maximum 12 labor rows reached.'); }
   });
 
-  $('#add-equip-row').on('click', function() {
+  $('#add-equip-row').off('click.est').on('click.est', function() {
     var hidden = $('.equip-row:hidden').first();
     if (hidden.length) { hidden.show(); }
     else { alert('Maximum 12 equipment rows reached.'); }
   });
 
-  $(document).on('click', '.del-labor-row', function() {
+  $('#table').off('click.est', '.del-labor-row').on('click.est', '.del-labor-row', function() {
     var row = $(this).closest('.labor-row');
     row.find('select').val('0');
     row.find('input').val('');
@@ -487,14 +487,18 @@ $(document).ready(function() {
     totalA(); subtotal(); porce(); total(); persf();
   });
 
-  $(document).on('click', '.del-equip-row', function() {
+  $('#table').off('click.est', '.del-equip-row').on('click.est', '.del-equip-row', function() {
     var row = $(this).closest('.equip-row');
     row.find('input').val('');
     row.hide();
     if ($('.equip-row:visible').length === 0) $('.equip-row').first().show();
     total_gallons(); totalE(); subtotal(); porce(); total(); persf();
   });
+}
 
+document.addEventListener('turbolinks:load', setupEstimatesForm);
+
+$(document).ready(function() {
   $('#table').on('input', function() {
     for (let i = 1; i <= 12; i++) {
       calculateHours(i);
